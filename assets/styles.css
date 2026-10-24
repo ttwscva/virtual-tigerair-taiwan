@@ -35,43 +35,67 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 5%;
+    padding: 12px 5%;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-.logo-area {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+/* --- 擬真臺灣虎航 Logo 樣式 (Tigerair Taiwan Style) --- */
+.tiger-brand-logo {
     text-decoration: none;
+    display: inline-flex;
+    flex-direction: column;
+    font-family: 'Arial Black', 'Trebuchet MS', sans-serif, 'PingFang TC';
+    line-height: 1;
 }
 
-.logo-badge {
-    background-color: var(--tiger-yellow);
-    color: var(--tiger-black);
+/* 上方 tigerair 粗體文字 */
+.brand-top {
+    font-size: 1.7rem;
     font-weight: 900;
-    font-size: 1.3rem;
-    padding: 6px 12px;
-    border-radius: 4px;
+    color: #555555; /* 經典深灰 */
+    letter-spacing: -0.5px;
+}
+
+/* Virtual 前綴 (橘色斜體點綴) */
+.vt-prefix {
+    color: var(--tiger-orange);
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-right: 4px;
+    font-style: italic;
+}
+
+/* 下方微笑曲線與中文字 */
+.brand-bottom {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+/* 虎航經典下巴微笑弧線 (U型微笑) */
+.tiger-smile {
+    width: 22px;
+    height: 9px;
+    border-bottom: 5px solid var(--tiger-yellow);
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-radius: 0 0 12px 12px;
+    margin-left: 10px;
+}
+
+/* 虛擬台灣虎航圓潤中文字 */
+.brand-zh {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #555555;
     letter-spacing: 1px;
 }
 
-.logo-text {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--tiger-black);
-}
-
-.logo-text span {
-    display: block;
-    font-size: 0.75rem;
-    color: #666;
-    font-weight: normal;
-}
-
+/* 導航選單 */
 nav {
     display: flex;
     align-items: center;
@@ -108,7 +132,7 @@ nav a:hover {
     background: linear-gradient(rgba(17,17,17,0.5), rgba(17,17,17,0.7)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600') center/cover;
     color: white;
     text-align: center;
-    padding: 120px 20px;
+    padding: 110px 20px;
 }
 
 .hero h1 {
@@ -220,7 +244,7 @@ nav a:hover {
     text-decoration: underline;
 }
 
-/* 擬真機隊表格樣式 */
+/* 機隊表格樣式 */
 .table-wrapper {
     overflow-x: auto;
     background: white;
@@ -251,7 +275,7 @@ nav a:hover {
 }
 
 .fleet-table tr:hover {
-    background-color: #fffde7; /* 滑過顯色 */
+    background-color: #fffde7;
 }
 
 /* 機型徽章 Badge */
