@@ -1,93 +1,60 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Tigerair Taiwan | 虛擬臺灣虎航 - 航向無限可能</title>
-    <!-- 引入 assets 資料夾內的 CSS -->
-    <link rel="stylesheet" href="assets/styles.css">
-</head>
-<body>
+<!-- 機隊介紹區塊 (對齊真實虎航資料) -->
+        <section id="fleet" style="margin-top: 60px;">
+            <h2 class="section-title">vTGW 營運機隊 (Fleet)</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                vTGW 主力採用 Airbus A320ceo 與 A320neo 家族，完美適應東北亞與東南亞中短程低成本航空營運。
+            </p>
 
-    <!-- 頂部宣告條 -->
-    <div class="top-bar">
-        ⚡ VATSIM 虛擬航空公司網路營運中 ｜ 呼號：SMARTCAT (TGW) ｜ 模擬器：MSFS
-    </div>
-
-    <!-- 導航列 -->
-    <header>
-        <a href="#" class="logo-area">
-            <div class="logo-badge">TGW</div>
-            <div class="logo-text">
-                虛擬臺灣虎航
-                <span>Virtual Tigerair Taiwan</span>
+            <!-- 機隊統計表格 -->
+            <div class="table-wrapper">
+                <table class="fleet-table">
+                    <thead>
+                        <tr>
+                            <th>機型 (Type)</th>
+                            <th>機號 (Registration)</th>
+                            <th>MSFS 推薦模組 (Recommended Addon)</th>
+                            <th>預設基地 (Hub)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- A320ceo 陣容 -->
+                        <tr>
+                            <td><span class="badge ceo">A320-200</span></td>
+                            <td>B-50001, B-50005, B-50006, B-50008, B-50011, B-50015, B-50016, B-50017, B-50018</td>
+                            <td>Fenix A320 / FlyByWire A320neo (代用)</td>
+                            <td>RCTP / RCKH</td>
+                        </tr>
+                        <!-- A320neo 陣容 -->
+                        <tr>
+                            <td><span class="badge neo">A320neo</span></td>
+                            <td>B-50021, B-50022, B-50023, B-50025, B-50026, B-50027, B-50028, B-50029, B-50031, B-50032</td>
+                            <td>FlyByWire A320neo / iniBuilds A320neo</td>
+                            <td>RCTP / RCKH / RCMQ</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </a>
-        <nav>
-            <a href="#about">關於我們</a>
-            <a href="#network">航線網絡</a>
-            <a href="#fleet">機隊介紹</a>
-            <a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">Discord 社群</a>
-            <a href="https://vamsys.io" target="_blank" class="nav-btn">vAMSYS 登入</a>
-        </nav>
-    </header>
 
-    <!-- 主視覺 Hero Banner -->
-    <section class="hero">
-        <h1>熱情、專注、滑順 <span>想飛就飛！</span></h1>
-        <p>專為 MSFS 飛行模擬玩家打造的擬真低成本航空體驗。桃園/高雄直飛日、韓、東南亞，邀請您加入 SMARTCAT 行列！</p>
-        <a href="https://vamsys.io" target="_blank" class="hero-cta">立即申請加入飛行員</a>
-    </section>
-
-    <!-- 主內容區 -->
-    <div class="container">
-
-        <!-- VATSIM 免責聲明 -->
-        <div class="disclaimer-box">
-            <strong>⚠️ VATSIM 官方規範免責聲明 (Disclaimer)：</strong><br>
-            本網站與社群為非營利、純屬虛擬之飛行模擬社群（Virtual Airline），專供 VATSIM 網絡使用。本團體與真實世界的「台灣虎航股份有限公司 (Tigerair Taiwan)」無任何商業、法律或實質隸屬關係。所有商標與識別權利歸原版權所有者所有。
-        </div>
-
-        <h2 class="section-title" id="about">探索 vTGW 核心特色</h2>
-
-        <!-- 特色卡片區 -->
-        <div class="cards-grid">
-            <div class="card">
-                <div class="card-content">
-                    <h3>✈️ 擬真航線與 vAMSYS</h3>
-                    <p>串接業界頂尖 vAMSYS 系統，支援自動 PIREP 航班記錄與階級晉升考核，體驗真實 LCC 的營運快感。</p>
-                    <a href="#network" class="card-link">了解航線分佈 &rarr;</a>
+            <!-- 特色彩繪機介紹 (Livery Spotlight) -->
+            <h3 style="margin-top: 40px; margin-bottom: 20px; color: var(--tiger-black);">🎨 主力特色彩繪機 (Special Liveries)</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h4>B-50021 | AIRBUS A320neo 首架官方聯名彩繪</h4>
+                        <p>台灣首架 A320neo，機身保留 Tigerair 經典虎紋與大字「AIRBUS A320neo」識別塗裝。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h4>B-50015 | 董陽孜「虎虎生風」書法彩繪機</h4>
+                        <p>攜手國寶級書法家董陽孜，將巨幅藝術作品躍然於機身，象徵放眼未來的自我期許。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h4>B-50006 / B-50018 | 岡山桃太郎 & Rakuten 樂天桃猿聯名彩繪</h4>
+                        <p>跨界結合旅遊與運動文化，充滿動感活力與元氣，為社群飛行增添樂趣。</p>
+                    </div>
                 </div>
             </div>
-
-            <div class="card">
-                <div class="card-content">
-                    <h3>🎯 A320 機隊與塗裝</h3>
-                    <p>主力營運 Airbus A320ceo 與 A320neo，搭配高品質 MSFS 塗裝，讓您每一次進場都充滿自信。</p>
-                    <a href="#fleet" class="card-link">查看機隊細節 &rarr;</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-content">
-                    <h3>💬 活躍社群與團飛</h3>
-                    <p>結合 Facebook 與 Discord，定期舉辦 VATSIM 線上群飛活動，與各地同好一同挑戰複雜機場與側風降落。</p>
-                    <a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank" class="card-link">加入 Discord 社群 &rarr;</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- 頁尾 -->
-    <footer>
-        <p>&copy; 2026 Virtual Tigerair Taiwan (vTGW). All Rights Reserved.</p>
-        <p class="footer-disclaimer">
-            For Flight Simulation Use Only on the VATSIM Network. Not affiliated with Tigerair Taiwan.
-        </p>
-    </footer>
-
-    <!-- 引入 assets 資料夾內的 JavaScript -->
-    <script src="assets/site.js"></script>
-</body>
-</html>
+        </section>
