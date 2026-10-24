@@ -1,66 +1,52 @@
-/*
-  Formosa Virtual Airways — site settings
-  Replace the example URLs below with your real Facebook, Discord invite,
-  and vAMSYS portal URLs. Leave a value as an empty string until ready.
-*/
-const SITE_CONFIG = {
-  facebookUrl: "",
-  discordUrl: "",
-  vamsysUrl: "",
-  contactEmail: "contact@example.com"
-};
+const menuButton = document.querySelector(".menu-toggle");
+const nav = document.querySelector("#primary-nav");
+if (menuButton && nav) {
+  menuButton.addEventListener("click", () => {
+    const isOpen = nav.classList.toggle("open");
+    menuButton.setAttribute("aria-expanded", String(isOpen));
+  });
+  nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => {
+    nav.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  }));
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-  const menuButton = document.querySelector(".menu-toggle");
-  const nav = document.querySelector("#primary-nav");
+const dateInput = document.querySelector("#flight-date");
+if (dateInput) {
+  const today = new Date();
+  const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+    .toISOString().slice(0, 10);
+  dateInput.value = localDate;
+  dateInput.min = localDate;
+}
 
-  if (menuButton && nav) {
-    menuButton.addEventListener("click", () => {
-      const open = menuButton.getAttribute("aria-expanded") !== "true";
-      menuButton.setAttribute("aria-expanded", String(open));
-      nav.classList.toggle("open", open);
-    });
-    nav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
-      nav.classList.remove("open");
-      menuButton.setAttribute("aria-expanded", "false");
-    }));
-  }
-
-  const links = {
-    facebook: SITE_CONFIG.facebookUrl,
-    discord: SITE_CONFIG.discordUrl,
-    vamsys: SITE_CONFIG.vamsysUrl
-  };
-  let configured = 0;
-  document.querySelectorAll("[data-link]").forEach(anchor => {
-    const key = anchor.dataset.link;
-    const url = links[key];
-    if (url && /^https:\/\/\S+/i.test(url)) {
-      anchor.href = url;
-      anchor.target = "_blank";
-      anchor.rel = "noopener noreferrer";
-      anchor.classList.remove("is-disabled");
-      configured++;
-    } else {
-      anchor.href = "#links";
-      anchor.classList.add("is-disabled");
-      anchor.setAttribute("aria-disabled", "true");
-      anchor.addEventListener("click", event => event.preventDefault());
+const origin = document.querySelector("#origin");
+const destination = document.querySelector("#destination");
+const swapButton = document.querySelector("#swap-airports");
+if (swapButton && origin && destination) {
+  swapButton.addEventListener("click", () => {
+    const oldOrigin = origin.value;
+    const oldDestination = destination.value;
+    if ([...origin.options].some((option) => option.value === oldDestination) &&
+        [...destination.options].some((option) => option.value === oldOrigin)) {
+      origin.value = oldDestination;
+      destination.value = oldOrigin;
     }
   });
+}
 
-  const help = document.querySelector("#link-help");
-  if (help && configured === 3) {
-    help.textContent = "所有入口已設定完成。 / All links are configured.";
-  } else if (help) {
-    help.textContent = "尚有 " + (3 - configured) + " 個入口待設定。請編輯 assets/site.js 中的 SITE_CONFIG。 / " + (3 - configured) + " link(s) pending. Edit SITE_CONFIG in assets/site.js.";
-  }
-
-  const contactLink = document.querySelector('a[href="mailto:contact@example.com"]');
-  if (contactLink && SITE_CONFIG.contactEmail && SITE_CONFIG.contactEmail !== "contact@example.com") {
-    contactLink.href = "mailto:" + SITE_CONFIG.contactEmail;
-  }
-
-  const year = document.querySelector("#year");
-  if (year) year.textContent = new Date().getFullYear();
-});
+const flightForm = document.querySelector("#flight-form");
+const result = document.querySelector("#search-result");
+if (flightForm && result) {
+  flightForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const originText = origin.options[origin.selectedIndex].text;
+    const destinationText = destination.options[destination.selectedIndex].text;
+    const date = document.querySelector("#flight-date").value;
+    if (origin.value === destination.value) {
+      result.textContent = "請選擇不同的出發機場與目的地。";
+      return;
+    }
+    result.textContent = `模擬航班規劃：${originText} → ${destinationText}｜日期：${date}。這是社群規劃工具，不會訂購真實機票；請以社群公告及模擬器航路資料為準。`;
+  });
+}

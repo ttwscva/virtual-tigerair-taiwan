@@ -3,177 +3,124 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#173c5a">
-  <meta name="description" content="An independent virtual airline community based in Taiwan, for MSFS and VATSIM pilots.">
-  <title>Formosa Virtual Airways｜福爾摩沙虛擬航空</title>
+  <meta name="theme-color" content="#f47721">
+  <meta name="description" content="虛擬臺灣虎航 Virtual Tigerair Taiwan，面向 MSFS 與 VATSIM 飛行員的非官方模擬飛行社群。">
+  <title>虛擬臺灣虎航 | Virtual Tigerair Taiwan</title>
   <link rel="stylesheet" href="assets/styles.css">
   <script defer src="assets/site.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">跳至主要內容 / Skip to content</a>
+  <a class="skip-link" href="#main">跳至主要內容</a>
+  <div class="topline"><div class="container topline-inner"><span>VIRTUAL AIRLINE · TAIWAN</span><span>非官方模擬飛行社群</span></div></div>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#home" aria-label="Formosa Virtual Airways home">
-        <span class="brand-mark" aria-hidden="true">F<span>V</span></span>
-        <span class="brand-copy"><strong>FORMOSA VIRTUAL</strong><small>福爾摩沙虛擬航空</small></span>
+      <a class="brand" href="#home" aria-label="虛擬臺灣虎航首頁">
+        <span class="brand-mark" aria-hidden="true">t<span>v</span></span>
+        <span class="brand-copy"><strong>VIRTUAL TIGERAIR</strong><small>虛擬臺灣虎航</small></span>
       </a>
-      <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav">選單 / Menu</button>
-      <nav id="primary-nav" class="primary-nav" aria-label="Main navigation">
-        <a href="#fleet">機隊 Fleet</a>
-        <a href="#routes">航線 Routes</a>
-        <a href="#join">加入我們 Join</a>
-        <a href="#about">關於 About</a>
-        <a class="nav-cta" href="#links">會員入口 / Pilot Portal</a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav">選單 ☰</button>
+      <nav class="primary-nav" id="primary-nav" aria-label="主要導覽">
+        <a href="#flight-search">模擬航班</a>
+        <a href="#routes">航線探索</a>
+        <a href="#news">最新消息</a>
+        <a href="#join">加入我們</a>
+        <a class="nav-cta" href="#pilot-portal">飛行員入口 ↗</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <section id="home" class="hero">
+    <section class="hero" id="home">
+      <div class="hero-bg-mark" aria-hidden="true">tiger</div>
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">TAIWAN · MSFS · VATSIM</p>
-          <h1>從台灣出發，<br><span>飛向每一個目的地。</span></h1>
-          <p class="lead">以台灣為基地的獨立虛擬航空社群。一起規劃航班、探索航線，在 VATSIM 網路上享受更有組織的模擬飛行。</p>
-          <p class="lead lead-en">An independent virtual airline community based in Taiwan. Plan flights, explore routes, and fly together on the VATSIM network.</p>
+          <p class="eyebrow"><span></span> YOUR NEXT FLIGHT STARTS HERE</p>
+          <h1>準備好起飛了嗎？<br><em>台灣出發，一起飛。</em></h1>
+          <p class="hero-lead">把每一次模擬飛行，變成值得期待的旅程。加入虛擬臺灣虎航，使用 MSFS 與 VATSIM，探索亞洲航線、累積飛行紀錄，和飛友一起翱翔。</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#join">加入飛行員 / Become a Pilot</a>
-            <a class="button button-secondary" href="#routes">探索航線 / Explore Routes</a>
+            <a class="button button-dark" href="#flight-search">規劃一趟模擬航班 <span>→</span></a>
+            <a class="button button-outline" href="#join">認識我們</a>
           </div>
-          <p class="notice-inline">獨立非官方虛擬航空，與任何真實航空公司無隸屬或背書關係。<br><span>Independent virtual airline; not affiliated with or endorsed by any real airline.</span></p>
+          <p class="hero-note">獨立非官方虛擬航空社群，與臺灣虎航股份有限公司無隸屬或背書關係。</p>
         </div>
-        <div class="hero-art" aria-label="Original abstract aviation illustration">
-          <div class="sun"></div>
-          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-          <div class="island island-main"></div><div class="island island-small"></div>
-          <div class="flight-path"></div>
-          <div class="plane-symbol" aria-hidden="true">✈</div>
-          <div class="art-label"><strong>RCTP</strong><span>TAIPEI · TAIWAN</span></div>
-          <div class="art-caption">YOUR JOURNEY STARTS HERE</div>
+        <div class="hero-visual" aria-label="以台灣與航線為主題的裝飾插畫">
+          <div class="visual-sun"></div><div class="visual-ring ring-a"></div><div class="visual-ring ring-b"></div>
+          <div class="taiwan-shape"></div><div class="route-dash"></div><div class="plane">✈</div>
+          <div class="visual-stamp"><small>HOME BASE</small><strong>RCTP</strong><span>TAOYUAN · TAIWAN</span></div>
+          <div class="visual-index">VTT / 001</div>
         </div>
       </div>
     </section>
 
-    <section class="trust-strip" aria-label="Platform summary">
-      <div class="container strip-grid">
-        <div><strong>MSFS</strong><span>Microsoft Flight Simulator</span></div>
-        <div><strong>VATSIM</strong><span>Online flight simulation</span></div>
-        <div><strong>vAMSYS</strong><span>Flight operations portal</span></div>
-        <div><strong>TAIWAN</strong><span>Our virtual home base</span></div>
-      </div>
-    </section>
-
-    <section id="fleet" class="section">
+    <section class="flight-search" id="flight-search">
       <div class="container">
-        <div class="section-heading">
-          <div><p class="eyebrow">OUR FLEET</p><h2>機隊介紹 <span>Our Fleet</span></h2></div>
-          <p>先以常見窄體客機為主，讓不同模擬器版本與機模選擇的飛行員都能參與。</p>
+        <div class="search-heading">
+          <div><p class="eyebrow">FLIGHT PLANNER</p><h2>規劃你的下一趟飛行</h2></div>
+          <span class="sim-tag">模擬飛行專用 · 非實際機票</span>
         </div>
-        <div class="card-grid three">
-          <article class="info-card fleet-card">
-            <div class="aircraft-art aircraft-a320"><span>FVA</span><i>✈</i></div>
-            <div class="card-body"><p class="card-kicker">NARROW-BODY</p><h3>Airbus A320 Family</h3><p>適合台灣國內線與亞洲區域航線。建議機型，實際支援清單以營運公告為準。</p><span class="pill">Regional · Short/Medium haul</span></div>
-          </article>
-          <article class="info-card fleet-card">
-            <div class="aircraft-art aircraft-a321"><span>FVA</span><i>✈</i></div>
-            <div class="card-body"><p class="card-kicker">HIGH-CAPACITY NARROW-BODY</p><h3>Airbus A321 Family</h3><p>適用於較長的區域航線與社群活動。會員可使用相容的 MSFS 機模。</p><span class="pill">Regional · Medium haul</span></div>
-          </article>
-          <article class="info-card fleet-card">
-            <div class="aircraft-art aircraft-flex"><span>FVA</span><i>✈</i></div>
-            <div class="card-body"><p class="card-kicker">FLEXIBLE OPERATIONS</p><h3>其他相容機型</h3><p>依活動需求逐步擴充機隊，避免要求會員額外購買付費機模。</p><span class="pill">Community-friendly</span></div>
-          </article>
-        </div>
-        <p class="section-footnote">此頁機隊為示意規劃，不代表真實航空公司的機隊或營運資訊。 / Fleet shown is illustrative, not a real-world operator's fleet.</p>
+        <form id="flight-form" class="search-panel">
+          <label>出發機場
+            <select id="origin" name="origin"><option value="RCTP">RCTP 桃園國際機場</option><option value="RCKH">RCKH 高雄國際機場</option><option value="RCMQ">RCMQ 臺中國際機場</option></select>
+          </label>
+          <button class="swap-button" type="button" id="swap-airports" aria-label="交換出發與目的地">⇄</button>
+          <label>目的地
+            <select id="destination" name="destination"><option value="RJTT">RJTT 東京羽田</option><option value="RJBB">RJBB 大阪關西</option><option value="RKPK">RKPK 釜山金海</option><option value="ROAH">ROAH 沖繩那霸</option><option value="RCKH">RCKH 高雄國際機場</option><option value="RCTP">RCTP 桃園國際機場</option></select>
+          </label>
+          <label>預計日期
+            <input id="flight-date" type="date" name="date" required>
+          </label>
+          <button class="button button-orange search-submit" type="submit">搜尋模擬航班 <span>→</span></button>
+        </form>
+        <p class="search-result" id="search-result" aria-live="polite">選擇出發地、目的地與日期，產生你的模擬飛行規劃。此工具不會訂購真實機票。</p>
       </div>
     </section>
 
-    <section id="routes" class="section section-soft">
+    <section class="section route-section" id="routes">
       <div class="container">
-        <div class="section-heading">
-          <div><p class="eyebrow">ROUTE NETWORK</p><h2>航線網路 <span>Our Routes</span></h2></div>
-          <p>以桃園國際機場為虛擬主基地，優先規劃台灣、日本、韓國及港澳航線。</p>
+        <div class="section-heading"><div><p class="eyebrow">ROUTE INSPIRATION</p><h2>下一站，飛去哪？</h2></div><p>從台灣出發，探索適合週末活動、團體飛行與 VATSIM 線上飛行的熱門航點。</p></div>
+        <div class="route-grid">
+          <article class="route-card route-featured"><div class="route-card-top"><span class="route-code">VTT 101</span><span class="route-chip">人氣航線</span></div><div class="route-graphic tokyo"><span>東京</span><i>✈</i></div><div class="route-info"><div><small>RCTP · TAIPEI</small><strong>桃園 → 東京羽田</strong></div><span class="route-arrow">↗</span></div><p>適合熟悉繁忙進場程序與日本空域的飛行員。</p></article>
+          <article class="route-card"><div class="route-card-top"><span class="route-code">VTT 203</span><span class="route-chip">東北亞</span></div><div class="route-graphic osaka"><span>大阪</span><i>✈</i></div><div class="route-info"><div><small>RCTP · TAIPEI</small><strong>桃園 → 大阪關西</strong></div><span class="route-arrow">↗</span></div><p>練習海上航路、標準離到場程序與航班管理。</p></article>
+          <article class="route-card"><div class="route-card-top"><span class="route-code">VTT 305</span><span class="route-chip">短程航線</span></div><div class="route-graphic okinawa"><span>沖繩</span><i>✈</i></div><div class="route-info"><div><small>RCTP · TAIPEI</small><strong>桃園 → 沖繩那霸</strong></div><span class="route-arrow">↗</span></div><p>短程飛行好選擇，適合新加入的飛行員練習。</p></article>
         </div>
-        <div class="route-toolbar">
-          <span class="route-origin"><span class="status-dot"></span> 主基地 / HUB <strong>RCTP · Taipei Taoyuan</strong></span>
-          <span class="muted">規劃航線 / Planned routes</span>
-        </div>
-        <div class="route-table-wrap">
-          <table class="route-table">
-            <thead><tr><th>起點 / From</th><th>目的地 / To</th><th>區域 / Region</th><th>建議機型 / Suggested aircraft</th><th>狀態 / Status</th></tr></thead>
-            <tbody>
-              <tr><td><strong>RCTP</strong><small>桃園 Taoyuan</small></td><td><strong>RJAA</strong><small>東京成田 Tokyo Narita</small></td><td>日本 Japan</td><td>A320 / A321</td><td><span class="route-status">規劃中 Planned</span></td></tr>
-              <tr><td><strong>RCTP</strong><small>桃園 Taoyuan</small></td><td><strong>RJBB</strong><small>大阪關西 Osaka Kansai</small></td><td>日本 Japan</td><td>A320 / A321</td><td><span class="route-status">規劃中 Planned</span></td></tr>
-              <tr><td><strong>RCTP</strong><small>桃園 Taoyuan</small></td><td><strong>RJFF</strong><small>福岡 Fukuoka</small></td><td>日本 Japan</td><td>A320</td><td><span class="route-status">規劃中 Planned</span></td></tr>
-              <tr><td><strong>RCTP</strong><small>桃園 Taoyuan</small></td><td><strong>ROAH</strong><small>沖繩那霸 Naha</small></td><td>日本 Japan</td><td>A320</td><td><span class="route-status">規劃中 Planned</span></td></tr>
-              <tr><td><strong>RCTP</strong><small>桃園 Taoyuan</small></td><td><strong>RKSI</strong><small>首爾仁川 Seoul Incheon</small></td><td>韓國 Korea</td><td>A320 / A321</td><td><span class="route-status">規劃中 Planned</span></td></tr>
-              <tr><td><strong>RCTP</strong><small>桃園 Taoyuan</small></td><td><strong>VHHH</strong><small>香港 Hong Kong</small></td><td>港澳 Hong Kong</td><td>A320</td><td><span class="route-status">規劃中 Planned</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="section-footnote">航線為虛擬營運提案，非實際航班時刻表。請在正式開放前核對機場、航路與系統資料。<br>These are proposed virtual routes, not a real-world timetable. Verify airport and route data before launch.</p>
+        <p class="section-footnote">以上為虛構社群航班示例，並非真實航空公司時刻表或實際營運航線。實際活動以社群公告為準。</p>
       </div>
     </section>
 
-    <section id="join" class="section">
+    <section class="news-section section" id="news">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">LATEST UPDATES</p><h2>社群最新消息</h2></div><a class="text-link" href="#join">查看如何加入 <span>→</span></a></div>
+        <div class="news-grid">
+          <article class="news-card news-main"><div class="news-art art-orange"><span>VTT</span><strong>FLY<br>TOGETHER</strong><i>✈</i></div><div class="news-body"><span class="news-category">社群公告</span><h3>虛擬臺灣虎航社群準備起飛</h3><p>我們正在建立以台灣為基地的模擬飛行社群，歡迎喜歡客機、航線規劃與線上飛行的你加入。</p><a href="#join" class="text-link">了解加入方式 →</a></div></article>
+          <article class="news-card"><div class="news-art art-navy"><span>MSFS</span><strong>SIM<br>READY</strong><i>✈</i></div><div class="news-body"><span class="news-category">飛行活動</span><h3>MSFS × VATSIM 團體飛行</h3><p>活動日期、集合時間與航路將透過社群公告更新。</p><a href="#pilot-portal" class="text-link">飛行員入口 →</a></div></article>
+          <article class="news-card"><div class="news-art art-cream"><span>JOIN US</span><strong>YOUR<br>CREW</strong><i>✈</i></div><div class="news-body"><span class="news-category">招募資訊</span><h3>新飛行員招募中</h3><p>無論你是剛開始飛行，或已熟悉 VATSIM，都歡迎認識我們。</p><a href="#join" class="text-link">加入社群 →</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="join-section" id="join">
       <div class="container join-grid">
-        <div>
-          <p class="eyebrow">JOIN OUR CREW</p>
-          <h2>準備好加入了嗎？<br><span>Ready for your next flight?</span></h2>
-          <p class="lead">不論你是剛接觸 VATSIM 的新手，或是已有飛行經驗的模擬飛行玩家，都歡迎加入社群。</p>
-          <p>加入後請先閱讀社群規章、完成新人指引，再依公告使用航班管理系統。實際註冊入口將在 vAMSYS 設定完成後更新。</p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#links">前往社群 / Join Community</a>
-            <a class="button button-secondary" href="mailto:contact@example.com">聯絡我們 / Contact</a>
-          </div>
-        </div>
-        <div class="join-panel">
-          <h3>加入流程 <span>How to join</span></h3>
-          <ol class="steps">
-            <li><span>01</span><div><strong>加入 Discord</strong><small>Join our community server</small></div></li>
-            <li><span>02</span><div><strong>閱讀會員規章</strong><small>Read community guidelines</small></div></li>
-            <li><span>03</span><div><strong>建立 vAMSYS 帳號</strong><small>Register when the portal is ready</small></div></li>
-            <li><span>04</span><div><strong>完成首次飛行</strong><small>Complete your first virtual flight</small></div></li>
-          </ol>
-          <div class="panel-note">vAMSYS 入口尚未設定 / vAMSYS portal link pending setup.</div>
-        </div>
+        <div><p class="eyebrow">JOIN THE CREW</p><h2>你的座位，<br><em>一直都在。</em></h2><p>不用追求完美的飛行經驗，從一趟航班開始，慢慢累積自己的飛行故事。</p><a class="button button-orange" href="#pilot-portal">查看加入方式 <span>→</span></a></div>
+        <div class="join-steps"><div class="step"><b>01</b><div><strong>準備模擬器</strong><small>Microsoft Flight Simulator（MSFS）</small></div></div><div class="step"><b>02</b><div><strong>加入線上飛行</strong><small>熟悉 VATSIM 網路與飛行規範</small></div></div><div class="step"><b>03</b><div><strong>加入社群與活動</strong><small>追蹤公告，與其他飛行員一起飛行</small></div></div></div>
       </div>
     </section>
 
-    <section id="links" class="section section-soft">
+    <section class="portal-section section" id="pilot-portal">
       <div class="container">
-        <div class="section-heading">
-          <div><p class="eyebrow">CONNECT WITH US</p><h2>社群與會員入口 <span>Community & Pilot Portal</span></h2></div>
-          <p>請在設定檔中填入你自己的 Facebook、Discord 與 vAMSYS 網址，即可啟用下列連結。</p>
-        </div>
-        <div class="link-grid">
-          <a class="link-card" data-link="facebook" href="#links"><span class="link-icon">f</span><span><strong>Facebook</strong><small>公告、招募與活動照片</small></span><span class="link-arrow">↗</span></a>
-          <a class="link-card" data-link="discord" href="#links"><span class="link-icon">◉</span><span><strong>Discord</strong><small>會員交流與活動集合</small></span><span class="link-arrow">↗</span></a>
-          <a class="link-card" data-link="vamsys" href="#links"><span class="link-icon">✈</span><span><strong>vAMSYS Pilot Portal</strong><small>航班預訂與飛行紀錄</small></span><span class="link-arrow">↗</span></a>
-        </div>
-        <p id="link-help" class="section-footnote">連結尚待設定。請編輯 assets/site.js 中的設定值。 / Links are not configured yet. Edit the settings in assets/site.js.</p>
-      </div>
-    </section>
-
-    <section id="about" class="section">
-      <div class="container about-grid">
-        <div><p class="eyebrow">ABOUT THE AIRLINE</p><h2>關於我們 <span>About Us</span></h2></div>
-        <div class="about-copy">
-          <p><strong>Formosa Virtual Airways（福爾摩沙虛擬航空）</strong>是一個以台灣為基地的獨立飛行模擬社群，目標是為 MSFS 與 VATSIM 玩家提供有組織的航線、社群活動與飛行紀錄體驗。</p>
-          <p>本網站為虛擬航空社群展示範本。名稱、機隊與航線資料皆可依實際規劃調整；在品牌授權確認前，不使用真實航空公司的商標或官方素材。</p>
-          <p class="english-copy">Formosa Virtual Airways is an independent flight simulation community based in Taiwan. We bring MSFS and VATSIM pilots together through organized routes, community events, and flight tracking.</p>
-          <div class="disclaimer"><strong>非官方聲明 / Disclaimer</strong><p>本社群僅供娛樂及飛行模擬用途，並非真實航空公司，也不代表任何真實航空公司、VATSIM 或 vAMSYS。相關商標與品牌權利均屬其各自權利人。</p><p>This is a virtual flight simulation community only. It is not a real airline and is not affiliated with or endorsed by any real airline, VATSIM, or vAMSYS. All third-party trademarks belong to their respective owners.</p></div>
+        <div class="section-heading"><div><p class="eyebrow">PILOT RESOURCES</p><h2>飛行員服務入口</h2></div><p>常用工具集中在這裡，方便你準備下一趟模擬航班。</p></div>
+        <div class="portal-grid">
+          <a class="portal-card" href="https://www.flightsimulator.com/" target="_blank" rel="noopener"><span class="portal-icon">✈</span><span><strong>Microsoft Flight Simulator</strong><small>模擬飛行平台</small></span><b>↗</b></a>
+          <a class="portal-card" href="https://www.vatsim.net/" target="_blank" rel="noopener"><span class="portal-icon">◎</span><span><strong>VATSIM</strong><small>線上飛行與管制網路</small></span><b>↗</b></a>
+          <a class="portal-card" href="https://www.vamsys.io/" target="_blank" rel="noopener"><span class="portal-icon">V</span><span><strong>vAMSYS</strong><small>虛擬航空營運管理平台</small></span><b>↗</b></a>
+          <a class="portal-card" href="#join"><span class="portal-icon">＋</span><span><strong>社群招募</strong><small>了解加入方式</small></span><b>→</b></a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-top">
-      <a class="brand brand-footer" href="#home"><span class="brand-mark">F<span>V</span></span><span class="brand-copy"><strong>FORMOSA VIRTUAL</strong><small>福爾摩沙虛擬航空</small></span></a>
-      <p>Fly together. Explore further.</p>
-      <a href="#home" class="back-top">回到頂部 ↑</a>
-    </div>
-    <div class="container footer-bottom"><span>© <span id="year"></span> Formosa Virtual Airways. Community project.</span><span>Independent virtual airline · Not an actual airline</span></div>
+    <div class="container footer-main"><a class="brand brand-footer" href="#home"><span class="brand-mark">t<span>v</span></span><span class="brand-copy"><strong>VIRTUAL TIGERAIR</strong><small>虛擬臺灣虎航</small></span></a><p>從台灣出發，一起飛向下一個目的地。</p><a class="back-top" href="#home">回到頂部 ↑</a></div>
+    <div class="container footer-bottom"><span>© 2026 Virtual Tigerair Taiwan · Independent virtual airline community.</span><span>本網站為非官方模擬飛行社群，與臺灣虎航股份有限公司無隸屬、授權或背書關係。未使用其官方標誌。</span></div>
   </footer>
 </body>
 </html>
