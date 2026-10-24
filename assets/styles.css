@@ -42,7 +42,7 @@ header {
     z-index: 1000;
 }
 
-/* --- 升級版擬真虎航 Logo 樣式 (精緻美編) --- */
+/* 擬真虎航 Logo 樣式 */
 .tiger-brand-logo {
     text-decoration: none;
     display: inline-flex;
@@ -53,7 +53,6 @@ header {
     padding: 4px 0;
 }
 
-/* 上方的 Virtual 字樣 (精緻美編標籤) */
 .brand-virtual-tag {
     background: linear-gradient(135deg, var(--tiger-orange), #ff9500);
     color: white;
@@ -67,7 +66,6 @@ header {
     box-shadow: 0 2px 4px rgba(243, 112, 33, 0.3);
 }
 
-/* 主體 tigerair 文字 */
 .brand-main {
     font-size: 1.6rem;
     font-weight: 900;
@@ -76,7 +74,6 @@ header {
     position: relative;
 }
 
-/* i 字上方的圓點 */
 .brand-main::after {
     content: '';
     display: inline-block;
@@ -89,7 +86,6 @@ header {
     margin-top: 3px;
 }
 
-/* 下方微笑曲線與中文對齊 */
 .brand-bottom {
     display: flex;
     align-items: center;
@@ -97,7 +93,6 @@ header {
     margin-top: -2px;
 }
 
-/* 經典虎航下巴微笑 U 型弧線 */
 .tiger-smile {
     width: 20px;
     height: 8px;
@@ -108,7 +103,6 @@ header {
     margin-left: 10px;
 }
 
-/* 繁體中文「虛擬台灣虎航」 */
 .brand-zh {
     font-size: 0.85rem;
     font-weight: 700;
@@ -148,28 +142,68 @@ nav a:hover {
     background-color: #e5ae0c;
 }
 
-/* Banner 主視覺 */
-.hero {
-    background: linear-gradient(rgba(17,17,17,0.5), rgba(17,17,17,0.7)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600') center/cover;
-    color: white;
+/* --- 自動輪播 Hero Banner 樣式 --- */
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 110px 20px;
+    color: white;
 }
 
-.hero h1 {
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    z-index: 1;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+/* 讓圖片上方疊一層暗色半透明遮罩，確保文字清晰 */
+.hero-slider::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(17, 17, 17, 0.55);
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.hero-content h1 {
     font-size: 3rem;
     margin-bottom: 15px;
     font-weight: 800;
     letter-spacing: 1px;
 }
 
-.hero h1 span {
+.hero-content h1 span {
     color: var(--tiger-yellow);
 }
 
-.hero p {
+.hero-content p {
     font-size: 1.25rem;
-    max-width: 700px;
     margin: 0 auto 35px;
     color: #eee;
 }
@@ -299,7 +333,6 @@ nav a:hover {
     background-color: #fffde7;
 }
 
-/* 機型徽章 Badge */
 .badge {
     display: inline-block;
     padding: 3px 8px;
@@ -342,5 +375,5 @@ footer p {
 
 @media (max-width: 768px) {
     nav { display: none; }
-    .hero h1 { font-size: 2.2rem; }
+    .hero-content h1 { font-size: 2.2rem; }
 }
