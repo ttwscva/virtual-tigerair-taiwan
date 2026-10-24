@@ -11,3 +11,126 @@
 @media(max-width:950px){.primary-nav{gap:13px;font-size:11px}.hero-grid{gap:30px}.search-panel{grid-template-columns:1fr 35px 1fr 1fr}.search-submit{grid-column:1/-1}.portal-grid{grid-template-columns:repeat(2,1fr)}.news-art{height:150px}.news-art strong{font-size:28px}}
 @media(max-width:720px){.container{width:min(100% - 30px,560px)}.topline-inner span:last-child{display:none}.header-inner{min-height:70px}.menu-toggle{display:block}.primary-nav{display:none;position:absolute;top:69px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:17px 22px 22px;flex-direction:column;align-items:stretch;gap:12px}.primary-nav.open{display:flex}.primary-nav a{padding:7px}.nav-cta{text-align:center}.hero{padding:48px 0 62px}.hero-grid{grid-template-columns:1fr}.hero-visual{min-height:285px;order:-1}.hero-copy h1{font-size:41px}.flight-search{margin-top:-22px}.search-heading{align-items:start;flex-direction:column;gap:10px}.search-heading h2{font-size:22px}.search-panel{grid-template-columns:1fr 35px 1fr;padding:15px;gap:9px}.search-panel label:nth-of-type(3){grid-column:1/-1}.search-submit{grid-column:1/-1}.section{padding:58px 0}.section-heading{align-items:start;flex-direction:column;gap:12px}.route-grid,.news-grid{grid-template-columns:1fr}.route-graphic{height:160px}.news-art{height:175px}.news-body p{min-height:0}.join-grid{grid-template-columns:1fr;gap:28px}.portal-grid{grid-template-columns:1fr}.footer-main{flex-wrap:wrap}.footer-main>p{order:3;width:100%}.footer-bottom{flex-direction:column;gap:7px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+
+/* V2 refinement: Tigerair-inspired structure, with original community branding */
+:root {
+  --orange: #f47721;
+  --orange-dark: #df5e10;
+  --ink: #242424;
+  --navy: #242424;
+  --line: #e8e8e8;
+  --cream: #fff7f1;
+}
+html, body { max-width: 100%; overflow-x: clip; }
+.container { width: min(1240px, calc(100% - 56px)); }
+.topline { background: #252525; }
+.topline-inner { min-height: 32px; align-items: center; }
+.site-header { background: #fff; }
+.header-inner { min-height: 82px; }
+.brand-mark {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #242424; color: var(--orange); font-size: 23px;
+  border: 3px solid var(--orange); letter-spacing: -2px;
+}
+.brand-mark span { color: #fff; }
+.brand-copy strong { font-size: 13px; letter-spacing: 1.6px; }
+.brand-copy small { color: #6c6c6c; font-size: 12px; }
+.primary-nav { gap: 22px; font-size: 13px; }
+.nav-cta { border: 1px solid #242424; border-radius: 3px; padding: 11px 17px; }
+.hero {
+  padding: 64px 0 84px;
+  background: linear-gradient(115deg, #fff 0%, #fff 53%, #fff3e9 100%);
+}
+.hero-bg-mark { display: none; }
+.hero-grid { grid-template-columns: 1.04fr .96fr; gap: 54px; }
+.hero-copy { position: relative; z-index: 2; }
+.hero-copy .eyebrow { font-size: 11px; letter-spacing: 2.1px; }
+.hero-copy h1 {
+  font-size: clamp(42px, 4.4vw, 66px);
+  line-height: 1.16; letter-spacing: -2px; margin-bottom: 24px;
+}
+.hero-copy h1 em { color: var(--orange); }
+.hero-lead { font-size: 15px; line-height: 1.9; color: #555; max-width: 590px; }
+.button { border-radius: 3px; min-height: 48px; padding: 14px 21px; }
+.button-dark { background: #242424; }
+.button-orange { background: var(--orange); }
+.button-outline { border-radius: 3px; border-color: #cfcfcf; }
+.hero-note { max-width: 560px; line-height: 1.7; }
+.hero-visual {
+  min-height: 420px;
+  border-radius: 0;
+  border: 0;
+  background:
+    radial-gradient(circle at 72% 24%, rgba(255,255,255,.95) 0 9%, transparent 9.5%),
+    linear-gradient(140deg, #ffb477 0%, #f47721 48%, #dc5d0d 100%);
+  box-shadow: 0 18px 48px rgba(171, 76, 17, .14);
+}
+.hero-visual:before {
+  content: "";
+  position: absolute; inset: 20px;
+  border: 1px solid rgba(255,255,255,.35);
+}
+.visual-sun {
+  width: 250px; height: 250px; right: 10%; top: 12%;
+  background: rgba(255,255,255,.23);
+}
+.visual-ring { border-color: rgba(255,255,255,.5); }
+.ring-a { width: 620px; height: 265px; left: -40px; top: 74px; }
+.ring-b { width: 520px; height: 210px; left: 15px; top: 110px; }
+.taiwan-shape {
+  width: 74px; height: 168px; right: 34%; top: 92px;
+  background: #252525; filter: drop-shadow(0 6px 6px rgba(0,0,0,.12));
+}
+.route-dash { border-top-color: #fff; width: 330px; right: -10px; top: 60px; }
+.plane { color: #252525; font-size: 38px; right: 24%; top: 68px; }
+.visual-stamp {
+  left: 30px; bottom: 28px; border-left-color: #242424;
+  background: rgba(255,255,255,.92); padding: 12px 16px;
+}
+.visual-stamp small, .visual-stamp span { color: #555; }
+.visual-stamp strong { color: #242424; }
+.visual-index { color: #fff; font-weight: 800; }
+.flight-search { margin-top: -32px; }
+.search-heading h2 { font-size: 29px; }
+.search-panel {
+  border-radius: 4px; padding: 25px; gap: 14px;
+  border-top: 4px solid var(--orange);
+  box-shadow: 0 16px 42px rgba(0,0,0,.10);
+}
+.search-panel label { font-size: 12px; color: #333; }
+.search-panel select, .search-panel input {
+  border-radius: 3px; min-height: 49px; font-size: 13px;
+}
+.swap-button { border-radius: 3px; min-height: 49px; }
+.sim-tag { border-radius: 3px; background: #fff0e5; color: #b84a08; }
+.section-heading h2 { font-size: clamp(31px, 3vw, 40px); }
+.route-card, .news-card { border-radius: 4px; }
+.route-graphic { border-radius: 2px; }
+.route-chip { border-radius: 2px; }
+.news-section { background: #f7f7f7; }
+.news-art { border-radius: 0; }
+.join-section { background: #252525; }
+.portal-card { border-radius: 4px; }
+.portal-icon { border-radius: 3px; }
+.site-footer { background: #191919; }
+@media (min-width: 1500px) {
+  .hero { padding-top: 78px; padding-bottom: 94px; }
+  .hero-visual { min-height: 455px; }
+}
+@media (max-width: 950px) {
+  .container { width: min(100% - 36px, 760px); }
+  .hero-grid { gap: 28px; }
+  .hero-visual { min-height: 340px; }
+}
+@media (max-width: 720px) {
+  .container { width: calc(100% - 30px); }
+  .hero { padding: 38px 0 58px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 27px; }
+  .hero-visual { min-height: 280px; order: -1; }
+  .hero-copy h1 { font-size: clamp(38px, 10vw, 48px); }
+  .flight-search { margin-top: -18px; }
+  .search-panel { border-top-width: 3px; }
+  .visual-stamp { left: 17px; bottom: 17px; }
+  .visual-index { right: 16px; bottom: 20px; }
+}
