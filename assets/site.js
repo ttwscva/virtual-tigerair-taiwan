@@ -14,4 +14,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-console.log('Virtual Tigerair Taiwan Website Loaded Successfully.');
+console.log('Virtual Tigerair Taiwan Fleet Data Loaded.');
