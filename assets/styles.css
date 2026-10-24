@@ -42,57 +42,78 @@ header {
     z-index: 1000;
 }
 
-/* --- 擬真臺灣虎航 Logo 樣式 (Tigerair Taiwan Style) --- */
+/* --- 升級版擬真虎航 Logo 樣式 (精緻美編) --- */
 .tiger-brand-logo {
     text-decoration: none;
     display: inline-flex;
     flex-direction: column;
-    font-family: 'Arial Black', 'Trebuchet MS', sans-serif, 'PingFang TC';
-    line-height: 1;
+    align-items: flex-start;
+    font-family: 'Fredoka', 'Quicksand', 'Arial Black', sans-serif, 'PingFang TC';
+    line-height: 1.1;
+    padding: 4px 0;
 }
 
-/* 上方 tigerair 粗體文字 */
-.brand-top {
-    font-size: 1.7rem;
-    font-weight: 900;
-    color: #555555; /* 經典深灰 */
-    letter-spacing: -0.5px;
-}
-
-/* Virtual 前綴 (橘色斜體點綴) */
-.vt-prefix {
-    color: var(--tiger-orange);
-    font-size: 1.15rem;
+/* 上方的 Virtual 字樣 (精緻美編標籤) */
+.brand-virtual-tag {
+    background: linear-gradient(135deg, var(--tiger-orange), #ff9500);
+    color: white;
+    font-size: 0.65rem;
     font-weight: 800;
-    margin-right: 4px;
-    font-style: italic;
+    letter-spacing: 2px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+    box-shadow: 0 2px 4px rgba(243, 112, 33, 0.3);
 }
 
-/* 下方微笑曲線與中文字 */
+/* 主體 tigerair 文字 */
+.brand-main {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #4a4a4a;
+    letter-spacing: -0.5px;
+    position: relative;
+}
+
+/* i 字上方的圓點 */
+.brand-main::after {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background-color: var(--tiger-yellow);
+    border-radius: 50%;
+    margin-left: -10px;
+    vertical-align: top;
+    margin-top: 3px;
+}
+
+/* 下方微笑曲線與中文對齊 */
 .brand-bottom {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 2px;
+    margin-top: -2px;
 }
 
-/* 虎航經典下巴微笑弧線 (U型微笑) */
+/* 經典虎航下巴微笑 U 型弧線 */
 .tiger-smile {
-    width: 22px;
-    height: 9px;
-    border-bottom: 5px solid var(--tiger-yellow);
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-radius: 0 0 12px 12px;
+    width: 20px;
+    height: 8px;
+    border-bottom: 4px solid var(--tiger-yellow);
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-radius: 0 0 10px 10px;
     margin-left: 10px;
 }
 
-/* 虛擬台灣虎航圓潤中文字 */
+/* 繁體中文「虛擬台灣虎航」 */
 .brand-zh {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    color: #555555;
-    letter-spacing: 1px;
+    color: #666666;
+    letter-spacing: 0.5px;
 }
 
 /* 導航選單 */
