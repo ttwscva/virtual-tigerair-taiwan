@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Tigerair Taiwan | 虛擬臺灣虎航 - 航向無限可能</title>
-    <!-- 引入 assets 資料夾內的 CSS -->
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
@@ -33,11 +32,19 @@
         </nav>
     </header>
 
-    <!-- 主視覺 Banner -->
-    <section class="hero">
-        <h1>熱情、專注、滑順 <span>想飛就飛！</span></h1>
-        <p>專為 MSFS 飛行模擬玩家打造的擬真低成本航空體驗。桃園/高雄直飛日、韓、東南亞，邀請您加入 SMARTCAT 行列！</p>
-        <a href="https://vamsys.io" target="_blank" class="hero-cta">立即申請加入飛行員</a>
+    <!-- 主視覺 Banner (自動循環播放輪播區塊) -->
+    <section class="hero-slider">
+        <!-- 輪播圖片群組 (可自行更換 img 網址) -->
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600');"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600');"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1500835556837-99ac94a94552?q=80&w=1600');"></div>
+
+        <!-- 遮罩與文字內容 -->
+        <div class="hero-content">
+            <h1>熱情、專注、滑順 <span>想飛就飛！</span></h1>
+            <p>專為 MSFS 飛行模擬玩家打造的擬真低成本航空體驗。桃園/高雄直飛日、韓、東南亞，邀請您加入 SMARTCAT 行列！</p>
+            <a href="https://vamsys.io" target="_blank" class="hero-cta">立即申請加入飛行員</a>
+        </div>
     </section>
 
     <!-- 主內容區 -->
@@ -98,7 +105,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- A320ceo 機隊 -->
                         <tr>
                             <td><span class="badge ceo">A320</span></td>
                             <td><strong>B-50001</strong></td>
@@ -171,8 +177,6 @@
                             <td>Sep 2026</td>
                             <td>Oct 2023</td>
                         </tr>
-
-                        <!-- A320neo 機隊 -->
                         <tr>
                             <td><span class="badge neo">A320N</span></td>
                             <td><strong>B-50021</strong></td>
@@ -218,3 +222,84 @@
                             <td><strong>B-50027</strong></td>
                             <td>01 Dec 2023</td>
                             <td>9,054 hrs</td>
+                            <td>Jul 2026</td>
+                            <td>Nil</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge neo">A320N</span></td>
+                            <td><strong>B-50028</strong></td>
+                            <td>18 Jun 2025</td>
+                            <td>4,216 hrs</td>
+                            <td>Jul 2026</td>
+                            <td>Nil</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge neo">A320N</span></td>
+                            <td><strong>B-50029</strong></td>
+                            <td>23 Jul 2025</td>
+                            <td>3,971 hrs</td>
+                            <td>Aug 2026</td>
+                            <td>Nil</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge neo">A320N</span></td>
+                            <td><strong>B-50031</strong></td>
+                            <td>29 Sep 2026</td>
+                            <td>11 hrs</td>
+                            <td>Nil</td>
+                            <td>Nil</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge neo">A320N</span></td>
+                            <td><strong>B-50032</strong></td>
+                            <td>07 Jul 2026</td>
+                            <td>798 hrs</td>
+                            <td>Nil</td>
+                            <td>Nil</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="margin-top: 40px; margin-bottom: 20px; color: var(--tiger-black);">🎨 彩繪機資訊 (Special Liveries)</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h4>B-50021 | AIRBUS A320neo 官方聯名彩繪</h4>
+                        <p>國內第一架 A320neo 客機，機身上與空中巴士攜手合作，將「AIRBUS A320neo」官方象徵識別直接塗裝於機身[cite: 1]。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h4>B-50015 | 董陽孜「虎虎生風」書法彩繪機</h4>
+                        <p>邀請國寶級書法家董陽孜創作「虎虎生風」四字，為亞洲首架文字巨幅書法彩繪機[cite: 1]。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h4>Rakuten Monkeys 樂天桃猿聯名彩繪機</h4>
+                        <p>跨界結合旅遊與運動文化，完美融合虎斑塗裝與吉祥物 Rocky 隊徽，展現滿滿元氣與活力[cite: 1]。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h4>「日本桃太郎 ✕ 虎將」紀念彩繪機</h4>
+                        <p>台虎攜手日本岡山縣廳推出，紀念岡山航線啟航十週年，讓兩地超萌角色飛上雲端[cite: 1]。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Virtual Tigerair Taiwan (vTGW). All Rights Reserved.</p>
+        <p class="footer-disclaimer">
+            For Flight Simulation Use Only on the VATSIM Network. Not affiliated with Tigerair Taiwan.
+        </p>
+    </footer>
+
+    <!-- 引入 JavaScript 控制圖片自動輪播 -->
+    <script src="assets/site.js"></script>
+</body>
+</html>
