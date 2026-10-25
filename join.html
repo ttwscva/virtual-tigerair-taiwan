@@ -123,7 +123,6 @@
             box-shadow: 0 6px 20px rgba(255, 194, 14, 0.45);
         }
 
-        /* 成功提示與直接寄信備用提示 */
         #result-box {
             display: none;
             padding: 16px;
@@ -173,12 +172,13 @@
                 <p>歡迎熱愛飛行模擬的朋友加入 SMARTCAT 行列！送出後將自動為您開啟 Gmail 並填妥收件格式。</p>
             </div>
 
-            <form id="joinForm">
+            <!-- 不使用任何可能觸發跳轉的 form action -->
+            <div>
                 <div class="form-grid">
                     <!-- 姓名 -->
                     <div class="form-group">
                         <label class="form-label">姓名 <span class="req">*</span></label>
-                        <input type="text" id="applicant_name" class="form-input" placeholder="請輸入您的姓名或暱稱" required>
+                        <input type="text" id="applicant_name" class="form-input" placeholder="請輸入您的姓名或暱稱">
                     </div>
 
                     <!-- Discord 用戶名 -->
@@ -191,23 +191,23 @@
                 <!-- 電子郵件 -->
                 <div class="form-group">
                     <label class="form-label">電子郵件 <span class="req">*</span></label>
-                    <input type="email" id="applicant_email" class="form-input" placeholder="your.email@example.com" required>
+                    <input type="email" id="applicant_email" class="form-input" placeholder="your.email@example.com">
                 </div>
 
                 <!-- 主旨 / 主要飛行平台 -->
                 <div class="form-group">
                     <label class="form-label">主旨 / 主要飛行平台 <span class="req">*</span></label>
-                    <input type="text" id="applicant_subject" class="form-input" placeholder="例如：申請加入飛行員 (主要使用 MSFS / X-Plane / P3D)" required>
+                    <input type="text" id="applicant_subject" class="form-input" placeholder="例如：申請加入飛行員 (主要使用 MSFS / X-Plane / P3D)">
                 </div>
 
                 <!-- 訊息內容 -->
                 <div class="form-group">
                     <label class="form-label">訊息內容 / 飛行經驗簡述 <span class="req">*</span></label>
-                    <textarea id="applicant_message" class="form-textarea" placeholder="請簡述您的飛行模擬經驗、喜愛的機型，或是對加入虛擬台灣虎航的想法與建議..." required></textarea>
+                    <textarea id="applicant_message" class="form-textarea" placeholder="請簡述您的飛行模擬經驗、喜愛的機型，或是對加入虛擬台灣虎航的想法與建議..."></textarea>
                 </div>
 
-                <!-- 送出按鈕 -->
-                <button type="submit" class="btn-submit">
+                <!-- 送出按鈕 (type 改為 button，徹底根除 form 跳轉) -->
+                <button type="button" class="btn-submit" onclick="submitApplication()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13"></line>
                         <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -218,7 +218,7 @@
                 <div id="result-box">
                     🎉 已為您自動整理信件內容並開啟 Gmail！若瀏覽器未自動跳出，請直接將內容寄至：<strong>ttw.sc.va@gmail.com</strong>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
@@ -296,14 +296,17 @@
     </footer>
 
     <script>
-        document.getElementById('joinForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
+        function submitApplication() {
             const name = document.getElementById('applicant_name').value.trim();
             const discord = document.getElementById('discord_user').value.trim() || '無填寫';
             const email = document.getElementById('applicant_email').value.trim();
             const subjectInput = document.getElementById('applicant_subject').value.trim();
             const message = document.getElementById('applicant_message').value.trim();
+
+            if (!name || !email || !subjectInput || !message) {
+                alert('請完整填寫所有標註 * 的必填欄位！');
+                return;
+            }
 
             const targetEmail = 'ttw.sc.va@gmail.com';
             const mailSubject = `【虛擬臺灣虎航加入申請】${subjectInput} - ${name}`;
@@ -319,21 +322,20 @@
                              `${message}\n\n` +
                              `（此信件由 Virtual Tigerair Taiwan 官方網站招募系統自動帶入格式）`;
 
-            // 優先開啟網頁版 Gmail 直達傳送介面
+            // 直接呼叫 Gmail 網頁版撰寫新信件介面
             const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(targetEmail)}&su=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
             
-            // 系統預設 mailto 協定備用
+            // 系統預設 mailto 協定
             const mailtoUrl = `mailto:${targetEmail}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
 
-            // 顯示提示訊息
             document.getElementById('result-box').style.display = 'block';
 
-            // 嘗試在新分頁開啟 Gmail，若被彈出視窗攔截則使用系統 mailto
-            const newWindow = window.open(gmailUrl, '_blank');
-            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+            // 優先開啟網頁版 Gmail
+            const newTab = window.open(gmailUrl, '_blank');
+            if (!newTab || newTab.closed || typeof newTab.closed == 'undefined') {
                 window.location.href = mailtoUrl;
             }
-        });
+        }
     </script>
 </body>
 </html>
