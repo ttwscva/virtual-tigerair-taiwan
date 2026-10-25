@@ -28,7 +28,7 @@
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.06);
             border-top: 5px solid var(--tiger-yellow);
-            max-height: 800px;
+            height: 750px;
             overflow-y: auto;
             padding: 16px 20px;
         }
@@ -134,15 +134,15 @@
             line-height: 1.5;
         }
 
-        /* 右側虎航深色地圖容器 */
+        /* 右側地圖容器 */
         .station-map-view {
-            background: #18191c;
+            background: #14171a;
             border-radius: 12px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            height: 800px;
+            height: 750px;
             position: sticky;
             top: 85px;
-            border: 2px solid #282a2e;
+            border: 2px solid #23272e;
             overflow: hidden;
             position: relative;
         }
@@ -150,7 +150,7 @@
         #tiger-map {
             width: 100%;
             height: 100%;
-            background: #18191c;
+            background: #14171a;
         }
 
         /* 地圖控制按鈕與提示 */
@@ -159,7 +159,7 @@
             top: 15px;
             right: 15px;
             z-index: 1000;
-            background: rgba(24, 25, 28, 0.9);
+            background: rgba(17, 20, 24, 0.9);
             backdrop-filter: blur(8px);
             padding: 12px 18px;
             border-radius: 8px;
@@ -191,7 +191,7 @@
             background: #e5ae0c;
         }
 
-        /* 標籤文字樣式 */
+        /* 大字區域標籤 */
         .leaflet-tooltip-region {
             background: transparent !important;
             border: none !important;
@@ -204,334 +204,4 @@
         }
 
         .leaflet-tooltip-station {
-            background: rgba(20, 20, 20, 0.9) !important;
-            border: 1px solid var(--tiger-yellow) !important;
-            border-radius: 4px !important;
-            color: #fff !important;
-            font-size: 0.75rem !important;
-            font-weight: bold !important;
-            padding: 3px 8px !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        }
-
-        @media (max-width: 992px) {
-            .station-layout {
-                grid-template-columns: 1fr;
-            }
-            .station-map-view {
-                position: relative;
-                top: 0;
-                height: 480px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- 導航列 -->
-    <header>
-        <a href="index.html" class="tiger-brand-logo">
-            <div class="brand-virtual-tag">Virtual</div>
-            <div class="brand-main">tigerair</div>
-            <div class="brand-bottom">
-                <div class="tiger-smile"></div>
-                <div class="brand-zh">虛擬台灣虎航</div>
-            </div>
-        </a>
-        <nav>
-            <a href="index.html#about">關於我們</a>
-            <a href="index.html#fleet">機隊資料</a>
-            <a href="routes.html" style="color: var(--tiger-orange);">航線網絡</a>
-            <a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">Discord 社群</a>
-            <a href="https://vamsys.io" target="_blank" class="nav-btn">vAMSYS 登入</a>
-        </nav>
-    </header>
-
-    <!-- 頁面 Banner -->
-    <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600') center/cover; color: white; text-align: center; padding: 50px 20px;">
-        <h1 style="font-size: 2.3rem; font-weight: 800; margin-bottom: 8px;">航線網絡與航點資訊 <span style="color: var(--tiger-yellow);">Station Map</span></h1>
-        <p style="font-size: 1rem; color: #eee; max-width: 800px; margin: 0 auto;">探索 vTGW 涵蓋台灣基地的日、韓、東南亞動態航線圖，點選左側卡片即可檢視專屬飛行航路。</p>
-    </section>
-
-    <!-- 主內容區 -->
-    <div class="network-container">
-        
-        <div class="station-layout">
-            
-            <!-- 左側：航點清單 -->
-            <div class="station-sidebar">
-                <h3 style="margin-bottom: 12px; color: var(--tiger-black); font-size: 1.15rem;">📍 營運航點 (Destinations)</h3>
-                
-                <!-- 台灣營運基地 -->
-                <div class="station-category">
-                    <span>台灣主營運基地</span>
-                    <span style="font-size: 0.75rem; color: var(--tiger-orange);">Hubs</span>
-                </div>
-                
-                <div class="station-card active" onclick="selectStation('TPE')">
-                    <img src="https://images.unsplash.com/photo-1508803197928-3bc7c6d22f7d?q=80&w=300" class="station-thumb" alt="台北桃園">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">TPE</span>
-                            <span class="station-name">台北 (桃園)</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RCTP<br><strong>航廈：</strong>第一航廈 7 號櫃檯</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('KHH')">
-                    <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=300" class="station-thumb" alt="高雄">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">KHH</span>
-                            <span class="station-name">高雄 (小港)</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RCKH<br><strong>航廈：</strong>國際航廈</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('RMQ')">
-                    <img src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?q=80&w=300" class="station-thumb" alt="台中">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">RMQ</span>
-                            <span class="station-name">台中 (清泉崗)</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RCMQ<br><strong>航廈：</strong>國際航廈</div>
-                    </div>
-                </div>
-
-                <!-- 日本航點 -->
-                <div class="station-category">
-                    <span>日本航點</span>
-                    <span style="font-size: 0.75rem; color: #888;">Japan</span>
-                </div>
-
-                <div class="station-card" onclick="selectStation('NRT')">
-                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="東京成田">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">NRT</span>
-                            <span class="station-name">東京 (成田)</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJAA<br><strong>航廈：</strong>第二航廈</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('HND')">
-                    <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=300" class="station-thumb" alt="東京羽田">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">HND</span>
-                            <span class="station-name">東京 (羽田)</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJTT<br><strong>航廈：</strong>第三航廈</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('KIX')">
-                    <img src="https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?q=80&w=300" class="station-thumb" alt="大阪關西">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">KIX</span>
-                            <span class="station-name">大阪 (關西)</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJBB<br><strong>航廈：</strong>第一航廈</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('FUK')">
-                    <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=300" class="station-thumb" alt="福岡">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">FUK</span>
-                            <span class="station-name">福岡</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJFF<br><strong>航廈：</strong>國際航廈</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('OKA')">
-                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=300" class="station-thumb" alt="沖繩">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">OKA</span>
-                            <span class="station-name">沖繩 (那霸)</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>ROAH<br><strong>航廈：</strong>國際航廈</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('CTS')">
-                    <img src="https://images.unsplash.com/photo-1578637387939-43c525550085?q=80&w=300" class="station-thumb" alt="札幌">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">CTS</span>
-                            <span class="station-name">札幌 (新千歲)</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJCC<br><strong>航廈：</strong>國際航廈</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('SDJ')">
-                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="仙台">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">SDJ</span>
-                            <span class="station-name">仙台</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJSS<br><strong>航廈：</strong>國際航廈</div>
-                    </div>
-                </div>
-
-                <!-- 韓國航點 -->
-                <div class="station-category">
-                    <span>韓國航點</span>
-                    <span style="font-size: 0.75rem; color: #888;">South Korea</span>
-                </div>
-
-                <div class="station-card" onclick="selectStation('ICN')">
-                    <img src="https://images.unsplash.com/photo-1538485399081-06af2fc99641?q=80&w=300" class="station-thumb" alt="首爾仁川">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">ICN</span>
-                            <span class="station-name">首爾 (仁川)</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RKSI<br><strong>航廈：</strong>第一航廈 M1-M5</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('PUS')">
-                    <img src="https://images.unsplash.com/photo-1578335596538-2819cdb64426?q=80&w=300" class="station-thumb" alt="釜山">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">PUS</span>
-                            <span class="station-name">釜山</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RKPK<br><strong>航廈：</strong>國際航廈 D22-D26</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('CJU')">
-                    <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=300" class="station-thumb" alt="濟州">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">CJU</span>
-                            <span class="station-name">濟州</span>
-                        </div>
-                        <div class="station-info"><strong>ICAO：</strong>RKPC<br><strong>航廈：</strong>國際航廈</div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- 右側：完全無水印、高對比的虎航向量風格地圖 -->
-            <div class="station-map-view">
-                <div id="tiger-map"></div>
-                <div class="map-overlay-badge">
-                    <div>當前航網：<strong id="current-station-label">台北 (桃園) - 輻射航線</strong></div>
-                    <button class="btn-show-all" onclick="drawAllRoutes()">顯示全航網連線</button>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- 頁尾 -->
-    <footer>
-        <p>&copy; 2026 Virtual Tigerair Taiwan (vTGW). All Rights Reserved.</p>
-        <p class="footer-disclaimer">
-            For Flight Simulation Use Only on the VATSIM Network. Not affiliated with Tigerair Taiwan.
-        </p>
-    </footer>
-
-    <!-- Leaflet JS 庫 -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        const STATIONS = {
-            TPE: { name: "台北桃園", icao: "RCTP", lat: 25.0797, lng: 121.2342, isHub: true },
-            KHH: { name: "高雄", icao: "RCKH", lat: 22.5714, lng: 120.3500, isHub: true },
-            RMQ: { name: "台中", icao: "RCMQ", lat: 24.2647, lng: 120.6206, isHub: true },
-            NRT: { name: "東京成田", icao: "RJAA", lat: 35.7647, lng: 140.3864 },
-            HND: { name: "東京羽田", icao: "RJTT", lat: 35.5494, lng: 139.7798 },
-            KIX: { name: "大阪關西", icao: "RJBB", lat: 34.4347, lng: 135.2441 },
-            FUK: { name: "福岡", icao: "RJFF", lat: 33.5859, lng: 130.4507 },
-            OKA: { name: "沖繩", icao: "ROAH", lat: 26.1958, lng: 127.6458 },
-            CTS: { name: "札幌新千歲", icao: "RJCC", lat: 42.7752, lng: 141.6923 },
-            SDJ: { name: "仙台", icao: "RJSS", lat: 38.1397, lng: 140.9169 },
-            ICN: { name: "首爾仁川", icao: "RKSI", lat: 37.4602, lng: 126.4407 },
-            PUS: { name: "釜山", icao: "RKPK", lat: 35.1795, lng: 128.9382 },
-            CJU: { name: "濟州", icao: "RKPC", lat: 33.5113, lng: 126.4930 }
-        };
-
-        const ROUTES = [
-            { from: 'TPE', to: 'NRT' }, { from: 'TPE', to: 'HND' }, { from: 'TPE', to: 'KIX' },
-            { from: 'TPE', to: 'FUK' }, { from: 'TPE', to: 'OKA' }, { from: 'TPE', to: 'CTS' },
-            { from: 'TPE', to: 'SDJ' }, { from: 'TPE', to: 'ICN' }, { from: 'TPE', to: 'PUS' },
-            { from: 'TPE', to: 'CJU' },
-            { from: 'KHH', to: 'NRT' }, { from: 'KHH', to: 'KIX' }, { from: 'KHH', to: 'FUK' },
-            { from: 'KHH', to: 'OKA' }, { from: 'KHH', to: 'ICN' },
-            { from: 'RMQ', to: 'NRT' }, { from: 'RMQ', to: 'KIX' }
-        ];
-
-        // 1. 初始化地圖
-        const map = L.map('tiger-map', {
-            center: [32.0, 133.0],
-            zoom: 5,
-            minZoom: 4,
-            maxZoom: 7,
-            zoomControl: false,
-            attributionControl: false
-        });
-
-        L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-        // 2. 載入無水印且高質感的深色向量地圖（GeoJSON）
-        fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
-            .then(res => res.json())
-            .then(data => {
-                L.geoJSON(data, {
-                    style: function (feature) {
-                        return {
-                            fillColor: '#2b2d32', // 與虎航官網相同的深灰色陸地
-                            fillOpacity: 1,
-                            color: '#3d4046',     // 國界細線
-                            weight: 1
-                        };
-                    }
-                }).addTo(map);
-            })
-            .catch(() => {
-                // 備用無 Key 高清深色底圖（CartoDB CDN 備用無水印接口）
-                L.tileLayer('https://basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png').addTo(map);
-            });
-
-        // 3. 標註如同真實虎航官網的「台灣、日本、韓國」大字
-        const REGION_LABELS = [
-            { name: "台 灣", lat: 23.7, lng: 119.5 },
-            { name: "日 本", lat: 36.5, lng: 137.5 },
-            { name: "韓 國", lat: 36.5, lng: 128.0 }
-        ];
-
-        REGION_LABELS.forEach(reg => {
-            L.marker([reg.lat, reg.lng], {
-                icon: L.divIcon({
-                    className: 'leaflet-tooltip-region',
-                    html: reg.name,
-                    iconSize: [120, 30]
-                }),
-                interactive: false
-            }).addTo(map);
-        });
-
-        let activeRouteLayers = [];
-        let markerLayers = {};
-
-        // 貝茲弧線演算法
-        function createCurvedPoints(latlng1, latlng2, numPoints = 60) {
-            const points = [];
-            const lat1 = latlng1.lat, lon1 = latlng1.lng;
-            const lat2 = latlng2.lat, lon2 = latlng2.lng;
-            
-            const offsetX = (lon2 - lon1) * 0
+            background: rgba
