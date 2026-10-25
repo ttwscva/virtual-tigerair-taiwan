@@ -8,13 +8,28 @@
     <!-- Leaflet.js 地圖核心 -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
+        .tiger-logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .tiger-logo-img {
+            height: 48px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            transition: opacity 0.2s;
+        }
+        .tiger-logo-img:hover {
+            opacity: 0.85;
+        }
+
         .network-container {
             max-width: 1400px;
             margin: 25px auto 40px;
             padding: 0 20px;
         }
 
-        /* 雙欄核心排版 */
         .station-layout {
             display: grid;
             grid-template-columns: 460px 1fr;
@@ -24,7 +39,6 @@
             position: relative;
         }
 
-        /* 左側航點捲動清單 */
         .station-sidebar {
             background: #ffffff;
             border-radius: 12px;
@@ -62,7 +76,6 @@
             justify-content: space-between;
         }
 
-        /* 航點卡片 */
         .station-card {
             display: flex;
             gap: 14px;
@@ -136,7 +149,6 @@
             line-height: 1.5;
         }
 
-        /* 右側地圖容器 */
         .station-map-view {
             background-color: #111317;
             border-radius: 12px;
@@ -153,7 +165,6 @@
             background-color: #15181e;
         }
 
-        /* 地圖疊加標籤與按鈕 */
         .map-overlay-badge {
             position: absolute;
             top: 15px;
@@ -191,7 +202,6 @@
             background: #e5ae0c;
         }
 
-        /* 地圖上的航點標籤樣式 */
         .leaflet-label-station {
             background: rgba(17, 19, 23, 0.88) !important;
             border: 1px solid var(--tiger-yellow) !important;
@@ -226,13 +236,8 @@
 
     <!-- 導航列 -->
     <header>
-        <a href="index.html" class="tiger-brand-logo">
-            <div class="brand-virtual-tag">Virtual</div>
-            <div class="brand-main">tigerair</div>
-            <div class="brand-bottom">
-                <div class="tiger-smile"></div>
-                <div class="brand-zh">虛擬台灣虎航</div>
-            </div>
+        <a href="index.html" class="tiger-logo-link">
+            <img src="assets/virtual_tigerair_taiwan.jpg" alt="Virtual Tigerair Taiwan 虛擬臺灣虎航" class="tiger-logo-img">
         </a>
         <nav>
             <a href="index.html#about">關於我們</a>
@@ -255,7 +260,7 @@
         
         <div class="station-layout">
             
-            <!-- 左側：航點清單 (嚴格依照官網 Station Map 格式) -->
+            <!-- 左側：航點清單 -->
             <div class="station-sidebar">
                 <h3 style="margin-bottom: 12px; color: var(--tiger-black); font-size: 1.15rem;">📍 航點資訊 (Destinations)</h3>
                 
@@ -627,7 +632,7 @@
 
             </div>
 
-            <!-- 右側：真實全球暗黑向量地圖（Esri World Dark Gray Base） -->
+            <!-- 右側：真實全球暗黑向量地圖 -->
             <div class="station-map-view">
                 <div id="map"></div>
                 <div class="map-overlay-badge">
@@ -651,15 +656,11 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 嚴密對應真實經緯度 (WGS84)
         const STATIONS = {
-            // 台灣基地
             TPE: { name: "台北桃園", lat: 25.0797, lng: 121.2342, isHub: true },
             KHH: { name: "高雄",     lat: 22.5714, lng: 120.3500, isHub: true },
             RMQ: { name: "台中",     lat: 24.2647, lng: 120.6206, isHub: true },
             TNN: { name: "台南",     lat: 22.9504, lng: 120.2056, isHub: true },
-
-            // 日本本州/東北/北海道
             NRT: { name: "東京成田", lat: 35.7647, lng: 140.3864 },
             HND: { name: "東京羽田", lat: 35.5494, lng: 139.7798 },
             KIX: { name: "大阪關西", lat: 34.4347, lng: 135.2441 },
@@ -675,28 +676,21 @@
             HKD: { name: "函館",     lat: 41.7700, lng: 140.8222 },
             CTS: { name: "札幌新千歲",lat: 42.7752, lng: 141.6923 },
             KCZ: { name: "高知",     lat: 33.5461, lng: 133.6694 },
-
-            // 日本九州/沖繩
             FUK: { name: "福岡",     lat: 33.5859, lng: 130.4507 },
             HSG: { name: "佐賀",     lat: 33.1497, lng: 130.3022 },
             KMJ: { name: "熊本",     lat: 32.8372, lng: 130.8550 },
             KMI: { name: "宮崎",     lat: 31.8772, lng: 131.4486 },
             OKA: { name: "沖繩",     lat: 26.1958, lng: 127.6458 },
             ISG: { name: "石垣島",   lat: 24.3964, lng: 124.2450 },
-
-            // 韓國
             ICN: { name: "首爾仁川", lat: 37.4602, lng: 126.4407 },
             GMP: { name: "首爾金浦", lat: 37.5583, lng: 126.7906 },
             PUS: { name: "釜山",     lat: 35.1795, lng: 128.9382 },
             CJU: { name: "濟州",     lat: 33.5113, lng: 126.4930 },
-
-            // 東南亞
             HKT: { name: "普吉島",   lat: 8.1132,  lng: 98.3169 },
             DAD: { name: "峴港",     lat: 16.0439, lng: 108.1994 }
         };
 
         const ROUTES = [
-            // 桃園
             { from: 'TPE', to: 'NRT' }, { from: 'TPE', to: 'HND' }, { from: 'TPE', to: 'KIX' },
             { from: 'TPE', to: 'NGO' }, { from: 'TPE', to: 'FUK' }, { from: 'TPE', to: 'OKA' },
             { from: 'TPE', to: 'CTS' }, { from: 'TPE', to: 'HKD' }, { from: 'TPE', to: 'SDJ' },
@@ -706,20 +700,16 @@
             { from: 'TPE', to: 'FKS' }, { from: 'TPE', to: 'HSG' }, { from: 'TPE', to: 'ICN' },
             { from: 'TPE', to: 'PUS' }, { from: 'TPE', to: 'CJU' }, { from: 'TPE', to: 'HKT' },
             { from: 'TPE', to: 'DAD' },
-            // 高雄
             { from: 'KHH', to: 'NRT' }, { from: 'KHH', to: 'KIX' }, { from: 'KHH', to: 'NGO' },
             { from: 'KHH', to: 'FUK' }, { from: 'KHH', to: 'OKA' }, { from: 'KHH', to: 'CTS' },
             { from: 'KHH', to: 'SDJ' }, { from: 'KHH', to: 'OKJ' }, { from: 'KHH', to: 'KMQ' },
             { from: 'KHH', to: 'KMJ' }, { from: 'KHH', to: 'ISG' }, { from: 'KHH', to: 'GMP' },
             { from: 'KHH', to: 'CJU' }, { from: 'KHH', to: 'DAD' },
-            // 台中
             { from: 'RMQ', to: 'NRT' }, { from: 'RMQ', to: 'NGO' }, { from: 'RMQ', to: 'OKA' },
             { from: 'RMQ', to: 'CJU' },
-            // 台南
             { from: 'TNN', to: 'OKA' }, { from: 'TNN', to: 'KMJ' }
         ];
 
-        // 1. 初始化 Leaflet 地圖
         const map = L.map('map', {
             center: [28.0, 126.0],
             zoom: 4,
@@ -731,14 +721,12 @@
 
         L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-        // 2. 載入極致單色暗黑地圖（Esri World Dark Gray Base，完全免費無水印）
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
             maxZoom: 16
         }).addTo(map);
 
         let activeLayers = [];
 
-        // 二次貝茲大圓飛行弧線計算
         function getArcLatLngs(p1, p2, numPoints = 60) {
             const lat1 = p1.lat, lon1 = p1.lng;
             const lat2 = p2.lat, lon2 = p2.lng;
@@ -749,7 +737,6 @@
             const dLng = lon2 - lon1;
             const dist = Math.sqrt(dLat * dLat + dLng * dLng);
             
-            // 弧線微幅向西北自然拱起
             const offset = dist * 0.16;
             const ctrlLat = midLat + (dLng / dist) * offset;
             const ctrlLng = midLng - (dLat / dist) * offset;
@@ -764,7 +751,6 @@
             return points;
         }
 
-        // 3. 繪製航點 Marker
         Object.keys(STATIONS).forEach(code => {
             const st = STATIONS[code];
             const isHub = st.isHub;
@@ -792,7 +778,6 @@
             activeLayers = [];
         }
 
-        // 4. 點選航點：繪製輻射連線並置中
         function selectStation(code) {
             clearRoutes();
 
@@ -813,7 +798,6 @@
 
                 const arcCoords = getArcLatLngs(p1, p2);
 
-                // 外發光光暈
                 const glow = L.polyline(arcCoords, {
                     color: '#f37021',
                     weight: 5.5,
@@ -821,7 +805,6 @@
                     lineCap: 'round'
                 }).addTo(map);
 
-                // 核心金黃線條
                 const line = L.polyline(arcCoords, {
                     color: '#ffc20e',
                     weight: 2.2,
@@ -832,11 +815,9 @@
                 activeLayers.push(glow, line);
             });
 
-            // 保持東亞正中心視野
             map.flyTo([28.0, 126.0], 4, { duration: 0.8 });
         }
 
-        // 顯示全航線網路連線
         function drawAllRoutes() {
             clearRoutes();
 
@@ -862,7 +843,6 @@
             map.flyTo([28.0, 126.0], 4, { duration: 0.8 });
         }
 
-        // 初始化
         window.addEventListener('load', () => {
             setTimeout(() => {
                 map.invalidateSize();
