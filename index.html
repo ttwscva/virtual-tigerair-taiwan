@@ -6,8 +6,107 @@
     <title>Virtual Tigerair Taiwan | 虛擬臺灣虎航 - 航向無限可能</title>
     <link rel="stylesheet" href="assets/styles.css">
     <style>
-        #about {
+        #about, #news {
             scroll-margin-top: 90px;
+        }
+
+        /* 最新消息專屬樣式 */
+        .news-section {
+            margin: 45px 0 60px;
+        }
+
+        .news-card-wrapper {
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--tiger-yellow);
+            padding: 10px 25px;
+        }
+
+        .news-item {
+            display: flex;
+            gap: 25px;
+            padding: 22px 0;
+            border-bottom: 1px solid #edf0f2;
+            align-items: baseline;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 190px;
+            flex-shrink: 0;
+        }
+
+        .news-date {
+            font-size: 0.9rem;
+            color: #718096;
+            font-family: monospace;
+            font-weight: 600;
+        }
+
+        .news-badge {
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 9px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .badge-primary {
+            background: #fff4ea;
+            color: var(--tiger-orange);
+            border: 1px solid rgba(243, 112, 33, 0.25);
+        }
+
+        .badge-alert {
+            background: #fef08a;
+            color: #713f12;
+            border: 1px solid rgba(234, 179, 8, 0.4);
+        }
+
+        .news-body {
+            flex-grow: 1;
+        }
+
+        .news-title {
+            font-size: 1.08rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--tiger-black);
+        }
+
+        .news-title-link {
+            color: var(--tiger-black);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .news-title-link:hover {
+            color: var(--tiger-orange);
+        }
+
+        .news-desc {
+            font-size: 0.92rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .news-item {
+                flex-direction: column;
+                gap: 10px;
+                padding: 18px 0;
+            }
+            .news-meta {
+                min-width: auto;
+            }
         }
     </style>
 </head>
@@ -27,7 +126,7 @@
         </nav>
     </header>
 
-    <!-- 主視覺 Banner (輪播區塊) -->
+    <!-- 主視覺 Banner -->
     <section class="hero-slider">
         <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600');"></div>
         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600');"></div>
@@ -43,9 +142,18 @@
     <!-- 主內容區 -->
     <div class="container">
 
-        <h2 class="section-title" id="about">探索 vTTW 核心特色</h2>
+        <!-- 最新消息公告專區 -->
+        <section class="news-section" id="news">
+            <h2 class="section-title">最新消息 (News &amp; Updates)</h2>
+            <div class="news-card-wrapper">
+                <div id="news-list">
+                    <!-- 由 assets/news.js 動態渲染 -->
+                </div>
+            </div>
+        </section>
 
-        <!-- 特色卡片區 -->
+        <!-- 核心特色區 -->
+        <h2 class="section-title" id="about">探索 vTTW 核心特色</h2>
         <div class="cards-grid">
             <div class="card">
                 <div class="card-content">
@@ -74,21 +182,19 @@
 
     </div>
 
-    <!-- 擬真台灣虎航風格頁尾 -->
+    <!-- 頁尾 -->
     <footer class="tiger-footer">
         <div class="tiger-footer-top">
-            <!-- 欄位 1：關於虛擬台虎 -->
             <div class="footer-col">
                 <h4>關於虛擬台虎</h4>
                 <ul>
-                    <li><a href="#about">最新消息</a></li>
+                    <li><a href="#news">最新消息</a></li>
                     <li><a href="#about">公司簡介</a></li>
                     <li><a href="fleet.html">機隊資料</a></li>
                     <li><a href="join.html">招募加入我們</a></li>
                 </ul>
             </div>
 
-            <!-- 欄位 2：航務專區 -->
             <div class="footer-col">
                 <h4>航務專區</h4>
                 <ul>
@@ -97,7 +203,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 3：飛行員指南 -->
             <div class="footer-col">
                 <h4>飛行員指南</h4>
                 <ul>
@@ -106,7 +211,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 4：關注我們 -->
             <div class="footer-col">
                 <h4>關注我們</h4>
                 <ul>
@@ -115,7 +219,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 5：飛行模擬支援工具 -->
             <div class="footer-col">
                 <h4>飛行模擬支援工具</h4>
                 <div class="app-btn-box">
@@ -137,7 +240,6 @@
             </div>
         </div>
 
-        <!-- 下方白色版權條 -->
         <div class="tiger-footer-bottom">
             <div class="footer-bottom-inner">
                 <div class="footer-brand-logo">
@@ -153,6 +255,8 @@
         </div>
     </footer>
 
+    <!-- 載入輪播與公告腳本 -->
     <script src="assets/site.js"></script>
+    <script src="assets/news.js"></script>
 </body>
 </html>
