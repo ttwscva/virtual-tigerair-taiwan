@@ -102,7 +102,7 @@
             object-fit: cover;
             border-radius: 6px;
             flex-shrink: 0;
-            background: #e2e8f0;
+            background: #222;
         }
 
         .station-details {
@@ -134,15 +134,15 @@
             line-height: 1.5;
         }
 
-        /* 右側地圖容器 */
+        /* 右側純深色虎航航網地圖容器 (黑底 #1a1c20) */
         .station-map-view {
-            background: #14171a;
+            background-color: #1a1c20;
             border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.25);
             height: 750px;
             position: sticky;
             top: 85px;
-            border: 2px solid #23272e;
+            border: 2px solid #2d3139;
             overflow: hidden;
             position: relative;
         }
@@ -150,16 +150,16 @@
         #tiger-map {
             width: 100%;
             height: 100%;
-            background: #14171a;
+            background-color: #1a1c20;
         }
 
-        /* 地圖控制按鈕與提示 */
+        /* 地圖疊加標籤與按鈕 */
         .map-overlay-badge {
             position: absolute;
             top: 15px;
             right: 15px;
             z-index: 1000;
-            background: rgba(17, 20, 24, 0.9);
+            background: rgba(22, 24, 28, 0.92);
             backdrop-filter: blur(8px);
             padding: 12px 18px;
             border-radius: 8px;
@@ -196,12 +196,116 @@
             background: transparent !important;
             border: none !important;
             box-shadow: none !important;
-            color: rgba(255, 255, 255, 0.8) !important;
+            color: rgba(255, 255, 255, 0.7) !important;
             font-size: 1.35rem !important;
             font-weight: 800 !important;
-            letter-spacing: 3px !important;
+            letter-spacing: 4px !important;
             text-shadow: 0 2px 8px rgba(0,0,0,0.9);
         }
 
         .leaflet-tooltip-station {
-            background: rgba
+            background: rgba(18, 20, 24, 0.92) !important;
+            border: 1px solid var(--tiger-yellow) !important;
+            border-radius: 4px !important;
+            color: #fff !important;
+            font-size: 0.78rem !important;
+            font-weight: bold !important;
+            padding: 3px 8px !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+        }
+
+        @media (max-width: 992px) {
+            .station-layout {
+                grid-template-columns: 1fr;
+            }
+            .station-map-view {
+                position: relative;
+                top: 0;
+                height: 480px;
+            }
+            .station-sidebar {
+                height: auto;
+                max-height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 導航列 -->
+    <header>
+        <a href="index.html" class="tiger-brand-logo">
+            <div class="brand-virtual-tag">Virtual</div>
+            <div class="brand-main">tigerair</div>
+            <div class="brand-bottom">
+                <div class="tiger-smile"></div>
+                <div class="brand-zh">虛擬台灣虎航</div>
+            </div>
+        </a>
+        <nav>
+            <a href="index.html#about">關於我們</a>
+            <a href="index.html#fleet">機隊資料</a>
+            <a href="routes.html" style="color: var(--tiger-orange);">航線網絡</a>
+            <a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">Discord 社群</a>
+            <a href="https://vamsys.io" target="_blank" class="nav-btn">vAMSYS 登入</a>
+        </nav>
+    </header>
+
+    <!-- 頁面 Banner -->
+    <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600') center/cover; color: white; text-align: center; padding: 50px 20px;">
+        <h1 style="font-size: 2.3rem; font-weight: 800; margin-bottom: 8px;">航線網絡與航點資訊 <span style="color: var(--tiger-yellow);">Station Map</span></h1>
+        <p style="font-size: 1rem; color: #eee; max-width: 800px; margin: 0 auto;">探索 vTGW 涵蓋台灣基地的日、韓、東南亞動態航線圖，點選左側卡片即可檢視專屬飛行航路。</p>
+    </section>
+
+    <!-- 主內容區 -->
+    <div class="network-container">
+        
+        <div class="station-layout">
+            
+            <!-- 左側：航點清單 -->
+            <div class="station-sidebar">
+                <h3 style="margin-bottom: 12px; color: var(--tiger-black); font-size: 1.15rem;">📍 營運航點 (Destinations)</h3>
+                
+                <!-- 台灣營運基地 -->
+                <div class="station-category">
+                    <span>台灣主營運基地</span>
+                    <span style="font-size: 0.75rem; color: var(--tiger-orange);">Hubs</span>
+                </div>
+                
+                <div class="station-card active" onclick="selectStation('TPE')">
+                    <img src="https://images.unsplash.com/photo-1508803197928-3bc7c6d22f7d?q=80&w=300" class="station-thumb" alt="台北桃園">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">TPE</span>
+                            <span class="station-name">台北 (桃園)</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RCTP<br><strong>航廈：</strong>第一航廈 7 號櫃檯</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('KHH')">
+                    <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=300" class="station-thumb" alt="高雄">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">KHH</span>
+                            <span class="station-name">高雄 (小港)</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RCKH<br><strong>航廈：</strong>國際航廈</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('RMQ')">
+                    <img src="https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?q=80&w=300" class="station-thumb" alt="台中">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">RMQ</span>
+                            <span class="station-name">台中 (清泉崗)</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RCMQ<br><strong>航廈：</strong>國際航廈</div>
+                    </div>
+                </div>
+
+                <!-- 日本航點 -->
+                <div class="station-category">
+                    <span>日本航點</span>
+                    <span style="font-size: 0.75rem
