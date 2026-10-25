@@ -1,1 +1,0 @@
-This starter's original HTML, CSS, and JavaScript are provided for you to modify and use for your virtual airline website. Third-party names, logos, trademarks, and brands mentioned in your deployment remain the property of their respective owners. No third-party trademark or brand license is granted by this starter.
