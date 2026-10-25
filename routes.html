@@ -283,7 +283,7 @@
     <!-- 頁面 Banner -->
     <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600') center/cover; color: white; text-align: center; padding: 45px 20px;">
         <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">航線網絡與航點資訊 <span style="color: var(--tiger-yellow);">Station Map</span></h1>
-        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">同步虎航 55 頁官方時刻表，點選卡片或地圖即可檢視真實飛航輻射航線。</p>
+        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">同步虎航 55 頁官方時刻表，點選卡片或地圖即可檢視航線資料。</p>
     </section>
 
     <!-- 主內容區 -->
@@ -291,7 +291,7 @@
         
         <div class="station-layout">
             
-            <!-- 左側：航點清單 (嚴格對齊時刻表 PDF) -->
+            <!-- 左側：航點清單 -->
             <div class="station-sidebar">
                 <h3 style="margin-bottom: 12px; color: var(--tiger-black); font-size: 1.15rem;">📍 營運航點 (Destinations)</h3>
                 
@@ -751,7 +751,7 @@
                 </svg>
 
                 <div class="map-overlay-badge">
-                    <div>當前航網：<strong id="current-station-label">台北 (桃園) - 輻射航線</strong></div>
+                    <div>當前航網：<strong id="current-station-label">台北桃園 (TPE)</strong></div>
                     <button class="btn-show-all" onclick="drawAllRoutes()">顯示全航網連線</button>
                 </div>
             </div>
@@ -769,7 +769,6 @@
     </footer>
 
     <script>
-        // 嚴密對齊時刻表 PDF 的全部航點精確地理投影坐標
         const STATIONS = {
             // 台灣基地
             TPE: { name: "台北桃園", x: 275, y: 525, isHub: true },
@@ -813,63 +812,33 @@
             DAD: { name: "峴港",     x: 165, y: 595 }
         };
 
-        // 嚴密對齊時刻表 PDF (p.1 ~ p.55) 的航線清單
         const ROUTES = [
-            // 1. 台北桃園 (TPE) 出發航線
-            { from: 'TPE', to: 'NRT' }, // IT200, IT202, IT700
-            { from: 'TPE', to: 'HND' }, // IT216
-            { from: 'TPE', to: 'KIX' }, // IT210, IT212
-            { from: 'TPE', to: 'NGO' }, // IT206, IT706
-            { from: 'TPE', to: 'FUK' }, // IT240, IT720
-            { from: 'TPE', to: 'OKA' }, // IT230, IT232
-            { from: 'TPE', to: 'CTS' }, // IT234
-            { from: 'TPE', to: 'HKD' }, // IT236
-            { from: 'TPE', to: 'SDJ' }, // IT254
-            { from: 'TPE', to: 'HNA' }, // IT258
-            { from: 'TPE', to: 'AXT' }, // IT256
-            { from: 'TPE', to: 'KCZ' }, // IT250
-            { from: 'TPE', to: 'KMI' }, // IT742
-            { from: 'TPE', to: 'ISG' }, // IT736
-            { from: 'TPE', to: 'OKJ' }, // IT214, IT714
-            { from: 'TPE', to: 'KMQ' }, // IT252
-            { from: 'TPE', to: 'KIJ' }, // IT228
-            { from: 'TPE', to: 'YGJ' }, // IT724
-            { from: 'TPE', to: 'FKS' }, // IT752
-            { from: 'TPE', to: 'HSG' }, // IT246
-            { from: 'TPE', to: 'ICN' }, // IT602
-            { from: 'TPE', to: 'PUS' }, // IT606
-            { from: 'TPE', to: 'CJU' }, // IT654
-            { from: 'TPE', to: 'HKT' }, // IT503
-            { from: 'TPE', to: 'DAD' }, // IT551
+            // 1. 台北桃園 (TPE)
+            { from: 'TPE', to: 'NRT' }, { from: 'TPE', to: 'HND' }, { from: 'TPE', to: 'KIX' },
+            { from: 'TPE', to: 'NGO' }, { from: 'TPE', to: 'FUK' }, { from: 'TPE', to: 'OKA' },
+            { from: 'TPE', to: 'CTS' }, { from: 'TPE', to: 'HKD' }, { from: 'TPE', to: 'SDJ' },
+            { from: 'TPE', to: 'HNA' }, { from: 'TPE', to: 'AXT' }, { from: 'TPE', to: 'KCZ' },
+            { from: 'TPE', to: 'KMI' }, { from: 'TPE', to: 'ISG' }, { from: 'TPE', to: 'OKJ' },
+            { from: 'TPE', to: 'KMQ' }, { from: 'TPE', to: 'KIJ' }, { from: 'TPE', to: 'YGJ' },
+            { from: 'TPE', to: 'FKS' }, { from: 'TPE', to: 'HSG' }, { from: 'TPE', to: 'ICN' },
+            { from: 'TPE', to: 'PUS' }, { from: 'TPE', to: 'CJU' }, { from: 'TPE', to: 'HKT' },
+            { from: 'TPE', to: 'DAD' },
 
-            // 2. 高雄小港 (KHH) 出發航線
-            { from: 'KHH', to: 'NRT' }, // IT280
-            { from: 'KHH', to: 'KIX' }, // IT284
-            { from: 'KHH', to: 'NGO' }, // IT268
-            { from: 'KHH', to: 'FUK' }, // IT270
-            { from: 'KHH', to: 'OKA' }, // IT288, IT728
-            { from: 'KHH', to: 'CTS' }, // IT260
-            { from: 'KHH', to: 'SDJ' }, // IT772
-            { from: 'KHH', to: 'OKJ' }, // IT262
-            { from: 'KHH', to: 'KMQ' }, // IT294
-            { from: 'KHH', to: 'KMJ' }, // IT766
-            { from: 'KHH', to: 'ISG' }, // IT762
-            { from: 'KHH', to: 'GMP' }, // IT662
-            { from: 'KHH', to: 'CJU' }, // IT670
-            { from: 'KHH', to: 'DAD' }, // IT585
+            // 2. 高雄小港 (KHH)
+            { from: 'KHH', to: 'NRT' }, { from: 'KHH', to: 'KIX' }, { from: 'KHH', to: 'NGO' },
+            { from: 'KHH', to: 'FUK' }, { from: 'KHH', to: 'OKA' }, { from: 'KHH', to: 'CTS' },
+            { from: 'KHH', to: 'SDJ' }, { from: 'KHH', to: 'OKJ' }, { from: 'KHH', to: 'KMQ' },
+            { from: 'KHH', to: 'KMJ' }, { from: 'KHH', to: 'ISG' }, { from: 'KHH', to: 'GMP' },
+            { from: 'KHH', to: 'CJU' }, { from: 'KHH', to: 'DAD' },
 
-            // 3. 台中清泉崗 (RMQ) 出發航線
-            { from: 'RMQ', to: 'NRT' }, // IT778 (常態/增班)
-            { from: 'RMQ', to: 'NGO' }, // IT778
-            { from: 'RMQ', to: 'OKA' }, // IT792
-            { from: 'RMQ', to: 'CJU' }, // IT632
+            // 3. 台中清泉崗 (RMQ)
+            { from: 'RMQ', to: 'NRT' }, { from: 'RMQ', to: 'NGO' }, { from: 'RMQ', to: 'OKA' },
+            { from: 'RMQ', to: 'CJU' },
 
-            // 4. 台南 (TNN) 出發航線
-            { from: 'TNN', to: 'OKA' }, // IT796
-            { from: 'TNN', to: 'KMJ' }  // IT794
+            // 4. 台南 (TNN)
+            { from: 'TNN', to: 'OKA' }, { from: 'TNN', to: 'KMJ' }
         ];
 
-        // 弧線計算（向西北微拱起）
         function getArcPath(p1, p2) {
             const midX = (p1.x + p2.x) / 2;
             const midY = (p1.y + p2.y) / 2;
@@ -880,22 +849,20 @@
             return `M ${p1.x},${p1.y} Q ${ctrlX},${ctrlY} ${p2.x},${p2.y}`;
         }
 
-        // 點選航點：畫出輻射弧線
         function selectStation(code) {
             const routesLayer = document.getElementById('routes-layer');
             if (!routesLayer) return;
 
-            // 1. 更新卡片選取狀態
             document.querySelectorAll('.station-card').forEach(card => card.classList.remove('active'));
             const selectedCard = Array.from(document.querySelectorAll('.station-card')).find(card => card.textContent.includes(code));
             if (selectedCard) selectedCard.classList.add('active');
 
-            // 2. 更新右上角標題
             const isHub = STATIONS[code] && STATIONS[code].isHub;
             const stationName = STATIONS[code] ? STATIONS[code].name : code;
-            document.getElementById('current-station-label').textContent = `${stationName} (${code}) - 輻射航線`;
+            
+            // 移除「 - 輻射航線」字樣
+            document.getElementById('current-station-label').textContent = `${stationName} (${code})`;
 
-            // 3. 雙向篩選航線：如果是基地，顯示從該基地出發的所有線條；如果是受訪航點，顯示連到各基地的線條
             const filteredRoutes = ROUTES.filter(r => isHub ? r.from === code : (r.to === code || r.from === code));
 
             let html = '';
@@ -914,7 +881,6 @@
             routesLayer.innerHTML = html;
         }
 
-        // 顯示全航線網路連線
         function drawAllRoutes() {
             const routesLayer = document.getElementById('routes-layer');
             if (!routesLayer) return;
@@ -934,7 +900,6 @@
             routesLayer.innerHTML = html;
         }
 
-        // 頁面初次載入預設畫出台北桃園 (TPE)
         window.addEventListener('DOMContentLoaded', () => {
             selectStation('TPE');
         });
