@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>航線網絡與航點資訊 | Virtual Tigerair Taiwan</title>
     <link rel="stylesheet" href="assets/styles.css">
-    <!-- Leaflet.js 地圖庫 -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         .network-container {
             max-width: 1400px;
@@ -134,9 +132,9 @@
             line-height: 1.5;
         }
 
-        /* 右側純深色虎航航網地圖容器 (黑底 #1a1c20) */
+        /* 右側虎航航網地圖容器 (黑底 #1a1c22) */
         .station-map-view {
-            background-color: #1a1c20;
+            background-color: #1a1c22;
             border-radius: 12px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.25);
             height: 750px;
@@ -147,10 +145,10 @@
             position: relative;
         }
 
-        #tiger-map {
+        #tiger-svg-map {
             width: 100%;
             height: 100%;
-            background-color: #1a1c20;
+            display: block;
         }
 
         /* 地圖疊加標籤與按鈕 */
@@ -158,7 +156,7 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            z-index: 1000;
+            z-index: 10;
             background: rgba(22, 24, 28, 0.92);
             backdrop-filter: blur(8px);
             padding: 12px 18px;
@@ -191,27 +189,51 @@
             background: #e5ae0c;
         }
 
-        /* 大字區域標籤 */
-        .leaflet-tooltip-region {
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            color: rgba(255, 255, 255, 0.7) !important;
-            font-size: 1.35rem !important;
-            font-weight: 800 !important;
-            letter-spacing: 4px !important;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+        /* 航線線條動畫 */
+        .flight-arc {
+            fill: none;
+            stroke: var(--tiger-yellow);
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            opacity: 0.95;
+            transition: opacity 0.3s;
         }
 
-        .leaflet-tooltip-station {
-            background: rgba(18, 20, 24, 0.92) !important;
-            border: 1px solid var(--tiger-yellow) !important;
-            border-radius: 4px !important;
-            color: #fff !important;
-            font-size: 0.78rem !important;
-            font-weight: bold !important;
-            padding: 3px 8px !important;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+        .flight-arc-glow {
+            fill: none;
+            stroke: var(--tiger-orange);
+            stroke-width: 5;
+            stroke-linecap: round;
+            opacity: 0.35;
+        }
+
+        /* 航點圓點 */
+        .city-marker {
+            cursor: pointer;
+            transition: r 0.2s, fill 0.2s;
+        }
+        .city-marker:hover {
+            r: 8px;
+            fill: #ffffff;
+        }
+
+        .city-label {
+            fill: #ffffff;
+            font-size: 11px;
+            font-weight: bold;
+            font-family: 'PingFang TC', sans-serif;
+            text-shadow: 0 1px 4px #000;
+            pointer-events: none;
+        }
+
+        .region-watermark {
+            fill: rgba(255, 255, 255, 0.5);
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 12px;
+            font-family: 'PingFang TC', sans-serif;
+            pointer-events: none;
+            user-select: none;
         }
 
         @media (max-width: 992px) {
@@ -308,4 +330,47 @@
                 <!-- 日本航點 -->
                 <div class="station-category">
                     <span>日本航點</span>
-                    <span style="font-size: 0.75rem
+                    <span style="font-size: 0.75rem; color: #888;">Japan</span>
+                </div>
+
+                <div class="station-card" onclick="selectStation('NRT')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="東京成田">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">NRT</span>
+                            <span class="station-name">東京 (成田)</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJAA<br><strong>航廈：</strong>第二航廈</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('HND')">
+                    <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=300" class="station-thumb" alt="東京羽田">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">HND</span>
+                            <span class="station-name">東京 (羽田)</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJTT<br><strong>航廈：</strong>第三航廈</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('KIX')">
+                    <img src="https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?q=80&w=300" class="station-thumb" alt="大阪關西">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">KIX</span>
+                            <span class="station-name">大阪 (關西)</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJBB<br><strong>航廈：</strong>第一航廈</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('FUK')">
+                    <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=300" class="station-thumb" alt="福岡">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">FUK</span>
+                            <span class="station-name">福岡</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJFF<br><strong>航廈：</strong>國際航廈</div>
