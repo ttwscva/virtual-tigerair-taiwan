@@ -125,18 +125,28 @@
             overflow-x: auto;
         }
 
+        /* 固定表格欄位寬度，確保所有卡片完全對齊 */
         .schedule-table {
             width: 100%;
+            min-width: 800px;
+            table-layout: fixed;
             border-collapse: collapse;
             font-size: 0.9rem;
             text-align: center;
         }
 
+        /* 鎖定精準寬度比例 */
+        .schedule-table th:nth-child(1), .schedule-table td:nth-child(1) { width: 14%; } /* 航班號 */
+        .schedule-table th:nth-child(2), .schedule-table td:nth-child(2) { width: 12%; } /* 起飛 */
+        .schedule-table th:nth-child(3), .schedule-table td:nth-child(3) { width: 12%; } /* 抵達 */
+        .schedule-table th:nth-child(4), .schedule-table td:nth-child(4) { width: 26%; } /* 飛航日 */
+        .schedule-table th:nth-child(5), .schedule-table td:nth-child(5) { width: 36%; } /* 出發期間 */
+
         .schedule-table th {
             background: #f8fafc;
             color: #475569;
             font-weight: 700;
-            padding: 10px 14px;
+            padding: 12px 14px;
             border-bottom: 1px solid #e2e8f0;
             white-space: nowrap;
         }
@@ -146,6 +156,7 @@
             border-bottom: 1px solid #edf2f7;
             color: #334155;
             white-space: nowrap;
+            vertical-align: middle;
         }
 
         .schedule-table tr:hover {
@@ -156,7 +167,7 @@
             font-weight: 800;
             color: var(--tiger-orange);
             background: #fff4ea;
-            padding: 2px 8px;
+            padding: 3px 10px;
             border-radius: 4px;
             display: inline-block;
         }
@@ -164,22 +175,33 @@
         .time-cell {
             font-weight: 700;
             color: #111;
+            font-size: 0.95rem;
         }
 
+        /* 飛航日圓點群組與對齊修復 */
         .days-pill {
             display: inline-flex;
-            gap: 3px;
+            gap: 6px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
         }
 
         .day-dot {
-            width: 20px;
-            height: 20px;
-            line-height: 20px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 800;
+            line-height: 1;
             background: #e2e8f0;
             color: #94a3b8;
-            font-size: 0.7rem;
-            font-weight: bold;
+            flex-shrink: 0;
+            user-select: none;
+            box-sizing: border-box;
         }
 
         .day-dot.on {
@@ -193,7 +215,7 @@
         }
 
         .period-text {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: #64748b;
         }
     </style>
@@ -257,7 +279,7 @@
     </footer>
 
     <script>
-        // PDF 提取之代表性航線時刻表資料集
+        // PDF 提取之班表資料集
         const TIMETABLE_DATA = [
             // 日本 - 桃園
             { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '東京 (成田)', toCode: 'NRT', country: '日本', flights: [
@@ -357,7 +379,7 @@
                 { fn: 'IT662', dep: '15:55', arr: '19:45', days: [1,1,1,1,1,1,1], period: '首爾商務熱門' }
             ]},
             { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '濟州', toCode: 'CJU', country: '韓國', flights: [
-                { fn: 'IT670', dep: '16:00', arr: '19:30', days: [1,1,1,1,1,1,1], period: '每日濟州包機/直航' }
+                { fn: 'IT670', dep: '16:00', arr: '19:30', days: [1,1,1,1,1,1,1], period: '每日濟州直航' }
             ]},
             { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '峴港', toCode: 'DAD', country: '越南', flights: [
                 { fn: 'IT585', dep: '17:20', arr: '19:00', days: [1,1,1,1,1,1,1], period: '南台灣峴港直航' }
