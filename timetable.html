@@ -224,7 +224,7 @@
         </a>
         <nav>
             <a href="index.html#about">關於我們</a>
-            <a href="index.html#fleet">機隊資料</a>
+            <a href="fleet.html">機隊資料</a>
             <a href="routes.html">航線網絡</a>
             <a href="timetable.html" style="color: var(--tiger-orange);">時刻表</a>
             <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
@@ -239,7 +239,6 @@
 
     <!-- 主內容區 -->
     <div class="tt-container">
-        
         <!-- 篩選列 -->
         <div class="filter-toolbar">
             <div class="hub-pills">
@@ -254,26 +253,23 @@
             </div>
         </div>
 
-        <!-- 航班清單區塊 -->
+        <!-- 航班清單 -->
         <div id="timetable-list"></div>
-
     </div>
 
-    <!-- 擬真台灣虎航風格頁尾 -->
+    <!-- 頁尾 -->
     <footer class="tiger-footer">
         <div class="tiger-footer-top">
-            <!-- 欄位 1：關於虛擬台虎 -->
             <div class="footer-col">
                 <h4>關於虛擬台虎</h4>
                 <ul>
                     <li><a href="index.html#about">最新消息</a></li>
                     <li><a href="index.html#about">公司簡介</a></li>
-                    <li><a href="index.html#fleet">機隊資料</a></li>
+                    <li><a href="fleet.html">機隊資料</a></li>
                     <li><a href="join.html">招募加入我們</a></li>
                 </ul>
             </div>
 
-            <!-- 欄位 2：航務專區 -->
             <div class="footer-col">
                 <h4>航務專區</h4>
                 <ul>
@@ -282,7 +278,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 3：飛行員指南 -->
             <div class="footer-col">
                 <h4>飛行員指南</h4>
                 <ul>
@@ -291,7 +286,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 4：關注我們 -->
             <div class="footer-col">
                 <h4>關注我們</h4>
                 <ul>
@@ -300,7 +294,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 5：飛行模擬支援工具 -->
             <div class="footer-col">
                 <h4>飛行模擬支援工具</h4>
                 <div class="app-btn-box">
@@ -322,7 +315,6 @@
             </div>
         </div>
 
-        <!-- 下方白色版權條 -->
         <div class="tiger-footer-bottom">
             <div class="footer-bottom-inner">
                 <div class="footer-brand-logo">
@@ -415,7 +407,7 @@
                 { fn: 'IT551', dep: '16:50', arr: '18:25', days: [1,1,1,1,1,1,1], period: '中越熱門航班' }
             ]},
 
-            // 高雄出發 (KHH)
+            // 高雄 (KHH)
             { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '東京 (成田)', toCode: 'NRT', country: '日本', flights: [
                 { fn: 'IT280', dep: '08:00', arr: '12:10', days: [1,1,1,1,1,1,1], period: '南台灣直飛主力' }
             ]},
@@ -444,7 +436,7 @@
                 { fn: 'IT585', dep: '17:20', arr: '19:00', days: [1,1,1,1,1,1,1], period: '南台灣峴港直航' }
             ]},
 
-            // 台中出發 (RMQ)
+            // 台中 (RMQ)
             { hub: 'RMQ', from: '台中 (清泉崗)', fromCode: 'RMQ', to: '東京 (成田)', toCode: 'NRT', country: '日本', flights: [
                 { fn: 'IT778', dep: '16:45', arr: '20:25', days: [1,1,1,1,1,1,1], period: '中部直飛成田' }
             ]},
@@ -455,7 +447,7 @@
                 { fn: 'IT632', dep: '07:00', arr: '10:15', days: [1,1,0,1,1,0,1], period: '中部度假航線' }
             ]},
 
-            // 台南出發 (TNN)
+            // 台南 (TNN)
             { hub: 'TNN', from: '台南', fromCode: 'TNN', to: '沖繩 (那霸)', toCode: 'OKA', country: '日本', flights: [
                 { fn: 'IT796', dep: '15:20', arr: '17:50', days: [0,1,0,0,0,1,0], period: '定期/包機營運' }
             ]},
