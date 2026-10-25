@@ -9,21 +9,6 @@
         #about, #fleet {
             scroll-margin-top: 90px;
         }
-        .tiger-logo-link {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-        .tiger-logo-img {
-            height: 48px;
-            width: auto;
-            display: block;
-            object-fit: contain;
-            transition: opacity 0.2s;
-        }
-        .tiger-logo-img:hover {
-            opacity: 0.85;
-        }
     </style>
 </head>
 <body>
@@ -43,7 +28,7 @@
         </nav>
     </header>
 
-    <!-- 主視覺 Banner -->
+    <!-- 主視覺 Banner (自動循環播放輪播區塊) -->
     <section class="hero-slider">
         <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600');"></div>
         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600');"></div>
@@ -236,12 +221,84 @@
 
     </div>
 
-    <!-- 頁尾 -->
-    <footer>
-        <p>&copy; 2026 Virtual Tigerair Taiwan (vTGW). All Rights Reserved.</p>
-        <p class="footer-disclaimer">
-            For Flight Simulation Use Only on the VATSIM Network. Not affiliated with Tigerair Taiwan.
-        </p>
+    <!-- 擬真台灣虎航風格頁尾 -->
+    <footer class="tiger-footer">
+        <div class="tiger-footer-top">
+            <div class="footer-col">
+                <h4>關於虛擬虎航</h4>
+                <ul>
+                    <li><a href="#about">最新消息</a></li>
+                    <li><a href="#about">航司簡介</a></li>
+                    <li><a href="#fleet">機隊資料 (Fleet)</a></li>
+                    <li><a href="https://vamsys.io" target="_blank">招募加入我們</a></li>
+                    <li><a href="routes.html">航網營運規劃</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>航務專區</h4>
+                <ul>
+                    <li><a href="timetable.html">航班時刻表</a></li>
+                    <li><a href="https://vamsys.io" target="_blank">vAMSYS 派遣系統</a></li>
+                    <li><a href="https://simbrief.com" target="_blank">SimBrief 簽派文件</a></li>
+                    <li><a href="routes.html">航站與櫃檯配置</a></li>
+                    <li><a href="#fleet">彩繪機塗裝庫</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>飛行員指南</h4>
+                <ul>
+                    <li><a href="https://vatsim.net" target="_blank">VATSIM 連線規範</a></li>
+                    <li><a href="https://vamsys.io" target="_blank">PIREP 填寫指南</a></li>
+                    <li><a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">常見問題 (FAQ)</a></li>
+                    <li><a href="#fleet">機長考核標準</a></li>
+                    <li><a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">技術諮詢與申訴</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>關注我們</h4>
+                <ul>
+                    <li><a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank" class="social-link">💬 Discord 官方社群</a></li>
+                    <li><a href="https://facebook.com" target="_blank" class="social-link">📘 Facebook 粉絲專頁</a></li>
+                    <li><a href="https://youtube.com" target="_blank" class="social-link">▶️ YouTube 航段紀錄</a></li>
+                    <li><a href="https://instagram.com" target="_blank" class="social-link">📷 Instagram 精彩截圖</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>飛行模擬必備軟體</h4>
+                <div class="app-btn-box">
+                    <a href="https://vamsys.io" target="_blank" class="app-btn">
+                        <span class="app-btn-icon">✈️</span>
+                        <div class="app-btn-text">
+                            <small>Download ACARS</small>
+                            <span>vAMSYS Client</span>
+                        </div>
+                    </a>
+                    <a href="https://vatsim.net" target="_blank" class="app-btn">
+                        <span class="app-btn-icon">🌐</span>
+                        <div class="app-btn-text">
+                            <small>Connect to Pilot Client</small>
+                            <span>vPilot for MSFS</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tiger-footer-bottom">
+            <div class="footer-bottom-inner">
+                <div class="footer-brand-logo">
+                    <img src="assets/virtual_tigerair_taiwan.png" alt="Virtual Tigerair Taiwan" class="footer-logo-img">
+                </div>
+                <div class="footer-legal">
+                    Copyright &copy; 2026 Virtual Tigerair Taiwan. All rights reserved. | 
+                    本虛擬組織為 VATSIM 網絡飛行模擬愛好者社群，非營利且與真實「台灣虎航股份有限公司」無任何商業或法律隸屬關係。
+                </div>
+                <div class="footer-badges">
+                    <div class="vatsim-badge">VATSIM NETWORK</div>
+                    <div class="vamsys-badge">vAMSYS OPERATED</div>
+                </div>
+            </div>
+        </div>
     </footer>
 
     <script src="assets/site.js"></script>
