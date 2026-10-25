@@ -9,16 +9,45 @@
         .zulu-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background: #1e232a;
-            color: var(--tiger-yellow);
-            font-family: monospace;
+            gap: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 6px 12px;
             font-size: 0.85rem;
+            color: #1e293b;
             font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 194, 14, 0.4);
             letter-spacing: 0.5px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+        }
+
+        .zulu-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+            animation: zuluPulse 2s infinite;
+        }
+
+        .zulu-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #64748b;
+            letter-spacing: 1px;
+        }
+
+        #zulu-clock {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #0f172a;
+            font-weight: 800;
+        }
+
+        @keyframes zuluPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.9); }
         }
 
         .fleet-container {
@@ -86,14 +115,14 @@
 </head>
 <body>
 
-    <!-- 導航列 -->
     <header>
         <a href="index.html" class="tiger-logo-link">
             <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬臺灣虎航" class="tiger-logo-img">
         </a>
         <nav>
             <div class="zulu-badge">
-                <span>🌐</span>
+                <span class="zulu-dot"></span>
+                <span class="zulu-label">ZULU</span>
                 <span id="zulu-clock">00:00:00Z</span>
             </div>
             <a href="index.html#about">關於我們</a>
@@ -105,16 +134,13 @@
         </nav>
     </header>
 
-    <!-- 頁面 Banner -->
     <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600') center/cover; color: white; text-align: center; padding: 45px 20px;">
         <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">機隊資料 <span style="color: var(--tiger-yellow);">Fleet Information</span></h1>
         <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">全主力營運空中巴士 A320 家族機隊，配備現代化航電與專屬虎斑塗裝，航向亞太各航點。</p>
     </section>
 
-    <!-- 主內容區 -->
     <div class="fleet-container">
 
-        <!-- 統計卡片 -->
         <div class="fleet-stats-grid">
             <div class="stat-card">
                 <h3>19 架</h3>
@@ -130,7 +156,6 @@
             </div>
         </div>
 
-        <!-- 機隊表格 -->
         <div class="section-header">
             <h2>✈️ 機隊名冊 (Fleet List)</h2>
             <span class="tag">Airbus A320 Family</span>
@@ -146,7 +171,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- A320ceo -->
                     <tr>
                         <td><span class="badge ceo">A320</span></td>
                         <td><strong>B-50001</strong></td>
@@ -193,7 +217,7 @@
                         <td>08 Dec 2017</td>
                     </tr>
 
-                    <!-- A320neo (A20N) -->
+                    <!-- A320neo 修正為 A20N -->
                     <tr>
                         <td><span class="badge neo">A20N</span></td>
                         <td><strong>B-50021</strong></td>
@@ -248,7 +272,6 @@
             </table>
         </div>
 
-        <!-- 彩繪機專區 -->
         <div class="section-header" style="margin-top: 60px;">
             <h2>🎨 彩繪機資訊 (Special Liveries)</h2>
             <span class="tag">專屬塗裝</span>
@@ -277,7 +300,6 @@
 
     </div>
 
-    <!-- 頁尾 -->
     <footer class="tiger-footer">
         <div class="tiger-footer-top">
             <div class="footer-col">
@@ -351,7 +373,7 @@
         </div>
     </footer>
 
-    <!-- Z 時間即時計算 -->
+    <script src="assets/site.js"></script>
     <script>
         function updateZuluClock() {
             const now = new Date();
