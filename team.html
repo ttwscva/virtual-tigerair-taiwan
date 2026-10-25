@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>組織架構與管理團隊 | Virtual Tigerair Taiwan 虛擬臺灣虎航</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <style>
+        .zulu-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #1e232a;
+            color: var(--tiger-yellow);
+            font-family: monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 194, 14, 0.4);
+            letter-spacing: 0.5px;
+        }
+
+        .team-container {
+            max-width: 1200px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+        }
+
+        .team-section {
+            margin-bottom: 50px;
+        }
+
+        .team-section h2 {
+            font-size: 1.45rem;
+            color: var(--tiger-black);
+            font-weight: 800;
+            border-bottom: 2px solid var(--tiger-yellow);
+            padding-bottom: 8px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 25px;
+        }
+
+        .member-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--tiger-yellow);
+            padding: 24px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .member-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(255, 194, 14, 0.18);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #f1f3f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 2.2rem;
+            border: 2px solid var(--tiger-yellow);
+        }
+
+        .member-role {
+            display: inline-block;
+            background: #fff4ea;
+            color: var(--tiger-orange);
+            font-size: 0.78rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--tiger-black);
+            margin-bottom: 4px;
+        }
+
+        .member-callsign {
+            font-family: monospace;
+            font-size: 0.88rem;
+            color: #6c757d;
+            margin-bottom: 12px;
+        }
+
+        .member-desc {
+            font-size: 0.86rem;
+            color: #555;
+            line-height: 1.55;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 導航列 -->
+    <header>
+        <a href="index.html" class="tiger-logo-link">
+            <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬臺灣虎航" class="tiger-logo-img">
+        </a>
+        <nav>
+            <div class="zulu-badge">
+                <span>🌐</span>
+                <span id="zulu-clock">00:00:00Z</span>
+            </div>
+            <a href="index.html#about">關於我們</a>
+            <a href="fleet.html">機隊資料</a>
+            <a href="routes.html">航線網絡</a>
+            <a href="timetable.html">時刻表</a>
+            <a href="team.html" style="color: var(--tiger-orange);">組織成員</a>
+            <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
+        </nav>
+    </header>
+
+    <!-- 頁面 Banner -->
+    <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600') center/cover; color: white; text-align: center; padding: 45px 20px;">
+        <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">組織成員與管理團隊 <span style="color: var(--tiger-yellow);">Staff &amp; Operations</span></h1>
+        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">致力於打造真實、專注且充滿熱情的虛擬飛行社群環境。</p>
+    </section>
+
+    <!-- 主內容區 -->
+    <div class="team-container">
+        
+        <!-- 執行管理部 -->
+        <div class="team-section">
+            <h2>👔 核心管理團隊 (Executive Leadership)</h2>
+            <div class="team-grid">
+                <div class="member-card">
+                    <div class="member-avatar">👨‍✈️</div>
+                    <span class="member-role">執行長 / 創辦人</span>
+                    <h3 class="member-name">管理員名稱</h3>
+                    <div class="member-callsign">TTW0001 / SMARTCAT 01</div>
+                    <p class="member-desc">綜理虛擬台灣虎航整體營運規劃、官方合作以及社群整體發展決策。</p>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-avatar">🛫</div>
+                    <span class="member-role">副執行長 / 航務主管</span>
+                    <h3 class="member-name">航務總監</h3>
+                    <div class="member-callsign">TTW0002 / SMARTCAT 02</div>
+                    <p class="member-desc">督導航線時刻規劃、SOP 飛行程序制定以及 vAMSYS 簽派資料庫維護。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 航務技術與人資招募組 -->
+        <div class="team-section">
+            <h2>🛠️ 航務技術與組員發展 (Technical &amp; HR)</h2>
+            <div class="team-grid">
+                <div class="member-card">
+                    <div class="member-avatar">💻</div>
+                    <span class="member-role">資訊工程與網管</span>
+                    <h3 class="member-name">IT 管理員</h3>
+                    <div class="member-callsign">TTW0003</div>
+                    <p class="member-desc">負責官網前端建置維護、GitHub Pages 部署及伺服器串接。</p>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-avatar">📋</div>
+                    <span class="member-role">人事與飛行員考核</span>
+                    <h3 class="member-name">組員招募小組</h3>
+                    <div class="member-callsign">TTW0005</div>
+                    <p class="member-desc">負責新進飛行員申請資格審核、首飛認證以及 PIREP 紀錄稽核。</p>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-avatar">🎨</div>
+                    <span class="member-role">塗裝與美工設計</span>
+                    <h3 class="member-name">視覺設計師</h3>
+                    <div class="member-callsign">TTW0008</div>
+                    <p class="member-desc">負責 A320 虎斑彩繪塗裝製作與官網各項多媒體視覺設計。</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 頁尾 -->
+    <footer class="tiger-footer">
+        <div class="tiger-footer-top">
+            <div class="footer-col">
+                <h4>關於虛擬台虎</h4>
+                <ul>
+                    <li><a href="index.html#news">最新消息</a></li>
+                    <li><a href="index.html#about">公司簡介</a></li>
+                    <li><a href="fleet.html">機隊資料</a></li>
+                    <li><a href="team.html">組織成員</a></li>
+                    <li><a href="join.html">招募加入我們</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>航務專區</h4>
+                <ul>
+                    <li><a href="routes.html">航線網絡</a></li>
+                    <li><a href="timetable.html">航班時刻表</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>飛行員指南</h4>
+                <ul>
+                    <li><a href="index.html#about">新手報到須知</a></li>
+                    <li><a href="index.html#about">常見問題</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>關注我們</h4>
+                <ul>
+                    <li><a href="https://facebook.com" target="_blank" class="social-link">📘 Facebook 社團</a></li>
+                    <li><a href="https://youtube.com" target="_blank" class="social-link">▶️ Youtube 頻道</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>飛行模擬支援工具</h4>
+                <div class="app-btn-box">
+                    <a href="https://vamsys.io" target="_blank" class="app-btn">
+                        <span class="app-btn-icon">✈️</span>
+                        <div class="app-btn-text">
+                            <small>Download ACARS</small>
+                            <span>vAMSYS Pegasus</span>
+                        </div>
+                    </a>
+                    <a href="https://simbrief.com" target="_blank" class="app-btn">
+                        <span class="app-btn-icon">📋</span>
+                        <div class="app-btn-text">
+                            <small>Flight Dispatch</small>
+                            <span>SimBrief by Navigraph</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tiger-footer-bottom">
+            <div class="footer-bottom-inner">
+                <div class="footer-brand-logo">
+                    <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan" class="footer-logo-img">
+                </div>
+                <div class="footer-legal">
+                    <div>Copyright &copy; 2026 Virtual Tigerair Taiwan. All rights reserved.</div>
+                    <div style="margin-top: 4px; color: #777; font-size: 0.75rem;">
+                        <strong>⚠️ 虛擬航空社群免責聲明 (Disclaimer)：</strong>本網站與社群為非營利之飛行模擬愛好者團體（Virtual Airline），專供飛行模擬愛好者交流使用。支援微軟模擬飛行 (MSFS)、X-Plane 及 Prepar3D 等主流平台，且不限制連線網絡。本團體與真實世界的「台灣虎航股份有限公司 (Tigerair Taiwan)」無任何商業、法律或實質隸屬關係。所有商標與識別權利歸原版權所有者所有。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Z 時間即時計算腳本 -->
+    <script>
+        function updateZuluClock() {
+            const now = new Date();
+            const h = String(now.getUTCHours()).padStart(2, '0');
+            const m = String(now.getUTCMinutes()).padStart(2, '0');
+            const s = String(now.getUTCSeconds()).padStart(2, '0');
+            const clockEl = document.getElementById('zulu-clock');
+            if (clockEl) {
+                clockEl.textContent = `${h}:${m}:${s}Z`;
+            }
+        }
+        setInterval(updateZuluClock, 1000);
+        updateZuluClock();
+    </script>
+</body>
+</html>
