@@ -37,13 +37,6 @@
             font-size: 0.95rem;
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
         .form-group {
             display: flex;
             flex-direction: column;
@@ -62,12 +55,6 @@
 
         .form-label .req {
             color: #e53e3e;
-        }
-
-        .form-label .opt {
-            color: #8c96a3;
-            font-size: 0.82rem;
-            font-weight: normal;
         }
 
         .form-input, .form-textarea {
@@ -133,31 +120,29 @@
 
         #result-box {
             display: none;
-            padding: 16px;
-            margin-top: 20px;
-            border-radius: 8px;
+            padding: 18px 20px;
+            margin-top: 25px;
+            border-radius: 10px;
             text-align: center;
-            font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            line-height: 1.6;
         }
+
         #result-box.success {
             display: block;
-            background: #def7ec;
-            color: #03543f;
-            border: 1px solid #bcf0da;
+            background: #e6f9f0;
+            color: #046c4e;
+            border: 1.5px solid #31c48d;
         }
+
         #result-box.error {
             display: block;
             background: #fde8e8;
             color: #9b1c1c;
-            border: 1px solid #fbd5d5;
+            border: 1.5px solid #f8b4b4;
         }
 
         @media (max-width: 650px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
             .join-card {
                 padding: 30px 20px;
             }
@@ -176,7 +161,6 @@
             <a href="index.html#fleet">機隊資料</a>
             <a href="routes.html">航線網絡</a>
             <a href="timetable.html">時刻表</a>
-            <a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">Discord 社群</a>
             <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
         </nav>
     </header>
@@ -190,18 +174,10 @@
             </div>
 
             <form id="joinForm">
-                <div class="form-grid">
-                    <!-- 姓名 -->
-                    <div class="form-group">
-                        <label class="form-label">姓名 <span class="req">*</span></label>
-                        <input type="text" name="name" class="form-input" placeholder="請輸入您的姓名或暱稱" required>
-                    </div>
-
-                    <!-- Discord 用戶名 -->
-                    <div class="form-group">
-                        <label class="form-label">Discord 用戶名 <span class="opt">(選填)</span></label>
-                        <input type="text" name="discord_username" class="form-input" placeholder="例如：@username 或 username#1234">
-                    </div>
+                <!-- 姓名 -->
+                <div class="form-group">
+                    <label class="form-label">姓名 <span class="req">*</span></label>
+                    <input type="text" name="name" class="form-input" placeholder="請輸入您的姓名或暱稱" required>
                 </div>
 
                 <!-- 電子郵件 -->
@@ -231,6 +207,7 @@
                     <span id="btnText">發送申請訊息</span>
                 </button>
 
+                <!-- 狀態提示框 -->
                 <div id="result-box"></div>
             </form>
         </div>
@@ -260,8 +237,8 @@
             <div class="footer-col">
                 <h4>飛行員指南</h4>
                 <ul>
-                    <li><a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">新手報到須知</a></li>
-                    <li><a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">常見問題</a></li>
+                    <li><a href="index.html#about">新手報到須知</a></li>
+                    <li><a href="index.html#about">常見問題</a></li>
                 </ul>
             </div>
 
@@ -341,7 +318,7 @@
                 const res = await response.json();
                 if (response.status === 200) {
                     resultBox.className = 'success';
-                    resultBox.innerHTML = '🎉 申請已直接送出！審核小組將盡速發送審核結果至您的電子信箱。';
+                    resultBox.innerHTML = '<strong>🎉 發送成功！敬請等候審核通知。</strong><br><span style="font-size: 0.88rem; opacity: 0.9;">審核小組將盡速發送審核結果至您的電子信箱，感謝您的申請！</span>';
                     form.reset();
                 } else {
                     resultBox.className = 'error';
