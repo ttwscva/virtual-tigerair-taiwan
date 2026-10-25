@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>航線網絡與航點資訊 | Virtual Tigerair Taiwan</title>
     <link rel="stylesheet" href="assets/styles.css">
+    <!-- Leaflet.js 地圖核心 -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         .network-container {
             max-width: 1400px;
@@ -145,10 +147,10 @@
             position: relative;
         }
 
-        #tiger-svg-map {
+        #map {
             width: 100%;
             height: 100%;
-            display: block;
+            background-color: #15181e;
         }
 
         /* 地圖疊加標籤與按鈕 */
@@ -156,7 +158,7 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            z-index: 10;
+            z-index: 1000;
             background: rgba(17, 19, 23, 0.94);
             backdrop-filter: blur(8px);
             padding: 10px 16px;
@@ -189,59 +191,21 @@
             background: #e5ae0c;
         }
 
-        /* 航線線條 */
-        .flight-arc {
-            fill: none;
-            stroke: var(--tiger-yellow);
-            stroke-width: 2.2;
-            stroke-linecap: round;
-            opacity: 0.95;
+        /* 地圖上的航點標籤樣式 */
+        .leaflet-label-station {
+            background: rgba(17, 19, 23, 0.88) !important;
+            border: 1px solid var(--tiger-yellow) !important;
+            color: #ffffff !important;
+            font-size: 10.5px !important;
+            font-weight: bold !important;
+            padding: 2px 6px !important;
+            border-radius: 4px !important;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5) !important;
+            white-space: nowrap !important;
         }
 
-        .flight-arc-glow {
-            fill: none;
-            stroke: var(--tiger-orange);
-            stroke-width: 5.5;
-            stroke-linecap: round;
-            opacity: 0.4;
-        }
-
-        /* 航點節點 */
-        .city-node {
-            cursor: pointer;
-        }
-        .city-node circle {
-            transition: r 0.2s, fill 0.2s;
-        }
-        .city-node:hover circle {
-            r: 7.5px;
-            fill: #ffffff !important;
-        }
-
-        .city-label {
-            fill: #ffffff;
-            font-size: 10.5px;
-            font-weight: bold;
-            font-family: 'PingFang TC', sans-serif;
-            text-shadow: 0 1px 4px #000;
-            pointer-events: none;
-            user-select: none;
-        }
-
-        .region-watermark {
-            fill: rgba(255, 255, 255, 0.25);
-            font-size: 24px;
-            font-weight: 900;
-            letter-spacing: 12px;
-            font-family: 'PingFang TC', sans-serif;
-            pointer-events: none;
-            user-select: none;
-        }
-
-        .grid-line {
-            stroke: rgba(255, 255, 255, 0.04);
-            stroke-width: 1;
-            stroke-dasharray: 4 4;
+        .leaflet-label-station::before {
+            border-top-color: var(--tiger-yellow) !important;
         }
 
         @media (max-width: 992px) {
@@ -291,7 +255,7 @@
         
         <div class="station-layout">
             
-            <!-- 左側：航點清單 -->
+            <!-- 左側：航點清單 (嚴格依照官網 Station Map 格式) -->
             <div class="station-sidebar">
                 <h3 style="margin-bottom: 12px; color: var(--tiger-black); font-size: 1.15rem;">📍 航點資訊 (Destinations)</h3>
                 
@@ -663,96 +627,9 @@
 
             </div>
 
-            <!-- 右側：真實單色全球向量地圖展示區 -->
+            <!-- 右側：真實全球暗黑向量地圖（Esri World Dark Gray Base） -->
             <div class="station-map-view">
-                <svg id="tiger-svg-map" viewBox="20 40 920 680" preserveAspectRatio="xMidYMid meet">
-                    <!-- 經緯裝飾虛線 -->
-                    <line x1="20" y1="180" x2="940" y2="180" class="grid-line" />
-                    <line x1="20" y1="360" x2="940" y2="360" class="grid-line" />
-                    <line x1="20" y1="540" x2="940" y2="540" class="grid-line" />
-                    <line x1="270" y1="40" x2="270" y2="720" class="grid-line" />
-                    <line x1="500" y1="40" x2="500" y2="720" class="grid-line" />
-                    <line x1="730" y1="40" x2="730" y2="720" class="grid-line" />
-
-                    <!-- 高精度單色全球陸地向量輪廓 (深灰單色 #232730) -->
-                    <g fill="#232730" stroke="#313642" stroke-width="1.1" stroke-linejoin="round">
-                        <!-- 歐亞大陸 / 俄羅斯遠東 / 中國沿海 / 中南半島 / 馬來半島 -->
-                        <path d="M 20,40 L 940,40 L 940,110 L 895,115 C 885,125 870,140 855,145 C 830,150 810,135 790,140 C 760,150 735,185 710,195 C 670,210 640,215 600,210 C 560,205 530,225 500,245 C 470,265 440,280 415,295 C 380,315 350,335 325,360 C 300,385 285,410 270,440 C 255,470 240,500 230,535 C 220,565 205,595 185,620 C 165,645 135,665 110,680 C 85,695 60,710 20,720 Z" />
-                        <!-- 朝鮮半島 -->
-                        <path d="M 335,165 C 355,160 380,165 400,175 C 420,185 435,210 440,235 C 445,265 442,295 438,325 C 435,345 422,360 405,362 C 385,364 370,350 360,335 C 350,310 342,275 338,245 C 335,220 332,190 335,165 Z" />
-                        <!-- 濟州島 -->
-                        <path d="M 366,380 C 372,375 382,375 387,381 C 390,387 384,394 376,393 C 368,392 363,386 366,380 Z" />
-                        <!-- 台灣本島 -->
-                        <path d="M 273,508 C 279,507 285,512 287,518 C 291,529 290,542 288,555 C 285,573 277,591 268,606 C 262,615 254,618 250,612 C 246,605 248,590 252,572 C 255,555 260,535 268,520 C 270,515 271,510 273,508 Z" />
-                        <!-- 日本北海道 -->
-                        <path d="M 770,55 C 800,52 840,58 860,70 C 885,85 890,110 875,130 C 855,150 820,165 795,155 C 770,145 750,150 740,160 C 730,165 725,155 730,140 C 740,115 745,85 770,55 Z" />
-                        <!-- 日本本州 -->
-                        <path d="M 735,175 C 748,185 758,210 762,240 C 768,275 755,305 730,335 C 705,360 670,380 625,395 C 590,405 560,412 530,412 C 518,405 525,392 540,385 C 575,370 610,355 645,335 C 685,310 705,275 710,230 C 712,195 722,175 735,175 Z" />
-                        <!-- 日本四國 -->
-                        <path d="M 545,420 C 565,412 595,410 612,418 C 618,428 610,445 595,455 C 575,462 555,455 545,442 C 540,432 540,425 545,420 Z" />
-                        <!-- 日本九州 -->
-                        <path d="M 465,405 C 485,398 505,402 515,418 C 525,438 525,465 510,488 C 495,510 472,515 455,498 C 442,480 440,455 450,432 C 455,420 458,410 465,405 Z" />
-                        <!-- 琉球/沖繩群島 -->
-                        <path d="M 405,555 C 415,548 425,545 432,548 C 435,552 428,558 420,560 C 412,562 405,560 405,555 Z" />
-                        <circle cx="438" cy="542" r="2.5" />
-                        <circle cx="448" cy="535" r="2" />
-                        <!-- 菲律賓呂宋島北部 (輔助定位) -->
-                        <path d="M 270,680 C 290,670 310,685 305,715 C 295,735 275,730 265,710 C 260,695 262,685 270,680 Z" />
-                    </g>
-
-                    <!-- 大字區域浮水印 -->
-                    <text x="205" y="565" class="region-watermark">台 灣</text>
-                    <text x="350" y="260" class="region-watermark">韓 國</text>
-                    <text x="670" y="280" class="region-watermark">日 本</text>
-
-                    <!-- 動態航線層 -->
-                    <g id="routes-layer"></g>
-
-                    <!-- 航點與標籤層 -->
-                    <g id="cities-layer">
-                        <!-- 台灣基地 (大黃點) -->
-                        <g class="city-node" onclick="selectStation('TPE')"><circle cx="275" cy="525" r="6.5" fill="#ffc20e" stroke="#f37021" stroke-width="2"/><text x="283" y="529" class="city-label">台北桃園 (TPE)</text></g>
-                        <g class="city-node" onclick="selectStation('RMQ')"><circle cx="270" cy="545" r="6.5" fill="#ffc20e" stroke="#f37021" stroke-width="2"/><text x="278" y="549" class="city-label">台中 (RMQ)</text></g>
-                        <g class="city-node" onclick="selectStation('TNN')"><circle cx="260" cy="565" r="6.5" fill="#ffc20e" stroke="#f37021" stroke-width="2"/><text x="268" y="569" class="city-label">台南 (TNN)</text></g>
-                        <g class="city-node" onclick="selectStation('KHH')"><circle cx="265" cy="585" r="6.5" fill="#ffc20e" stroke="#f37021" stroke-width="2"/><text x="273" y="589" class="city-label">高雄 (KHH)</text></g>
-
-                        <!-- 日本本州/北海道/東北 -->
-                        <g class="city-node" onclick="selectStation('CTS')"><circle cx="790" cy="135" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="798" y="139" class="city-label">札幌 (CTS)</text></g>
-                        <g class="city-node" onclick="selectStation('HKD')"><circle cx="755" cy="175" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="763" y="179" class="city-label">函館 (HKD)</text></g>
-                        <g class="city-node" onclick="selectStation('AXT')"><circle cx="725" cy="210" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="733" y="214" class="city-label">秋田 (AXT)</text></g>
-                        <g class="city-node" onclick="selectStation('HNA')"><circle cx="750" cy="225" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="758" y="229" class="city-label">花卷 (HNA)</text></g>
-                        <g class="city-node" onclick="selectStation('SDJ')"><circle cx="740" cy="265" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="748" y="269" class="city-label">仙台 (SDJ)</text></g>
-                        <g class="city-node" onclick="selectStation('FKS')"><circle cx="720" cy="285" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="728" y="289" class="city-label">福島 (FKS)</text></g>
-                        <g class="city-node" onclick="selectStation('KIJ')"><circle cx="685" cy="260" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="640" y="260" class="city-label">新潟 (KIJ)</text></g>
-                        <g class="city-node" onclick="selectStation('KMQ')"><circle cx="635" cy="330" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="590" y="330" class="city-label">小松 (KMQ)</text></g>
-                        <g class="city-node" onclick="selectStation('NRT')"><circle cx="745" cy="320" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="753" y="324" class="city-label">東京成田 (NRT)</text></g>
-                        <g class="city-node" onclick="selectStation('HND')"><circle cx="730" cy="330" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="738" y="334" class="city-label">東京羽田 (HND)</text></g>
-                        <g class="city-node" onclick="selectStation('NGO')"><circle cx="670" cy="360" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="678" y="364" class="city-label">名古屋 (NGO)</text></g>
-                        <g class="city-node" onclick="selectStation('KIX')"><circle cx="625" cy="385" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="633" y="389" class="city-label">大阪關西 (KIX)</text></g>
-                        <g class="city-node" onclick="selectStation('OKJ')"><circle cx="580" cy="380" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="535" y="380" class="city-label">岡山 (OKJ)</text></g>
-                        <g class="city-node" onclick="selectStation('YGJ')"><circle cx="560" cy="355" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="515" y="355" class="city-label">米子 (YGJ)</text></g>
-                        <g class="city-node" onclick="selectStation('KCZ')"><circle cx="570" cy="435" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="578" y="439" class="city-label">高知 (KCZ)</text></g>
-                        
-                        <!-- 九州/沖繩 -->
-                        <g class="city-node" onclick="selectStation('FUK')"><circle cx="480" cy="420" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="488" y="424" class="city-label">福岡 (FUK)</text></g>
-                        <g class="city-node" onclick="selectStation('HSG')"><circle cx="465" cy="435" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="420" y="435" class="city-label">佐賀 (HSG)</text></g>
-                        <g class="city-node" onclick="selectStation('KMJ')"><circle cx="475" cy="455" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="430" y="460" class="city-label">熊本 (KMJ)</text></g>
-                        <g class="city-node" onclick="selectStation('KMI')"><circle cx="505" cy="475" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="513" y="479" class="city-label">宮崎 (KMI)</text></g>
-                        <g class="city-node" onclick="selectStation('OKA')"><circle cx="425" cy="540" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="433" y="544" class="city-label">沖繩 (OKA)</text></g>
-                        <g class="city-node" onclick="selectStation('ISG')"><circle cx="355" cy="575" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="363" y="579" class="city-label">石垣島 (ISG)</text></g>
-
-                        <!-- 韓國 -->
-                        <g class="city-node" onclick="selectStation('ICN')"><circle cx="380" cy="225" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="388" y="229" class="city-label">首爾仁川 (ICN)</text></g>
-                        <g class="city-node" onclick="selectStation('GMP')"><circle cx="395" cy="235" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="403" y="239" class="city-label">首爾金浦 (GMP)</text></g>
-                        <g class="city-node" onclick="selectStation('PUS')"><circle cx="425" cy="305" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="433" y="309" class="city-label">釜山 (PUS)</text></g>
-                        <g class="city-node" onclick="selectStation('CJU')"><circle cx="370" cy="380" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="378" y="384" class="city-label">濟州 (CJU)</text></g>
-
-                        <!-- 東南亞 -->
-                        <g class="city-node" onclick="selectStation('HKT')"><circle cx="95" cy="655" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="103" y="659" class="city-label">普吉島 (HKT)</text></g>
-                        <g class="city-node" onclick="selectStation('DAD')"><circle cx="165" cy="595" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="173" y="599" class="city-label">峴港 (DAD)</text></g>
-                    </g>
-                </svg>
-
+                <div id="map"></div>
                 <div class="map-overlay-badge">
                     <div>當前航網：<strong id="current-station-label">台北桃園 (TPE)</strong></div>
                     <button class="btn-show-all" onclick="drawAllRoutes()">顯示全航網連線</button>
@@ -771,52 +648,55 @@
         </p>
     </footer>
 
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // 嚴密對應真實經緯度 (WGS84)
         const STATIONS = {
             // 台灣基地
-            TPE: { name: "台北桃園", x: 275, y: 525, isHub: true },
-            KHH: { name: "高雄",     x: 265, y: 585, isHub: true },
-            RMQ: { name: "台中",     x: 270, y: 545, isHub: true },
-            TNN: { name: "台南",     x: 260, y: 565, isHub: true },
+            TPE: { name: "台北桃園", lat: 25.0797, lng: 121.2342, isHub: true },
+            KHH: { name: "高雄",     lat: 22.5714, lng: 120.3500, isHub: true },
+            RMQ: { name: "台中",     lat: 24.2647, lng: 120.6206, isHub: true },
+            TNN: { name: "台南",     lat: 22.9504, lng: 120.2056, isHub: true },
 
             // 日本本州/東北/北海道
-            NRT: { name: "東京成田", x: 745, y: 320 },
-            HND: { name: "東京羽田", x: 730, y: 330 },
-            KIX: { name: "大阪關西", x: 625, y: 385 },
-            NGO: { name: "名古屋",   x: 670, y: 360 },
-            SDJ: { name: "仙台",     x: 740, y: 265 },
-            FKS: { name: "福島",     x: 720, y: 285 },
-            KIJ: { name: "新潟",     x: 685, y: 260 },
-            KMQ: { name: "小松",     x: 635, y: 330 },
-            OKJ: { name: "岡山",     x: 580, y: 380 },
-            YGJ: { name: "米子",     x: 560, y: 355 },
-            HNA: { name: "花卷",     x: 750, y: 225 },
-            AXT: { name: "秋田",     x: 725, y: 210 },
-            HKD: { name: "函館",     x: 755, y: 175 },
-            CTS: { name: "札幌新千歲",x: 790, y: 135 },
-            KCZ: { name: "高知",     x: 570, y: 435 },
+            NRT: { name: "東京成田", lat: 35.7647, lng: 140.3864 },
+            HND: { name: "東京羽田", lat: 35.5494, lng: 139.7798 },
+            KIX: { name: "大阪關西", lat: 34.4347, lng: 135.2441 },
+            NGO: { name: "名古屋",   lat: 34.8584, lng: 136.8054 },
+            SDJ: { name: "仙台",     lat: 38.1397, lng: 140.9169 },
+            FKS: { name: "福島",     lat: 37.2275, lng: 140.4319 },
+            KIJ: { name: "新潟",     lat: 37.9558, lng: 139.1214 },
+            KMQ: { name: "小松",     lat: 36.3946, lng: 136.4075 },
+            OKJ: { name: "岡山",     lat: 34.7570, lng: 133.8553 },
+            YGJ: { name: "米子",     lat: 35.4922, lng: 133.2365 },
+            HNA: { name: "花卷",     lat: 39.4286, lng: 141.1353 },
+            AXT: { name: "秋田",     lat: 39.6156, lng: 140.2186 },
+            HKD: { name: "函館",     lat: 41.7700, lng: 140.8222 },
+            CTS: { name: "札幌新千歲",lat: 42.7752, lng: 141.6923 },
+            KCZ: { name: "高知",     lat: 33.5461, lng: 133.6694 },
 
             // 日本九州/沖繩
-            FUK: { name: "福岡",     x: 480, y: 420 },
-            HSG: { name: "佐賀",     x: 465, y: 435 },
-            KMJ: { name: "熊本",     x: 475, y: 455 },
-            KMI: { name: "宮崎",     x: 505, y: 475 },
-            OKA: { name: "沖繩",     x: 425, y: 540 },
-            ISG: { name: "石垣島",   x: 355, y: 575 },
+            FUK: { name: "福岡",     lat: 33.5859, lng: 130.4507 },
+            HSG: { name: "佐賀",     lat: 33.1497, lng: 130.3022 },
+            KMJ: { name: "熊本",     lat: 32.8372, lng: 130.8550 },
+            KMI: { name: "宮崎",     lat: 31.8772, lng: 131.4486 },
+            OKA: { name: "沖繩",     lat: 26.1958, lng: 127.6458 },
+            ISG: { name: "石垣島",   lat: 24.3964, lng: 124.2450 },
 
             // 韓國
-            ICN: { name: "首爾仁川", x: 380, y: 225 },
-            GMP: { name: "首爾金浦", x: 395, y: 235 },
-            PUS: { name: "釜山",     x: 425, y: 305 },
-            CJU: { name: "濟州",     x: 370, y: 380 },
+            ICN: { name: "首爾仁川", lat: 37.4602, lng: 126.4407 },
+            GMP: { name: "首爾金浦", lat: 37.5583, lng: 126.7906 },
+            PUS: { name: "釜山",     lat: 35.1795, lng: 128.9382 },
+            CJU: { name: "濟州",     lat: 33.5113, lng: 126.4930 },
 
             // 東南亞
-            HKT: { name: "普吉島",   x: 95,  y: 655 },
-            DAD: { name: "峴港",     x: 165, y: 595 }
+            HKT: { name: "普吉島",   lat: 8.1132,  lng: 98.3169 },
+            DAD: { name: "峴港",     lat: 16.0439, lng: 108.1994 }
         };
 
         const ROUTES = [
-            // 1. 台北桃園 (TPE)
+            // 桃園
             { from: 'TPE', to: 'NRT' }, { from: 'TPE', to: 'HND' }, { from: 'TPE', to: 'KIX' },
             { from: 'TPE', to: 'NGO' }, { from: 'TPE', to: 'FUK' }, { from: 'TPE', to: 'OKA' },
             { from: 'TPE', to: 'CTS' }, { from: 'TPE', to: 'HKD' }, { from: 'TPE', to: 'SDJ' },
@@ -826,35 +706,95 @@
             { from: 'TPE', to: 'FKS' }, { from: 'TPE', to: 'HSG' }, { from: 'TPE', to: 'ICN' },
             { from: 'TPE', to: 'PUS' }, { from: 'TPE', to: 'CJU' }, { from: 'TPE', to: 'HKT' },
             { from: 'TPE', to: 'DAD' },
-
-            // 2. 高雄小港 (KHH)
+            // 高雄
             { from: 'KHH', to: 'NRT' }, { from: 'KHH', to: 'KIX' }, { from: 'KHH', to: 'NGO' },
             { from: 'KHH', to: 'FUK' }, { from: 'KHH', to: 'OKA' }, { from: 'KHH', to: 'CTS' },
             { from: 'KHH', to: 'SDJ' }, { from: 'KHH', to: 'OKJ' }, { from: 'KHH', to: 'KMQ' },
             { from: 'KHH', to: 'KMJ' }, { from: 'KHH', to: 'ISG' }, { from: 'KHH', to: 'GMP' },
             { from: 'KHH', to: 'CJU' }, { from: 'KHH', to: 'DAD' },
-
-            // 3. 台中清泉崗 (RMQ)
+            // 台中
             { from: 'RMQ', to: 'NRT' }, { from: 'RMQ', to: 'NGO' }, { from: 'RMQ', to: 'OKA' },
             { from: 'RMQ', to: 'CJU' },
-
-            // 4. 台南 (TNN)
+            // 台南
             { from: 'TNN', to: 'OKA' }, { from: 'TNN', to: 'KMJ' }
         ];
 
-        function getArcPath(p1, p2) {
-            const midX = (p1.x + p2.x) / 2;
-            const midY = (p1.y + p2.y) / 2;
-            const dx = p2.x - p1.x;
-            const dy = p2.y - p1.y;
-            const ctrlX = midX - dy * 0.16;
-            const ctrlY = midY + dx * 0.16;
-            return `M ${p1.x},${p1.y} Q ${ctrlX},${ctrlY} ${p2.x},${p2.y}`;
+        // 1. 初始化 Leaflet 地圖
+        const map = L.map('map', {
+            center: [28.0, 126.0],
+            zoom: 4,
+            minZoom: 3,
+            maxZoom: 7,
+            zoomControl: false,
+            attributionControl: false
+        });
+
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        // 2. 載入極致單色暗黑地圖（Esri World Dark Gray Base，完全免費無水印）
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 16
+        }).addTo(map);
+
+        let activeLayers = [];
+
+        // 二次貝茲大圓飛行弧線計算
+        function getArcLatLngs(p1, p2, numPoints = 60) {
+            const lat1 = p1.lat, lon1 = p1.lng;
+            const lat2 = p2.lat, lon2 = p2.lng;
+            const midLat = (lat1 + lat2) / 2;
+            const midLng = (lon1 + lon2) / 2;
+            
+            const dLat = lat2 - lat1;
+            const dLng = lon2 - lon1;
+            const dist = Math.sqrt(dLat * dLat + dLng * dLng);
+            
+            // 弧線微幅向西北自然拱起
+            const offset = dist * 0.16;
+            const ctrlLat = midLat + (dLng / dist) * offset;
+            const ctrlLng = midLng - (dLat / dist) * offset;
+
+            const points = [];
+            for (let i = 0; i <= numPoints; i++) {
+                const t = i / numPoints;
+                const lat = (1 - t) * (1 - t) * lat1 + 2 * (1 - t) * t * ctrlLat + t * t * lat2;
+                const lng = (1 - t) * (1 - t) * lon1 + 2 * (1 - t) * t * ctrlLng + t * t * lon2;
+                points.push([lat, lng]);
+            }
+            return points;
         }
 
+        // 3. 繪製航點 Marker
+        Object.keys(STATIONS).forEach(code => {
+            const st = STATIONS[code];
+            const isHub = st.isHub;
+
+            const marker = L.circleMarker([st.lat, st.lng], {
+                radius: isHub ? 7 : 4.5,
+                fillColor: isHub ? '#ffc20e' : '#ffffff',
+                color: isHub ? '#f37021' : '#ffc20e',
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.95
+            }).addTo(map);
+
+            marker.bindTooltip(`${st.name} (${code})`, {
+                permanent: false,
+                direction: 'top',
+                className: 'leaflet-label-station'
+            });
+
+            marker.on('click', () => selectStation(code));
+        });
+
+        function clearRoutes() {
+            activeLayers.forEach(l => map.removeLayer(l));
+            activeLayers = [];
+        }
+
+        // 4. 點選航點：繪製輻射連線並置中
         function selectStation(code) {
-            const routesLayer = document.getElementById('routes-layer');
-            if (!routesLayer) return;
+            clearRoutes();
 
             document.querySelectorAll('.station-card').forEach(card => card.classList.remove('active'));
             const selectedCard = Array.from(document.querySelectorAll('.station-card')).find(card => card.textContent.includes(code));
@@ -862,48 +802,76 @@
 
             const isHub = STATIONS[code] && STATIONS[code].isHub;
             const stationName = STATIONS[code] ? STATIONS[code].name : code;
-            
             document.getElementById('current-station-label').textContent = `${stationName} (${code})`;
 
             const filteredRoutes = ROUTES.filter(r => isHub ? r.from === code : (r.to === code || r.from === code));
 
-            let html = '';
             filteredRoutes.forEach(r => {
                 const p1 = STATIONS[r.from];
                 const p2 = STATIONS[r.to];
                 if (!p1 || !p2) return;
-                const d = getArcPath(p1, p2);
 
-                html += `
-                    <path d="${d}" class="flight-arc-glow"></path>
-                    <path d="${d}" class="flight-arc"></path>
-                `;
+                const arcCoords = getArcLatLngs(p1, p2);
+
+                // 外發光光暈
+                const glow = L.polyline(arcCoords, {
+                    color: '#f37021',
+                    weight: 5.5,
+                    opacity: 0.4,
+                    lineCap: 'round'
+                }).addTo(map);
+
+                // 核心金黃線條
+                const line = L.polyline(arcCoords, {
+                    color: '#ffc20e',
+                    weight: 2.2,
+                    opacity: 0.95,
+                    lineCap: 'round'
+                }).addTo(map);
+
+                activeLayers.push(glow, line);
             });
 
-            routesLayer.innerHTML = html;
+            // 保持東亞正中心視野
+            map.flyTo([28.0, 126.0], 4, { duration: 0.8 });
         }
 
+        // 顯示全航線網路連線
         function drawAllRoutes() {
-            const routesLayer = document.getElementById('routes-layer');
-            if (!routesLayer) return;
+            clearRoutes();
 
             document.querySelectorAll('.station-card').forEach(card => card.classList.remove('active'));
             document.getElementById('current-station-label').textContent = "全航線網絡展示 (All Routes)";
 
-            let html = '';
             ROUTES.forEach(r => {
                 const p1 = STATIONS[r.from];
                 const p2 = STATIONS[r.to];
                 if (!p1 || !p2) return;
-                const d = getArcPath(p1, p2);
-                html += `<path d="${d}" class="flight-arc" style="opacity: 0.45; stroke-width: 1.6;"></path>`;
+
+                const arcCoords = getArcLatLngs(p1, p2);
+                const line = L.polyline(arcCoords, {
+                    color: '#ffc20e',
+                    weight: 1.6,
+                    opacity: 0.45,
+                    lineCap: 'round'
+                }).addTo(map);
+
+                activeLayers.push(line);
             });
 
-            routesLayer.innerHTML = html;
+            map.flyTo([28.0, 126.0], 4, { duration: 0.8 });
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            selectStation('TPE');
+        // 初始化
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                map.invalidateSize();
+                selectStation('TPE');
+            }, 100);
+        });
+
+        window.addEventListener('resize', () => {
+            map.invalidateSize();
         });
     </script>
 </body>
