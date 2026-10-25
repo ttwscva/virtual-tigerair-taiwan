@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>航線網絡與航點資訊 | Virtual Tigerair Taiwan</title>
     <link rel="stylesheet" href="assets/styles.css">
-    <!-- Leaflet.js 地圖核心 -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         .network-container {
@@ -225,7 +224,7 @@
         </a>
         <nav>
             <a href="index.html#about">關於我們</a>
-            <a href="index.html#fleet">機隊資料</a>
+            <a href="fleet.html">機隊資料</a>
             <a href="routes.html" style="color: var(--tiger-orange);">航線網絡</a>
             <a href="timetable.html">時刻表</a>
             <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
@@ -240,17 +239,12 @@
 
     <!-- 主內容區 -->
     <div class="network-container">
-        
         <div class="station-layout">
-            
-            <!-- 左側：航點清單 -->
+            <!-- 左側航點列表 -->
             <div class="station-sidebar">
                 <h3 style="margin-bottom: 12px; color: var(--tiger-black); font-size: 1.15rem;">📍 航點資訊 (Destinations)</h3>
                 
-                <!-- 台灣 -->
-                <div class="station-category">
-                    <span>台灣 (Taiwan)</span>
-                </div>
+                <div class="station-category"><span>台灣 (Taiwan)</span></div>
                 
                 <div class="station-card active" onclick="selectStation('TPE')">
                     <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=300" class="station-thumb" alt="台北桃園">
@@ -296,10 +290,7 @@
                     </div>
                 </div>
 
-                <!-- 日本 -->
-                <div class="station-category">
-                    <span>日本 (Japan)</span>
-                </div>
+                <div class="station-category"><span>日本 (Japan)</span></div>
 
                 <div class="station-card" onclick="selectStation('OKA')">
                     <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=300" class="station-thumb" alt="沖繩">
@@ -532,10 +523,7 @@
                     </div>
                 </div>
 
-                <!-- 南韓 -->
-                <div class="station-category">
-                    <span>南韓 (South Korea)</span>
-                </div>
+                <div class="station-category"><span>南韓 (South Korea)</span></div>
 
                 <div class="station-card" onclick="selectStation('ICN')">
                     <img src="https://images.unsplash.com/photo-1538485399081-06af2fc99641?q=80&w=300" class="station-thumb" alt="首爾仁川">
@@ -581,10 +569,7 @@
                     </div>
                 </div>
 
-                <!-- 泰國 -->
-                <div class="station-category">
-                    <span>泰國 (Thailand)</span>
-                </div>
+                <div class="station-category"><span>泰國 (Thailand)</span></div>
 
                 <div class="station-card" onclick="selectStation('HKT')">
                     <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?q=80&w=300" class="station-thumb" alt="普吉島">
@@ -597,10 +582,7 @@
                     </div>
                 </div>
 
-                <!-- 越南 -->
-                <div class="station-category">
-                    <span>越南 (Vietnam)</span>
-                </div>
+                <div class="station-category"><span>越南 (Vietnam)</span></div>
 
                 <div class="station-card" onclick="selectStation('DAD')">
                     <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?q=80&w=300" class="station-thumb" alt="峴港">
@@ -612,10 +594,9 @@
                         <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- 右側：真實全球暗黑向量地圖 -->
+            <!-- 右側地圖 -->
             <div class="station-map-view">
                 <div id="map"></div>
                 <div class="map-overlay-badge">
@@ -623,26 +604,22 @@
                     <button class="btn-show-all" onclick="drawAllRoutes()">顯示全航網連線</button>
                 </div>
             </div>
-
         </div>
-
     </div>
 
-    <!-- 擬真台灣虎航風格頁尾 -->
+    <!-- 頁尾 -->
     <footer class="tiger-footer">
         <div class="tiger-footer-top">
-            <!-- 欄位 1：關於虛擬台虎 -->
             <div class="footer-col">
                 <h4>關於虛擬台虎</h4>
                 <ul>
                     <li><a href="index.html#about">最新消息</a></li>
                     <li><a href="index.html#about">公司簡介</a></li>
-                    <li><a href="index.html#fleet">機隊資料</a></li>
+                    <li><a href="fleet.html">機隊資料</a></li>
                     <li><a href="join.html">招募加入我們</a></li>
                 </ul>
             </div>
 
-            <!-- 欄位 2：航務專區 -->
             <div class="footer-col">
                 <h4>航務專區</h4>
                 <ul>
@@ -651,7 +628,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 3：飛行員指南 -->
             <div class="footer-col">
                 <h4>飛行員指南</h4>
                 <ul>
@@ -660,7 +636,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 4：關注我們 -->
             <div class="footer-col">
                 <h4>關注我們</h4>
                 <ul>
@@ -669,7 +644,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 5：飛行模擬支援工具 -->
             <div class="footer-col">
                 <h4>飛行模擬支援工具</h4>
                 <div class="app-btn-box">
@@ -691,7 +665,6 @@
             </div>
         </div>
 
-        <!-- 下方白色版權條 -->
         <div class="tiger-footer-bottom">
             <div class="footer-bottom-inner">
                 <div class="footer-brand-logo">
@@ -707,7 +680,6 @@
         </div>
     </footer>
 
-    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         const STATIONS = {
