@@ -6,9 +6,23 @@
     <title>Virtual Tigerair Taiwan | 虛擬臺灣虎航 - 航向無限可能</title>
     <link rel="stylesheet" href="assets/styles.css">
     <style>
-        /* 避免被固定導航列遮擋目標區塊標題 */
         #about, #fleet {
             scroll-margin-top: 90px;
+        }
+        .tiger-logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .tiger-logo-img {
+            height: 48px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            transition: opacity 0.2s;
+        }
+        .tiger-logo-img:hover {
+            opacity: 0.85;
         }
     </style>
 </head>
@@ -16,13 +30,8 @@
 
     <!-- 導航列 -->
     <header>
-        <a href="index.html" class="tiger-brand-logo">
-            <div class="brand-virtual-tag">Virtual</div>
-            <div class="brand-main">tigerair</div>
-            <div class="brand-bottom">
-                <div class="tiger-smile"></div>
-                <div class="brand-zh">虛擬台灣虎航</div>
-            </div>
+        <a href="index.html" class="tiger-logo-link">
+            <img src="assets/virtual_tigerair_taiwan.jpg" alt="Virtual Tigerair Taiwan 虛擬臺灣虎航" class="tiger-logo-img">
         </a>
         <nav>
             <a href="#about">關於我們</a>
@@ -34,7 +43,7 @@
         </nav>
     </header>
 
-    <!-- 主視覺 Banner (自動循環播放輪播區塊) -->
+    <!-- 主視覺 Banner -->
     <section class="hero-slider">
         <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600');"></div>
         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600');"></div>
