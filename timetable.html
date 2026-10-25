@@ -6,13 +6,28 @@
     <title>航班時刻表 (Timetable) | Virtual Tigerair Taiwan</title>
     <link rel="stylesheet" href="assets/styles.css">
     <style>
+        .tiger-logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .tiger-logo-img {
+            height: 48px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            transition: opacity 0.2s;
+        }
+        .tiger-logo-img:hover {
+            opacity: 0.85;
+        }
+
         .tt-container {
             max-width: 1300px;
             margin: 30px auto 60px;
             padding: 0 20px;
         }
 
-        /* 頂部搜尋與篩選列 */
         .filter-toolbar {
             background: #ffffff;
             border-radius: 10px;
@@ -84,7 +99,6 @@
             font-size: 0.85rem;
         }
 
-        /* 時刻表卡片清單 */
         .route-schedule-card {
             background: #ffffff;
             border-radius: 10px;
@@ -125,7 +139,6 @@
             overflow-x: auto;
         }
 
-        /* 固定表格欄位寬度，確保所有卡片完全對齊 */
         .schedule-table {
             width: 100%;
             min-width: 800px;
@@ -135,12 +148,11 @@
             text-align: center;
         }
 
-        /* 鎖定精準寬度比例 */
-        .schedule-table th:nth-child(1), .schedule-table td:nth-child(1) { width: 14%; } /* 航班號 */
-        .schedule-table th:nth-child(2), .schedule-table td:nth-child(2) { width: 12%; } /* 起飛 */
-        .schedule-table th:nth-child(3), .schedule-table td:nth-child(3) { width: 12%; } /* 抵達 */
-        .schedule-table th:nth-child(4), .schedule-table td:nth-child(4) { width: 26%; } /* 飛航日 */
-        .schedule-table th:nth-child(5), .schedule-table td:nth-child(5) { width: 36%; } /* 出發期間 */
+        .schedule-table th:nth-child(1), .schedule-table td:nth-child(1) { width: 14%; }
+        .schedule-table th:nth-child(2), .schedule-table td:nth-child(2) { width: 12%; }
+        .schedule-table th:nth-child(3), .schedule-table td:nth-child(3) { width: 12%; }
+        .schedule-table th:nth-child(4), .schedule-table td:nth-child(4) { width: 26%; }
+        .schedule-table th:nth-child(5), .schedule-table td:nth-child(5) { width: 36%; }
 
         .schedule-table th {
             background: #f8fafc;
@@ -178,7 +190,6 @@
             font-size: 0.95rem;
         }
 
-        /* 飛航日圓點群組與對齊修復 */
         .days-pill {
             display: inline-flex;
             gap: 6px;
@@ -224,13 +235,8 @@
 
     <!-- 導航列 -->
     <header>
-        <a href="index.html" class="tiger-brand-logo">
-            <div class="brand-virtual-tag">Virtual</div>
-            <div class="brand-main">tigerair</div>
-            <div class="brand-bottom">
-                <div class="tiger-smile"></div>
-                <div class="brand-zh">虛擬台灣虎航</div>
-            </div>
+        <a href="index.html" class="tiger-logo-link">
+            <img src="assets/virtual_tigerair_taiwan.jpg" alt="Virtual Tigerair Taiwan 虛擬臺灣虎航" class="tiger-logo-img">
         </a>
         <nav>
             <a href="index.html#about">關於我們</a>
@@ -279,7 +285,6 @@
     </footer>
 
     <script>
-        // PDF 提取之班表資料集
         const TIMETABLE_DATA = [
             // 日本 - 桃園
             { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '東京 (成田)', toCode: 'NRT', country: '日本', flights: [
