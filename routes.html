@@ -220,7 +220,7 @@
 
         .city-label {
             fill: #ffffff;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: bold;
             font-family: 'PingFang TC', sans-serif;
             text-shadow: 0 1px 4px #000;
@@ -238,7 +238,6 @@
             user-select: none;
         }
 
-        /* 細部經緯網格底紋裝飾 */
         .grid-line {
             stroke: rgba(255, 255, 255, 0.04);
             stroke-width: 1;
@@ -284,7 +283,7 @@
     <!-- 頁面 Banner -->
     <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600') center/cover; color: white; text-align: center; padding: 45px 20px;">
         <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">航線網絡與航點資訊 <span style="color: var(--tiger-yellow);">Station Map</span></h1>
-        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">依據真實虎航最新班表規劃，點選左側卡片即可檢視專屬飛行航路與航班資訊。</p>
+        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">同步虎航 55 頁官方時刻表，點選卡片或地圖即可檢視真實飛航輻射航線。</p>
     </section>
 
     <!-- 主內容區 -->
@@ -292,14 +291,14 @@
         
         <div class="station-layout">
             
-            <!-- 左側：航點清單 -->
+            <!-- 左側：航點清單 (嚴格對齊時刻表 PDF) -->
             <div class="station-sidebar">
                 <h3 style="margin-bottom: 12px; color: var(--tiger-black); font-size: 1.15rem;">📍 營運航點 (Destinations)</h3>
                 
                 <!-- 台灣營運基地 -->
                 <div class="station-category">
                     <span>台灣營運基地</span>
-                    <span style="font-size: 0.75rem; color: var(--tiger-orange);">Bases</span>
+                    <span style="font-size: 0.75rem; color: var(--tiger-orange);">Hubs</span>
                 </div>
                 
                 <div class="station-card active" onclick="selectStation('TPE')">
@@ -309,7 +308,7 @@
                             <span class="station-code">TPE</span>
                             <span class="station-name">台北 (桃園)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RCTP<br><strong>航廈：</strong>第一航廈 7 號櫃檯</div>
+                        <div class="station-info"><strong>ICAO：</strong>RCTP | 主基地 (日韓/東南亞)</div>
                     </div>
                 </div>
 
@@ -320,7 +319,7 @@
                             <span class="station-code">KHH</span>
                             <span class="station-name">高雄 (小港)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RCKH<br><strong>航廈：</strong>國際航廈</div>
+                        <div class="station-info"><strong>ICAO：</strong>RCKH | 南部核心基地</div>
                     </div>
                 </div>
 
@@ -331,7 +330,7 @@
                             <span class="station-code">RMQ</span>
                             <span class="station-name">台中 (清泉崗)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RCMQ<br><strong>航廈：</strong>國際航廈</div>
+                        <div class="station-info"><strong>ICAO：</strong>RCMQ | 中部營運基地</div>
                     </div>
                 </div>
 
@@ -342,7 +341,7 @@
                             <span class="station-code">TNN</span>
                             <span class="station-name">台南</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RCNN<br><strong>特色：</strong>季節性包機航點 (沖繩/熊本)</div>
+                        <div class="station-info"><strong>ICAO：</strong>RCNN | 沖繩 IT796 / 熊本 IT794</div>
                     </div>
                 </div>
 
@@ -359,7 +358,7 @@
                             <span class="station-code">NRT</span>
                             <span class="station-name">東京 (成田)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJAA | <strong>班次：</strong>IT200/202/280</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJAA | 桃/高/中皆直飛</div>
                     </div>
                 </div>
 
@@ -370,7 +369,7 @@
                             <span class="station-code">HND</span>
                             <span class="station-name">東京 (羽田)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJTT | <strong>班次：</strong>IT216/217</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJTT | 桃園深夜直飛 (IT216)</div>
                     </div>
                 </div>
 
@@ -381,7 +380,18 @@
                             <span class="station-code">KIX</span>
                             <span class="station-name">大阪 (關西)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJBB | <strong>班次：</strong>IT210/212/284</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJBB | 桃/高主力熱門</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('NGO')">
+                    <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=300" class="station-thumb" alt="名古屋">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">NGO</span>
+                            <span class="station-name">名古屋 (中部)</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJGG | 桃/中/高皆直飛 (IT206/778/268)</div>
                     </div>
                 </div>
 
@@ -392,7 +402,7 @@
                             <span class="station-code">FUK</span>
                             <span class="station-name">福岡</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJFF | <strong>班次：</strong>IT240/720/270</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJFF | 桃園/高雄日常直達</div>
                     </div>
                 </div>
 
@@ -403,7 +413,7 @@
                             <span class="station-code">OKA</span>
                             <span class="station-name">沖繩 (那霸)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>ROAH | <strong>航線：</strong>桃/中/高/南皆有飛航</div>
+                        <div class="station-info"><strong>ICAO：</strong>ROAH | 桃/中/高/南四基地全開</div>
                     </div>
                 </div>
 
@@ -414,7 +424,7 @@
                             <span class="station-code">CTS</span>
                             <span class="station-name">札幌 (新千歲)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJCC | <strong>班次：</strong>IT234/260</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJCC | 桃園/高雄北國主力</div>
                     </div>
                 </div>
 
@@ -425,7 +435,7 @@
                             <span class="station-code">HKD</span>
                             <span class="station-name">函館</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJCH | <strong>班次：</strong>IT236/237</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJCH | 桃園直飛 (IT236)</div>
                     </div>
                 </div>
 
@@ -436,7 +446,84 @@
                             <span class="station-code">SDJ</span>
                             <span class="station-name">仙台</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJSS | <strong>班次：</strong>IT254/772</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJSS | 桃園/高雄直航東北</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('OKJ')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="岡山">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">OKJ</span>
+                            <span class="station-name">岡山</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJOB | 桃園/高雄主力 (IT214/262)</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('KMQ')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="小松">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">KMQ</span>
+                            <span class="station-name">小松</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJNK | 桃園/高雄北陸門戶</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('KMJ')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="熊本">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">KMJ</span>
+                            <span class="station-name">熊本</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJFT | 高雄 (IT766) / 台南 (IT794)</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('HSG')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="佐賀">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">HSG</span>
+                            <span class="station-name">佐賀</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJFS | 桃園直飛 (IT246)</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('KCZ')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="高知">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">KCZ</span>
+                            <span class="station-name">高知</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJOK | 桃園直飛四國 (IT250)</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('KMI')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="宮崎">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">KMI</span>
+                            <span class="station-name">宮崎</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJFM | 桃園九州航線 (IT742)</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('AXT')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="秋田">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">AXT</span>
+                            <span class="station-name">秋田</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJSK | 桃園直飛東北 (IT256)</div>
                     </div>
                 </div>
 
@@ -447,7 +534,51 @@
                             <span class="station-code">HNA</span>
                             <span class="station-name">花卷</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJSI | <strong>班次：</strong>IT258/259</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJSI | 桃園直飛東北 (IT258)</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('FKS')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="福島">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">FKS</span>
+                            <span class="station-name">福島</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJSF | 桃園定期包機 (IT752)</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('KIJ')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="新潟">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">KIJ</span>
+                            <span class="station-name">新潟</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJSN | 桃園直飛 (IT228)</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('YGJ')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="米子">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">YGJ</span>
+                            <span class="station-name">米子</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJOH | 桃園鳥取航線 (IT724)</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('ISG')">
+                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=300" class="station-thumb" alt="石垣島">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">ISG</span>
+                            <span class="station-name">石垣島</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>ROIG | 桃園 (IT736) / 高雄 (IT762)</div>
                     </div>
                 </div>
 
@@ -464,7 +595,7 @@
                             <span class="station-code">ICN</span>
                             <span class="station-name">首爾 (仁川)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RKSI | <strong>班次：</strong>IT602/603</div>
+                        <div class="station-info"><strong>ICAO：</strong>RKSI | 桃園晚班直航 (IT602)</div>
                     </div>
                 </div>
 
@@ -475,7 +606,7 @@
                             <span class="station-code">GMP</span>
                             <span class="station-name">首爾 (金浦)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RKSS | <strong>班次：</strong>IT662/663</div>
+                        <div class="station-info"><strong>ICAO：</strong>RKSS | 高雄直航首爾 (IT662)</div>
                     </div>
                 </div>
 
@@ -486,7 +617,7 @@
                             <span class="station-code">PUS</span>
                             <span class="station-name">釜山</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RKPK | <strong>班次：</strong>IT606/607</div>
+                        <div class="station-info"><strong>ICAO：</strong>RKPK | 桃園每日直航 (IT606)</div>
                     </div>
                 </div>
 
@@ -497,7 +628,7 @@
                             <span class="station-code">CJU</span>
                             <span class="station-name">濟州</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RKPC | <strong>航線：</strong>桃/中/高皆有飛航</div>
+                        <div class="station-info"><strong>ICAO：</strong>RKPC | 桃 (IT654) / 中 (IT632) / 高 (IT670)</div>
                     </div>
                 </div>
 
@@ -514,7 +645,7 @@
                             <span class="station-code">HKT</span>
                             <span class="station-name">泰國普吉島</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>VTSP | <strong>班次：</strong>IT503/504</div>
+                        <div class="station-info"><strong>ICAO：</strong>VTSP | 桃園直飛 (IT503)</div>
                     </div>
                 </div>
 
@@ -525,16 +656,16 @@
                             <span class="station-code">DAD</span>
                             <span class="station-name">越南峴港</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>VVDN | <strong>班次：</strong>IT551/585</div>
+                        <div class="station-info"><strong>ICAO：</strong>VVDN | 桃 (IT551) / 高 (IT585)</div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- 右側：真實高解析度自然海岸線 SVG 地圖 -->
+            <!-- 右側：完整深色地理海岸線地圖 -->
             <div class="station-map-view">
                 <svg id="tiger-svg-map" viewBox="20 40 920 680" preserveAspectRatio="xMidYMid meet">
-                    <!-- 背景經緯度裝飾線 -->
+                    <!-- 經緯裝飾線 -->
                     <line x1="20" y1="200" x2="940" y2="200" class="grid-line" />
                     <line x1="20" y1="400" x2="940" y2="400" class="grid-line" />
                     <line x1="20" y1="600" x2="940" y2="600" class="grid-line" />
@@ -542,12 +673,271 @@
                     <line x1="500" y1="40" x2="500" y2="720" class="grid-line" />
                     <line x1="720" y1="40" x2="720" y2="720" class="grid-line" />
 
-                    <!-- 高解析度地理陸地輪廓 (Dark Slate Grey) -->
+                    <!-- 高解析度地理陸地輪廓 -->
                     <g fill="#242831" stroke="#333844" stroke-width="1.2" stroke-linejoin="round">
                         <!-- 中國大陸與華南沿海、中南半島 -->
                         <path d="M 20,120 Q 90,130 145,150 T 215,210 Q 235,250 248,310 T 260,390 Q 268,445 252,485 T 235,530 Q 220,560 195,595 T 160,635 Q 120,660 70,675 L 20,680 Z" />
-                        <!-- 朝鮮半島 (北緯38度至釜山) -->
+                        <!-- 朝鮮半島 -->
                         <path d="M 335,165 Q 365,160 395,170 T 425,200 Q 435,230 442,265 T 435,325 Q 425,350 405,355 T 380,345 Q 365,325 352,285 T 335,215 Z" />
-                        <!-- 濟州島 (精緻水滴橢圓) -->
+                        <!-- 濟州島 -->
                         <path d="M 365,380 C 372,374 384,374 388,381 C 390,387 380,394 372,392 C 366,390 362,385 365,380 Z" />
-                        <!-- 台灣本島 (標準
+                        <!-- 台灣本島 -->
+                        <path d="M 273,510 C 278,508 285,512 287,518 C 291,528 290,542 288,555 C 285,572 276,590 268,605 C 262,615 254,618 250,612 C 246,605 248,590 252,572 C 255,555 260,535 268,520 C 270,515 271,511 273,510 Z" />
+                        <!-- 日本北海道 -->
+                        <path d="M 770,55 C 800,52 840,58 860,70 C 885,85 890,110 875,130 C 855,150 820,165 795,155 C 770,145 750,150 740,160 C 730,165 725,155 730,140 C 740,115 745,85 770,55 Z" />
+                        <!-- 日本本州 -->
+                        <path d="M 735,175 C 748,185 758,210 762,240 C 768,275 755,305 730,335 C 705,360 670,380 625,395 C 590,405 560,412 530,412 C 518,405 525,392 540,385 C 575,370 610,355 645,335 C 685,310 705,275 710,230 C 712,195 722,175 735,175 Z" />
+                        <!-- 日本四國 -->
+                        <path d="M 545,420 C 565,412 595,410 612,418 C 618,428 610,445 595,455 C 575,462 555,455 545,442 C 540,432 540,425 545,420 Z" />
+                        <!-- 日本九州 -->
+                        <path d="M 465,405 C 485,398 505,402 515,418 C 525,438 525,465 510,488 C 495,510 472,515 455,498 C 442,480 440,455 450,432 C 455,420 458,410 465,405 Z" />
+                        <!-- 琉球/沖繩群島 -->
+                        <path d="M 405,555 C 415,548 425,545 432,548 C 435,552 428,558 420,560 C 412,562 405,560 405,555 Z" />
+                        <circle cx="438" cy="542" r="2.5" />
+                        <circle cx="448" cy="535" r="2" />
+                    </g>
+
+                    <!-- 大字區域浮水印 -->
+                    <text x="205" y="565" class="region-watermark">台 灣</text>
+                    <text x="350" y="260" class="region-watermark">韓 國</text>
+                    <text x="670" y="280" class="region-watermark">日 本</text>
+
+                    <!-- 動態航線層 -->
+                    <g id="routes-layer"></g>
+
+                    <!-- 靜態航點與標籤層 (全數掛載 onclick 事件) -->
+                    <g id="cities-layer">
+                        <!-- 台灣基地 (大黃點) -->
+                        <g class="city-node" onclick="selectStation('TPE')"><circle cx="275" cy="525" r="6.5" fill="#ffc20e" stroke="#f37021" stroke-width="2"/><text x="283" y="529" class="city-label">台北桃園 (TPE)</text></g>
+                        <g class="city-node" onclick="selectStation('RMQ')"><circle cx="270" cy="545" r="6.5" fill="#ffc20e" stroke="#f37021" stroke-width="2"/><text x="278" y="549" class="city-label">台中 (RMQ)</text></g>
+                        <g class="city-node" onclick="selectStation('TNN')"><circle cx="260" cy="565" r="6.5" fill="#ffc20e" stroke="#f37021" stroke-width="2"/><text x="268" y="569" class="city-label">台南 (TNN)</text></g>
+                        <g class="city-node" onclick="selectStation('KHH')"><circle cx="265" cy="585" r="6.5" fill="#ffc20e" stroke="#f37021" stroke-width="2"/><text x="273" y="589" class="city-label">高雄 (KHH)</text></g>
+
+                        <!-- 日本本州/北海道/東北 -->
+                        <g class="city-node" onclick="selectStation('CTS')"><circle cx="790" cy="135" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="798" y="139" class="city-label">札幌 (CTS)</text></g>
+                        <g class="city-node" onclick="selectStation('HKD')"><circle cx="755" cy="175" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="763" y="179" class="city-label">函館 (HKD)</text></g>
+                        <g class="city-node" onclick="selectStation('AXT')"><circle cx="725" cy="210" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="733" y="214" class="city-label">秋田 (AXT)</text></g>
+                        <g class="city-node" onclick="selectStation('HNA')"><circle cx="750" cy="225" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="758" y="229" class="city-label">花卷 (HNA)</text></g>
+                        <g class="city-node" onclick="selectStation('SDJ')"><circle cx="740" cy="265" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="748" y="269" class="city-label">仙台 (SDJ)</text></g>
+                        <g class="city-node" onclick="selectStation('FKS')"><circle cx="720" cy="285" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="728" y="289" class="city-label">福島 (FKS)</text></g>
+                        <g class="city-node" onclick="selectStation('KIJ')"><circle cx="685" cy="260" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="640" y="260" class="city-label">新潟 (KIJ)</text></g>
+                        <g class="city-node" onclick="selectStation('KMQ')"><circle cx="635" cy="330" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="590" y="330" class="city-label">小松 (KMQ)</text></g>
+                        <g class="city-node" onclick="selectStation('NRT')"><circle cx="745" cy="320" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="753" y="324" class="city-label">東京成田 (NRT)</text></g>
+                        <g class="city-node" onclick="selectStation('HND')"><circle cx="730" cy="330" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="738" y="334" class="city-label">東京羽田 (HND)</text></g>
+                        <g class="city-node" onclick="selectStation('NGO')"><circle cx="670" cy="360" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="678" y="364" class="city-label">名古屋 (NGO)</text></g>
+                        <g class="city-node" onclick="selectStation('KIX')"><circle cx="625" cy="385" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="633" y="389" class="city-label">大阪關西 (KIX)</text></g>
+                        <g class="city-node" onclick="selectStation('OKJ')"><circle cx="580" cy="380" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="535" y="380" class="city-label">岡山 (OKJ)</text></g>
+                        <g class="city-node" onclick="selectStation('YGJ')"><circle cx="560" cy="355" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="515" y="355" class="city-label">米子 (YGJ)</text></g>
+                        <g class="city-node" onclick="selectStation('KCZ')"><circle cx="570" cy="435" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="578" y="439" class="city-label">高知 (KCZ)</text></g>
+                        
+                        <!-- 九州/沖繩 -->
+                        <g class="city-node" onclick="selectStation('FUK')"><circle cx="480" cy="420" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="488" y="424" class="city-label">福岡 (FUK)</text></g>
+                        <g class="city-node" onclick="selectStation('HSG')"><circle cx="465" cy="435" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="420" y="435" class="city-label">佐賀 (HSG)</text></g>
+                        <g class="city-node" onclick="selectStation('KMJ')"><circle cx="475" cy="455" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="430" y="460" class="city-label">熊本 (KMJ)</text></g>
+                        <g class="city-node" onclick="selectStation('KMI')"><circle cx="505" cy="475" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="513" y="479" class="city-label">宮崎 (KMI)</text></g>
+                        <g class="city-node" onclick="selectStation('OKA')"><circle cx="425" cy="540" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="433" y="544" class="city-label">沖繩 (OKA)</text></g>
+                        <g class="city-node" onclick="selectStation('ISG')"><circle cx="355" cy="575" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="363" y="579" class="city-label">石垣島 (ISG)</text></g>
+
+                        <!-- 韓國 -->
+                        <g class="city-node" onclick="selectStation('ICN')"><circle cx="380" cy="225" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="388" y="229" class="city-label">首爾仁川 (ICN)</text></g>
+                        <g class="city-node" onclick="selectStation('GMP')"><circle cx="395" cy="235" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="403" y="239" class="city-label">首爾金浦 (GMP)</text></g>
+                        <g class="city-node" onclick="selectStation('PUS')"><circle cx="425" cy="305" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="433" y="309" class="city-label">釜山 (PUS)</text></g>
+                        <g class="city-node" onclick="selectStation('CJU')"><circle cx="370" cy="380" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="378" y="384" class="city-label">濟州 (CJU)</text></g>
+
+                        <!-- 東南亞 -->
+                        <g class="city-node" onclick="selectStation('HKT')"><circle cx="95" cy="655" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="103" y="659" class="city-label">普吉島 (HKT)</text></g>
+                        <g class="city-node" onclick="selectStation('DAD')"><circle cx="165" cy="595" r="4.5" fill="#ffffff" stroke="#ffc20e" stroke-width="2"/><text x="173" y="599" class="city-label">峴港 (DAD)</text></g>
+                    </g>
+                </svg>
+
+                <div class="map-overlay-badge">
+                    <div>當前航網：<strong id="current-station-label">台北 (桃園) - 輻射航線</strong></div>
+                    <button class="btn-show-all" onclick="drawAllRoutes()">顯示全航網連線</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 頁尾 -->
+    <footer>
+        <p>&copy; 2026 Virtual Tigerair Taiwan (vTGW). All Rights Reserved.</p>
+        <p class="footer-disclaimer">
+            For Flight Simulation Use Only on the VATSIM Network. Not affiliated with Tigerair Taiwan.
+        </p>
+    </footer>
+
+    <script>
+        // 嚴密對齊時刻表 PDF 的全部航點精確地理投影坐標
+        const STATIONS = {
+            // 台灣基地
+            TPE: { name: "台北桃園", x: 275, y: 525, isHub: true },
+            KHH: { name: "高雄",     x: 265, y: 585, isHub: true },
+            RMQ: { name: "台中",     x: 270, y: 545, isHub: true },
+            TNN: { name: "台南",     x: 260, y: 565, isHub: true },
+
+            // 日本本州/東北/北海道
+            NRT: { name: "東京成田", x: 745, y: 320 },
+            HND: { name: "東京羽田", x: 730, y: 330 },
+            KIX: { name: "大阪關西", x: 625, y: 385 },
+            NGO: { name: "名古屋",   x: 670, y: 360 },
+            SDJ: { name: "仙台",     x: 740, y: 265 },
+            FKS: { name: "福島",     x: 720, y: 285 },
+            KIJ: { name: "新潟",     x: 685, y: 260 },
+            KMQ: { name: "小松",     x: 635, y: 330 },
+            OKJ: { name: "岡山",     x: 580, y: 380 },
+            YGJ: { name: "米子",     x: 560, y: 355 },
+            HNA: { name: "花卷",     x: 750, y: 225 },
+            AXT: { name: "秋田",     x: 725, y: 210 },
+            HKD: { name: "函館",     x: 755, y: 175 },
+            CTS: { name: "札幌新千歲",x: 790, y: 135 },
+            KCZ: { name: "高知",     x: 570, y: 435 },
+
+            // 日本九州/沖繩
+            FUK: { name: "福岡",     x: 480, y: 420 },
+            HSG: { name: "佐賀",     x: 465, y: 435 },
+            KMJ: { name: "熊本",     x: 475, y: 455 },
+            KMI: { name: "宮崎",     x: 505, y: 475 },
+            OKA: { name: "沖繩",     x: 425, y: 540 },
+            ISG: { name: "石垣島",   x: 355, y: 575 },
+
+            // 韓國
+            ICN: { name: "首爾仁川", x: 380, y: 225 },
+            GMP: { name: "首爾金浦", x: 395, y: 235 },
+            PUS: { name: "釜山",     x: 425, y: 305 },
+            CJU: { name: "濟州",     x: 370, y: 380 },
+
+            // 東南亞
+            HKT: { name: "普吉島",   x: 95,  y: 655 },
+            DAD: { name: "峴港",     x: 165, y: 595 }
+        };
+
+        // 嚴密對齊時刻表 PDF (p.1 ~ p.55) 的航線清單
+        const ROUTES = [
+            // 1. 台北桃園 (TPE) 出發航線
+            { from: 'TPE', to: 'NRT' }, // IT200, IT202, IT700
+            { from: 'TPE', to: 'HND' }, // IT216
+            { from: 'TPE', to: 'KIX' }, // IT210, IT212
+            { from: 'TPE', to: 'NGO' }, // IT206, IT706
+            { from: 'TPE', to: 'FUK' }, // IT240, IT720
+            { from: 'TPE', to: 'OKA' }, // IT230, IT232
+            { from: 'TPE', to: 'CTS' }, // IT234
+            { from: 'TPE', to: 'HKD' }, // IT236
+            { from: 'TPE', to: 'SDJ' }, // IT254
+            { from: 'TPE', to: 'HNA' }, // IT258
+            { from: 'TPE', to: 'AXT' }, // IT256
+            { from: 'TPE', to: 'KCZ' }, // IT250
+            { from: 'TPE', to: 'KMI' }, // IT742
+            { from: 'TPE', to: 'ISG' }, // IT736
+            { from: 'TPE', to: 'OKJ' }, // IT214, IT714
+            { from: 'TPE', to: 'KMQ' }, // IT252
+            { from: 'TPE', to: 'KIJ' }, // IT228
+            { from: 'TPE', to: 'YGJ' }, // IT724
+            { from: 'TPE', to: 'FKS' }, // IT752
+            { from: 'TPE', to: 'HSG' }, // IT246
+            { from: 'TPE', to: 'ICN' }, // IT602
+            { from: 'TPE', to: 'PUS' }, // IT606
+            { from: 'TPE', to: 'CJU' }, // IT654
+            { from: 'TPE', to: 'HKT' }, // IT503
+            { from: 'TPE', to: 'DAD' }, // IT551
+
+            // 2. 高雄小港 (KHH) 出發航線
+            { from: 'KHH', to: 'NRT' }, // IT280
+            { from: 'KHH', to: 'KIX' }, // IT284
+            { from: 'KHH', to: 'NGO' }, // IT268
+            { from: 'KHH', to: 'FUK' }, // IT270
+            { from: 'KHH', to: 'OKA' }, // IT288, IT728
+            { from: 'KHH', to: 'CTS' }, // IT260
+            { from: 'KHH', to: 'SDJ' }, // IT772
+            { from: 'KHH', to: 'OKJ' }, // IT262
+            { from: 'KHH', to: 'KMQ' }, // IT294
+            { from: 'KHH', to: 'KMJ' }, // IT766
+            { from: 'KHH', to: 'ISG' }, // IT762
+            { from: 'KHH', to: 'GMP' }, // IT662
+            { from: 'KHH', to: 'CJU' }, // IT670
+            { from: 'KHH', to: 'DAD' }, // IT585
+
+            // 3. 台中清泉崗 (RMQ) 出發航線
+            { from: 'RMQ', to: 'NRT' }, // IT778 (常態/增班)
+            { from: 'RMQ', to: 'NGO' }, // IT778
+            { from: 'RMQ', to: 'OKA' }, // IT792
+            { from: 'RMQ', to: 'CJU' }, // IT632
+
+            // 4. 台南 (TNN) 出發航線
+            { from: 'TNN', to: 'OKA' }, // IT796
+            { from: 'TNN', to: 'KMJ' }  // IT794
+        ];
+
+        // 弧線計算（向西北微拱起）
+        function getArcPath(p1, p2) {
+            const midX = (p1.x + p2.x) / 2;
+            const midY = (p1.y + p2.y) / 2;
+            const dx = p2.x - p1.x;
+            const dy = p2.y - p1.y;
+            const ctrlX = midX - dy * 0.16;
+            const ctrlY = midY + dx * 0.16;
+            return `M ${p1.x},${p1.y} Q ${ctrlX},${ctrlY} ${p2.x},${p2.y}`;
+        }
+
+        // 點選航點：畫出輻射弧線
+        function selectStation(code) {
+            const routesLayer = document.getElementById('routes-layer');
+            if (!routesLayer) return;
+
+            // 1. 更新卡片選取狀態
+            document.querySelectorAll('.station-card').forEach(card => card.classList.remove('active'));
+            const selectedCard = Array.from(document.querySelectorAll('.station-card')).find(card => card.textContent.includes(code));
+            if (selectedCard) selectedCard.classList.add('active');
+
+            // 2. 更新右上角標題
+            const isHub = STATIONS[code] && STATIONS[code].isHub;
+            const stationName = STATIONS[code] ? STATIONS[code].name : code;
+            document.getElementById('current-station-label').textContent = `${stationName} (${code}) - 輻射航線`;
+
+            // 3. 雙向篩選航線：如果是基地，顯示從該基地出發的所有線條；如果是受訪航點，顯示連到各基地的線條
+            const filteredRoutes = ROUTES.filter(r => isHub ? r.from === code : (r.to === code || r.from === code));
+
+            let html = '';
+            filteredRoutes.forEach(r => {
+                const p1 = STATIONS[r.from];
+                const p2 = STATIONS[r.to];
+                if (!p1 || !p2) return;
+                const d = getArcPath(p1, p2);
+
+                html += `
+                    <path d="${d}" class="flight-arc-glow"></path>
+                    <path d="${d}" class="flight-arc"></path>
+                `;
+            });
+
+            routesLayer.innerHTML = html;
+        }
+
+        // 顯示全航線網路連線
+        function drawAllRoutes() {
+            const routesLayer = document.getElementById('routes-layer');
+            if (!routesLayer) return;
+
+            document.querySelectorAll('.station-card').forEach(card => card.classList.remove('active'));
+            document.getElementById('current-station-label').textContent = "全航線網絡展示 (All Routes)";
+
+            let html = '';
+            ROUTES.forEach(r => {
+                const p1 = STATIONS[r.from];
+                const p2 = STATIONS[r.to];
+                if (!p1 || !p2) return;
+                const d = getArcPath(p1, p2);
+                html += `<path d="${d}" class="flight-arc" style="opacity: 0.45; stroke-width: 1.6;"></path>`;
+            });
+
+            routesLayer.innerHTML = html;
+        }
+
+        // 頁面初次載入預設畫出台北桃園 (TPE)
+        window.addEventListener('DOMContentLoaded', () => {
+            selectStation('TPE');
+        });
+    </script>
+</body>
+</html>
