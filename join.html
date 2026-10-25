@@ -9,16 +9,45 @@
         .zulu-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background: #1e232a;
-            color: var(--tiger-yellow);
-            font-family: monospace;
+            gap: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 6px 12px;
             font-size: 0.85rem;
+            color: #1e293b;
             font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 194, 14, 0.4);
             letter-spacing: 0.5px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+        }
+
+        .zulu-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+            animation: zuluPulse 2s infinite;
+        }
+
+        .zulu-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #64748b;
+            letter-spacing: 1px;
+        }
+
+        #zulu-clock {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #0f172a;
+            font-weight: 800;
+        }
+
+        @keyframes zuluPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.9); }
         }
 
         .join-container {
@@ -172,14 +201,14 @@
 </head>
 <body>
 
-    <!-- 導航列 -->
     <header>
         <a href="index.html" class="tiger-logo-link">
             <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬臺灣虎航" class="tiger-logo-img">
         </a>
         <nav>
             <div class="zulu-badge">
-                <span>🌐</span>
+                <span class="zulu-dot"></span>
+                <span class="zulu-label">ZULU</span>
                 <span id="zulu-clock">00:00:00Z</span>
             </div>
             <a href="index.html#about">關於我們</a>
@@ -191,7 +220,6 @@
         </nav>
     </header>
 
-    <!-- 頁面主體 -->
     <div class="join-container">
         <div class="join-card">
             <div class="join-header">
@@ -200,31 +228,26 @@
             </div>
 
             <div>
-                <!-- 姓名 -->
                 <div class="form-group">
                     <label class="form-label">姓名 <span class="req">*</span></label>
                     <input type="text" id="app_name" class="form-input" placeholder="請輸入您的姓名或暱稱" required>
                 </div>
 
-                <!-- 電子郵件 -->
                 <div class="form-group">
                     <label class="form-label">電子郵件 <span class="req">*</span></label>
                     <input type="email" id="app_email" class="form-input" placeholder="your.email@example.com" required>
                 </div>
 
-                <!-- 主旨 / 主要飛行平台 -->
                 <div class="form-group">
                     <label class="form-label">主旨 / 主要飛行平台 <span class="req">*</span></label>
                     <input type="text" id="app_subject" class="form-input" placeholder="例如：申請加入飛行員 (主要使用 MSFS / X-Plane / P3D)" required>
                 </div>
 
-                <!-- 訊息內容 -->
                 <div class="form-group">
                     <label class="form-label">訊息內容 / 飛行經驗簡述 <span class="req">*</span></label>
                     <textarea id="app_message" class="form-textarea" placeholder="請簡述您的飛行模擬經驗、喜愛的機型，或是對加入虛擬台灣虎航的想法與建議..." required></textarea>
                 </div>
 
-                <!-- 送出按鈕 -->
                 <button type="button" id="submitBtn" class="btn-submit" onclick="handleSendForm()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -238,7 +261,6 @@
         </div>
     </div>
 
-    <!-- 頁尾 -->
     <footer class="tiger-footer">
         <div class="tiger-footer-top">
             <div class="footer-col">
