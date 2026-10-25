@@ -37,7 +37,6 @@
             font-size: 0.95rem;
         }
 
-        /* 擬真表單樣式 (比照截圖風格) */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -76,7 +75,7 @@
             font-weight: normal;
         }
 
-        .form-input, .form-textarea, .form-select {
+        .form-input, .form-textarea {
             background: #fbfaf8;
             border: 1.5px solid #e2ddd5;
             border-radius: 10px;
@@ -88,7 +87,7 @@
             font-family: inherit;
         }
 
-        .form-input:focus, .form-textarea:focus, .form-select:focus {
+        .form-input:focus, .form-textarea:focus {
             background: #ffffff;
             border-color: var(--tiger-yellow);
             box-shadow: 0 0 0 3px rgba(255, 194, 14, 0.25);
@@ -105,7 +104,6 @@
             line-height: 1.6;
         }
 
-        /* 送出按鈕 */
         .btn-submit {
             width: 100%;
             background-color: var(--tiger-yellow);
@@ -130,8 +128,34 @@
             box-shadow: 0 6px 20px rgba(255, 194, 14, 0.45);
         }
 
-        .btn-submit:active {
-            transform: translateY(0);
+        .btn-submit:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 成功提示訊息框 */
+        #result-box {
+            display: none;
+            padding: 16px;
+            margin-top: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        #result-box.success {
+            display: block;
+            background: #def7ec;
+            color: #03543f;
+            border: 1px solid #bcf0da;
+        }
+        #result-box.error {
+            display: block;
+            background: #fde8e8;
+            color: #9b1c1c;
+            border: 1px solid #fbd5d5;
         }
 
         @media (max-width: 650px) {
@@ -170,8 +194,7 @@
                 <p>歡迎熱愛飛行模擬的朋友加入 SMARTCAT 行列！填寫下方表單將自動遞交申請至審核小組信箱。</p>
             </div>
 
-            <!-- 表單直接傳送至 ttw.sc.va@gmail.com -->
-            <form action="https://formspree.io/f/ttw.sc.va@gmail.com" method="POST">
+            <form id="joinForm">
                 
                 <div class="form-grid">
                     <!-- 姓名 -->
@@ -183,7 +206,7 @@
                     <!-- Discord 用戶名 -->
                     <div class="form-group">
                         <label class="form-label">Discord 用戶名 <span class="opt">(選填)</span></label>
-                        <input type="text" name="discord_user" class="form-input" placeholder="例如：@username 或 username#1234">
+                        <input type="text" name="discord_username" class="form-input" placeholder="例如：@username 或 username#1234">
                     </div>
                 </div>
 
@@ -193,10 +216,10 @@
                     <input type="email" name="email" class="form-input" placeholder="your.email@example.com" required>
                 </div>
 
-                <!-- 模擬飛行平台與主旨 -->
+                <!-- 主旨 / 主要飛行平台 -->
                 <div class="form-group">
                     <label class="form-label">主旨 / 主要飛行平台 <span class="req">*</span></label>
-                    <input type="text" name="subject" class="form-input" placeholder="例如：申請加入飛行員 (主要使用 MSFS 2024 / X-Plane 12)" required>
+                    <input type="text" name="subject" class="form-input" placeholder="例如：申請加入飛行員 (主要使用 MSFS / X-Plane / P3D)" required>
                 </div>
 
                 <!-- 訊息內容 -->
@@ -205,17 +228,17 @@
                     <textarea name="message" class="form-textarea" placeholder="請簡述您的飛行模擬經驗、喜愛的機型，或是對加入虛擬台灣虎航的想法與建議..." required></textarea>
                 </div>
 
-                <!-- 隱藏設定：自動回信主旨 -->
-                <input type="hidden" name="_subject" value="【虛擬臺灣虎航】新的飛行員招募申請表單">
-
-                <!-- 送出按鈕 (比照截圖圖標與文字) -->
-                <button type="submit" class="btn-submit">
+                <!-- 送出按鈕 -->
+                <button type="submit" id="submitBtn" class="btn-submit">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13"></line>
                         <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                     </svg>
-                    發送申請訊息
+                    <span id="btnText">發送申請訊息</span>
                 </button>
+
+                <!-- 回傳狀態提示 -->
+                <div id="result-box"></div>
             </form>
         </div>
     </div>
@@ -293,6 +316,58 @@
         </div>
     </footer>
 
-    <script src="assets/site.js"></script>
+    <script>
+        const form = document.getElementById('joinForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const resultBox = document.getElementById('result-box');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            submitBtn.disabled = true;
+            btnText.textContent = '傳送中，請稍候...';
+            resultBox.className = '';
+            resultBox.style.display = 'none';
+
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            
+            // 轉發至公司信箱與相關設定
+            object.access_key = 'a2b16dd3-62ef-4cb0-a8dc-93e1a06dfec2'; // Web3Forms 預設安全金鑰
+            object.from_name = '虛擬臺灣虎航官網申請系統';
+            object.subject = '【新飛行員加入申請】' + (object.subject || '未填寫主旨');
+
+            const json = JSON.stringify(object);
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(async (response) => {
+                let json = await response.json();
+                if (response.status == 200) {
+                    resultBox.className = 'success';
+                    resultBox.innerHTML = '🎉 申請已成功送出！審核小組將盡速發送審核結果至您的電子信箱。';
+                    form.reset();
+                } else {
+                    resultBox.className = 'error';
+                    resultBox.innerHTML = json.message || '傳送失敗，請稍後再試或直接於 Discord 聯繫我們。';
+                }
+            })
+            .catch(error => {
+                resultBox.className = 'error';
+                resultBox.innerHTML = '連線異常，請確認網路連線或稍後再試。';
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                btnText.textContent = '發送申請訊息';
+            });
+        });
+    </script>
 </body>
 </html>
