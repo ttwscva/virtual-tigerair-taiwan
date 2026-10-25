@@ -50,11 +50,6 @@
             margin-bottom: 22px;
         }
 
-        .form-group.full-width {
-            grid-column: 1 / -1;
-            margin-bottom: 22px;
-        }
-
         .form-label {
             font-size: 0.95rem;
             font-weight: 700;
@@ -128,14 +123,7 @@
             box-shadow: 0 6px 20px rgba(255, 194, 14, 0.45);
         }
 
-        .btn-submit:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* 成功提示訊息框 */
+        /* 成功提示與直接寄信備用提示 */
         #result-box {
             display: none;
             padding: 16px;
@@ -144,18 +132,9 @@
             text-align: center;
             font-weight: 700;
             font-size: 0.95rem;
-        }
-        #result-box.success {
-            display: block;
             background: #def7ec;
             color: #03543f;
             border: 1px solid #bcf0da;
-        }
-        #result-box.error {
-            display: block;
-            background: #fde8e8;
-            color: #9b1c1c;
-            border: 1px solid #fbd5d5;
         }
 
         @media (max-width: 650px) {
@@ -191,54 +170,54 @@
         <div class="join-card">
             <div class="join-header">
                 <h1>招募加入我們</h1>
-                <p>歡迎熱愛飛行模擬的朋友加入 SMARTCAT 行列！填寫下方表單將自動遞交申請至審核小組信箱。</p>
+                <p>歡迎熱愛飛行模擬的朋友加入 SMARTCAT 行列！送出後將自動為您開啟 Gmail 並填妥收件格式。</p>
             </div>
 
             <form id="joinForm">
-                
                 <div class="form-grid">
                     <!-- 姓名 -->
                     <div class="form-group">
                         <label class="form-label">姓名 <span class="req">*</span></label>
-                        <input type="text" name="name" class="form-input" placeholder="請輸入您的姓名或暱稱" required>
+                        <input type="text" id="applicant_name" class="form-input" placeholder="請輸入您的姓名或暱稱" required>
                     </div>
 
                     <!-- Discord 用戶名 -->
                     <div class="form-group">
                         <label class="form-label">Discord 用戶名 <span class="opt">(選填)</span></label>
-                        <input type="text" name="discord_username" class="form-input" placeholder="例如：@username 或 username#1234">
+                        <input type="text" id="discord_user" class="form-input" placeholder="例如：@username 或 username#1234">
                     </div>
                 </div>
 
                 <!-- 電子郵件 -->
                 <div class="form-group">
                     <label class="form-label">電子郵件 <span class="req">*</span></label>
-                    <input type="email" name="email" class="form-input" placeholder="your.email@example.com" required>
+                    <input type="email" id="applicant_email" class="form-input" placeholder="your.email@example.com" required>
                 </div>
 
                 <!-- 主旨 / 主要飛行平台 -->
                 <div class="form-group">
                     <label class="form-label">主旨 / 主要飛行平台 <span class="req">*</span></label>
-                    <input type="text" name="subject" class="form-input" placeholder="例如：申請加入飛行員 (主要使用 MSFS / X-Plane / P3D)" required>
+                    <input type="text" id="applicant_subject" class="form-input" placeholder="例如：申請加入飛行員 (主要使用 MSFS / X-Plane / P3D)" required>
                 </div>
 
                 <!-- 訊息內容 -->
                 <div class="form-group">
                     <label class="form-label">訊息內容 / 飛行經驗簡述 <span class="req">*</span></label>
-                    <textarea name="message" class="form-textarea" placeholder="請簡述您的飛行模擬經驗、喜愛的機型，或是對加入虛擬台灣虎航的想法與建議..." required></textarea>
+                    <textarea id="applicant_message" class="form-textarea" placeholder="請簡述您的飛行模擬經驗、喜愛的機型，或是對加入虛擬台灣虎航的想法與建議..." required></textarea>
                 </div>
 
                 <!-- 送出按鈕 -->
-                <button type="submit" id="submitBtn" class="btn-submit">
+                <button type="submit" class="btn-submit">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13"></line>
                         <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                     </svg>
-                    <span id="btnText">發送申請訊息</span>
+                    發送申請訊息
                 </button>
 
-                <!-- 回傳狀態提示 -->
-                <div id="result-box"></div>
+                <div id="result-box">
+                    🎉 已為您自動整理信件內容並開啟 Gmail！若瀏覽器未自動跳出，請直接將內容寄至：<strong>ttw.sc.va@gmail.com</strong>
+                </div>
             </form>
         </div>
     </div>
@@ -317,56 +296,43 @@
     </footer>
 
     <script>
-        const form = document.getElementById('joinForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const btnText = document.getElementById('btnText');
-        const resultBox = document.getElementById('result-box');
-
-        form.addEventListener('submit', function(e) {
+        document.getElementById('joinForm').addEventListener('submit', function(e) {
             e.preventDefault();
+
+            const name = document.getElementById('applicant_name').value.trim();
+            const discord = document.getElementById('discord_user').value.trim() || '無填寫';
+            const email = document.getElementById('applicant_email').value.trim();
+            const subjectInput = document.getElementById('applicant_subject').value.trim();
+            const message = document.getElementById('applicant_message').value.trim();
+
+            const targetEmail = 'ttw.sc.va@gmail.com';
+            const mailSubject = `【虛擬臺灣虎航加入申請】${subjectInput} - ${name}`;
             
-            submitBtn.disabled = true;
-            btnText.textContent = '傳送中，請稍候...';
-            resultBox.className = '';
-            resultBox.style.display = 'none';
+            const mailBody = `【申請者資料】\n` +
+                             `------------------------------------\n` +
+                             `姓名/暱稱：${name}\n` +
+                             `聯絡電子郵件：${email}\n` +
+                             `Discord 用戶名：${discord}\n` +
+                             `主要飛行平台/主旨：${subjectInput}\n` +
+                             `------------------------------------\n\n` +
+                             `【訊息內容與經歷簡述】\n` +
+                             `${message}\n\n` +
+                             `（此信件由 Virtual Tigerair Taiwan 官方網站招募系統自動帶入格式）`;
 
-            const formData = new FormData(form);
-            const object = Object.fromEntries(formData);
+            // 優先開啟網頁版 Gmail 直達傳送介面
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(targetEmail)}&su=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
             
-            // 轉發至公司信箱與相關設定
-            object.access_key = 'a2b16dd3-62ef-4cb0-a8dc-93e1a06dfec2'; // Web3Forms 預設安全金鑰
-            object.from_name = '虛擬臺灣虎航官網申請系統';
-            object.subject = '【新飛行員加入申請】' + (object.subject || '未填寫主旨');
+            // 系統預設 mailto 協定備用
+            const mailtoUrl = `mailto:${targetEmail}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
 
-            const json = JSON.stringify(object);
+            // 顯示提示訊息
+            document.getElementById('result-box').style.display = 'block';
 
-            fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: json
-            })
-            .then(async (response) => {
-                let json = await response.json();
-                if (response.status == 200) {
-                    resultBox.className = 'success';
-                    resultBox.innerHTML = '🎉 申請已成功送出！審核小組將盡速發送審核結果至您的電子信箱。';
-                    form.reset();
-                } else {
-                    resultBox.className = 'error';
-                    resultBox.innerHTML = json.message || '傳送失敗，請稍後再試或直接於 Discord 聯繫我們。';
-                }
-            })
-            .catch(error => {
-                resultBox.className = 'error';
-                resultBox.innerHTML = '連線異常，請確認網路連線或稍後再試。';
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                btnText.textContent = '發送申請訊息';
-            });
+            // 嘗試在新分頁開啟 Gmail，若被彈出視窗攔截則使用系統 mailto
+            const newWindow = window.open(gmailUrl, '_blank');
+            if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                window.location.href = mailtoUrl;
+            }
         });
     </script>
 </body>
