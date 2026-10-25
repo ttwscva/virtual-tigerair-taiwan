@@ -6,6 +6,21 @@
     <title>航班時刻表 (Timetable) | Virtual Tigerair Taiwan</title>
     <link rel="stylesheet" href="assets/styles.css">
     <style>
+        .zulu-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #1e232a;
+            color: var(--tiger-yellow);
+            font-family: monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 194, 14, 0.4);
+            letter-spacing: 0.5px;
+        }
+
         .tt-container {
             max-width: 1300px;
             margin: 30px auto 60px;
@@ -223,10 +238,15 @@
             <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬臺灣虎航" class="tiger-logo-img">
         </a>
         <nav>
+            <div class="zulu-badge">
+                <span>🌐</span>
+                <span id="zulu-clock">00:00:00Z</span>
+            </div>
             <a href="index.html#about">關於我們</a>
             <a href="fleet.html">機隊資料</a>
             <a href="routes.html">航線網絡</a>
             <a href="timetable.html" style="color: var(--tiger-orange);">時刻表</a>
+            <a href="team.html">組織成員</a>
             <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
         </nav>
     </header>
@@ -239,7 +259,6 @@
 
     <!-- 主內容區 -->
     <div class="tt-container">
-        <!-- 篩選列 -->
         <div class="filter-toolbar">
             <div class="hub-pills">
                 <button class="hub-btn active" onclick="filterHub('ALL', this)">全部出發地</button>
@@ -253,7 +272,6 @@
             </div>
         </div>
 
-        <!-- 航班清單 -->
         <div id="timetable-list"></div>
     </div>
 
@@ -263,9 +281,10 @@
             <div class="footer-col">
                 <h4>關於虛擬台虎</h4>
                 <ul>
-                    <li><a href="index.html#about">最新消息</a></li>
+                    <li><a href="index.html#news">最新消息</a></li>
                     <li><a href="index.html#about">公司簡介</a></li>
                     <li><a href="fleet.html">機隊資料</a></li>
+                    <li><a href="team.html">組織成員</a></li>
                     <li><a href="join.html">招募加入我們</a></li>
                 </ul>
             </div>
@@ -550,6 +569,19 @@
 
             renderTimetable(filtered);
         }
+
+        function updateZuluClock() {
+            const now = new Date();
+            const h = String(now.getUTCHours()).padStart(2, '0');
+            const m = String(now.getUTCMinutes()).padStart(2, '0');
+            const s = String(now.getUTCSeconds()).padStart(2, '0');
+            const clockEl = document.getElementById('zulu-clock');
+            if (clockEl) {
+                clockEl.textContent = `${h}:${m}:${s}Z`;
+            }
+        }
+        setInterval(updateZuluClock, 1000);
+        updateZuluClock();
 
         window.addEventListener('DOMContentLoaded', () => {
             renderTimetable(TIMETABLE_DATA);
