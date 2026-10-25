@@ -5,6 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>航線網絡與航點資訊 | Virtual Tigerair Taiwan</title>
     <link rel="stylesheet" href="assets/styles.css">
+    <style>
+        /* 航線頁面專屬雙欄排版樣式 */
+        .station-layout {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 30px;
+            margin-top: 30px;
+            align-items: start;
+        }
+
+        .station-sidebar {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--tiger-yellow);
+            max-height: 650px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .station-category {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--tiger-black);
+            margin: 15px 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--tiger-yellow);
+        }
+
+        .station-card {
+            background: var(--light-bg);
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--tiger-orange);
+            transition: transform 0.2s;
+        }
+
+        .station-card:hover {
+            transform: translateX(3px);
+            background: #fffdef;
+        }
+
+        .station-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .station-code {
+            background: var(--tiger-black);
+            color: var(--tiger-yellow);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .station-name {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: var(--tiger-black);
+        }
+
+        .station-info {
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .station-map-view {
+            background: #222;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            height: 650px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            border-top: 4px solid var(--tiger-yellow);
+        }
+
+        .station-map-view h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--tiger-yellow);
+        }
+
+        .station-map-view p {
+            color: #aaa;
+            max-width: 500px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 900px) {
+            .station-layout {
+                grid-template-columns: 1fr;
+            }
+            .station-sidebar {
+                max-height: 500px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -28,45 +138,158 @@
     </header>
 
     <!-- 頁面標題 Banner -->
-    <section class="hero-slider" style="height: 300px;">
+    <section class="hero-slider" style="height: 260px;">
         <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600');"></div>
-        <div class="hero-content">
-            <h1>航線網絡與基地資訊 <span>Route Network</span></h1>
-            <p>以桃園 (RCTP)、高雄 (RCKH)、台中 (RCMQ) 為核心，串聯日本、韓國、東南亞等熱門航點。</p>
+        <div class="hero-content" style="padding-top: 20px;">
+            <h1>航線網絡與航點資訊 <span>Station Map</span></h1>
+            <p>探索 vTGW 涵蓋台灣、日本、韓國及東南亞的全面航線佈局與機場櫃檯資訊。</p>
         </div>
     </section>
 
-    <!-- 內容容器 -->
-    <div class="container">
+    <!-- 內容容器：仿真實官網的左清單右地圖介面 -->
+    <div class="container" style="margin-top: 30px; max-width: 1300px;">
         
-        <!-- 基地資訊卡片 -->
-        <h2 class="section-title">vTGW 主要營運基地 (Hubs)</h2>
-        <div class="cards-grid">
-            <div class="card">
-                <div class="card-content">
-                    <h3>🇹🇼 台北桃園 (RCTP) - 主基地</h3>
-                    <p><strong>航廈：</strong>第一航廈<br><strong>櫃檯：</strong>7 號櫃檯<br><strong>主要航線：</strong>東京成田、大阪關西、新千歲、沖繩、首爾仁川、曼谷等。</p>
+        <div class="station-layout">
+            
+            <!-- 左側：航點與櫃檯資訊清單 -->
+            <div class="station-sidebar">
+                <h3 style="margin-bottom: 15px; color: var(--tiger-black); font-size: 1.2rem;">📍 航點資訊 (Destinations)</h3>
+                
+                <!-- 台灣 -->
+                <div class="station-category">台灣 (Taiwan)</div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">台北 (桃園)</span>
+                        <span class="station-code">RCTP / TPE</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>第一航廈<br><strong>櫃檯：</strong>7 號櫃檯</div>
+                </div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">台中 (清泉崗)</span>
+                        <span class="station-code">RCMQ / RMQ</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線櫃檯</div>
+                </div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">高雄 (小港)</span>
+                        <span class="station-code">RCKH / KHH</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>依機場公司安排</div>
+                </div>
+
+                <!-- 日本 -->
+                <div class="station-category">日本 (Japan)</div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">東京成田</span>
+                        <span class="station-code">RJAA / NRT</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>第二航廈</div>
+                </div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">東京羽田</span>
+                        <span class="station-code">RJTT / HND</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>第三航廈<br><strong>櫃檯：</strong>H1-H5</div>
+                </div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">大阪關西</span>
+                        <span class="station-code">RJBB / KIX</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>第一航廈</div>
+                </div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">札幌 (新千歲)</span>
+                        <span class="station-code">RJCC / CTS</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>國際航廈</div>
+                </div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">沖繩</span>
+                        <span class="station-code">ROAH / OKA</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>國際航廈</div>
+                </div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">福岡</span>
+                        <span class="station-code">RJFF / FUK</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>國際航廈</div>
+                </div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">岡山</span>
+                        <span class="station-code">RJOB / OKJ</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>國際航廈</div>
+                </div>
+
+                <!-- 南韓 -->
+                <div class="station-category">南韓 (South Korea)</div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">首爾 (仁川)</span>
+                        <span class="station-code">RKSI / ICN</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>第一航廈<br><strong>櫃檯：</strong>M1-M5</div>
+                </div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">首爾 (金浦)</span>
+                        <span class="station-code">RKSS / GMP</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>C9-14</div>
+                </div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">釜山</span>
+                        <span class="station-code">RKPK / PUS</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>D22-D26</div>
+                </div>
+
+                <!-- 東南亞 -->
+                <div class="station-category">東南亞 (Southeast Asia)</div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">泰國 普吉島</span>
+                        <span class="station-code">VTSP / HKT</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>國際航廈</div>
+                </div>
+                <div class="station-card">
+                    <div class="station-title-row">
+                        <span class="station-name">越南 峴港</span>
+                        <span class="station-code">VVPQ / DAD</span>
+                    </div>
+                    <div class="station-info"><strong>航廈：</strong>國際航廈</div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-content">
-                    <h3>🇹🇼 高雄小港 (RCKH) - 次要基地</h3>
-                    <p><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>依機場公司安排<br><strong>主要航線：</strong>大阪關西、福岡、沖繩、首爾仁川、澳門。</p>
+
+            <!-- 右側：航線網絡地圖示意區 -->
+            <div class="station-map-view">
+                <div style="font-size: 3.5rem; margin-bottom: 15px;">🗺️</div>
+                <h3>vTGW 互動航線網路圖</h3>
+                <p>以台灣三大基地（桃園、台中、高雄）為輻射中心，綿密串聯日本、南韓及東南亞各大重點航點。</p>
+                <div style="margin-top: 25px; background: rgba(255,194,14,0.15); border: 1px solid var(--tiger-yellow); padding: 15px 25px; border-radius: 6px; font-size: 0.9rem; color: var(--tiger-yellow);">
+                    💡 <strong>vAMSYS 提示：</strong>飛行員線上排班時，請依據上述指定機場與航廈進行航班模擬與停泊。
                 </div>
             </div>
-            <div class="card">
-                <div class="card-content">
-                    <h3>🇹🇼 台中清泉崗 (RCMQ) - 重點基地</h3>
-                    <p><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線櫃檯<br><strong>主要航線：</strong>日本、韓國區域航線。</p>
-                </div>
-            </div>
+
         </div>
 
-        <!-- 航線特色說明 -->
-        <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--tiger-yellow);">
-            <h3 style="margin-bottom: 15px; color: var(--tiger-black);">✈️ 飛行員航線執行指南</h3>
+        <!-- 飛行員執行指南 -->
+        <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid var(--tiger-yellow); margin-top: 40px;">
+            <h3 style="margin-bottom: 15px; color: var(--tiger-black);">✈️ VATSIM 航班計畫填寫規範</h3>
             <p style="color: #666; line-height: 1.8; margin-bottom: 15px;">
-                本社群所有航線皆對應真實臺灣虎航之航班編號與時間帶。飛行員在透過 **vAMSYS** 系統預定航班時，請務必確認使用規定的 **A320ceo** 或 **A320neo** 機型，並在 VATSIM 飛行計畫（Flight Plan）中的 Remarks 欄位填入：
+                本社群所有航線皆對應真實臺灣虎航之航班編號與時間帶。飛行員在透過 **vAMSYS** 系統預定航班並上線 VATSIM 時，請務必在 Flight Plan 的 Remarks 欄位填入：
             </p>
             <div style="background: #111; color: #ffc20e; padding: 12px; font-family: monospace; border-radius: 4px;">
                 OPR/VIRTUAL TIGERAIR TAIWAN - TGW
