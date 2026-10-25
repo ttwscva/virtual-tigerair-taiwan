@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>招募加入我們 | Virtual Tigerair Taiwan 虛擬臺灣虎航</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <style>
+        .join-container {
+            max-width: 780px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+        }
+
+        .join-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border-top: 6px solid var(--tiger-yellow);
+            padding: 40px 35px;
+        }
+
+        .join-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .join-header h1 {
+            font-size: 2rem;
+            color: var(--tiger-black);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .join-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* 擬真表單樣式 (比照截圖風格) */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 22px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+            margin-bottom: 22px;
+        }
+
+        .form-label {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #2d3139;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .form-label .req {
+            color: #e53e3e;
+        }
+
+        .form-label .opt {
+            color: #8c96a3;
+            font-size: 0.82rem;
+            font-weight: normal;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            background: #fbfaf8;
+            border: 1.5px solid #e2ddd5;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            color: #333;
+            outline: none;
+            transition: all 0.25s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            background: #ffffff;
+            border-color: var(--tiger-yellow);
+            box-shadow: 0 0 0 3px rgba(255, 194, 14, 0.25);
+        }
+
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: #a0a6b2;
+            font-size: 0.9rem;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 140px;
+            line-height: 1.6;
+        }
+
+        /* 送出按鈕 */
+        .btn-submit {
+            width: 100%;
+            background-color: var(--tiger-yellow);
+            color: #111111;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 25px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(255, 194, 14, 0.35);
+            transition: all 0.25s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #e5ae0c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 194, 14, 0.45);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 650px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .join-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 導航列 -->
+    <header>
+        <a href="index.html" class="tiger-logo-link">
+            <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬臺灣虎航" class="tiger-logo-img">
+        </a>
+        <nav>
+            <a href="index.html#about">關於我們</a>
+            <a href="index.html#fleet">機隊資料</a>
+            <a href="routes.html">航線網絡</a>
+            <a href="timetable.html">時刻表</a>
+            <a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">Discord 社群</a>
+            <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
+        </nav>
+    </header>
+
+    <!-- 頁面主體 -->
+    <div class="join-container">
+        <div class="join-card">
+            <div class="join-header">
+                <h1>招募加入我們</h1>
+                <p>歡迎熱愛飛行模擬的朋友加入 SMARTCAT 行列！填寫下方表單將自動遞交申請至審核小組信箱。</p>
+            </div>
+
+            <!-- 表單直接傳送至 ttw.sc.va@gmail.com -->
+            <form action="https://formspree.io/f/ttw.sc.va@gmail.com" method="POST">
+                
+                <div class="form-grid">
+                    <!-- 姓名 -->
+                    <div class="form-group">
+                        <label class="form-label">姓名 <span class="req">*</span></label>
+                        <input type="text" name="name" class="form-input" placeholder="請輸入您的姓名或暱稱" required>
+                    </div>
+
+                    <!-- Discord 用戶名 -->
+                    <div class="form-group">
+                        <label class="form-label">Discord 用戶名 <span class="opt">(選填)</span></label>
+                        <input type="text" name="discord_user" class="form-input" placeholder="例如：@username 或 username#1234">
+                    </div>
+                </div>
+
+                <!-- 電子郵件 -->
+                <div class="form-group">
+                    <label class="form-label">電子郵件 <span class="req">*</span></label>
+                    <input type="email" name="email" class="form-input" placeholder="your.email@example.com" required>
+                </div>
+
+                <!-- 模擬飛行平台與主旨 -->
+                <div class="form-group">
+                    <label class="form-label">主旨 / 主要飛行平台 <span class="req">*</span></label>
+                    <input type="text" name="subject" class="form-input" placeholder="例如：申請加入飛行員 (主要使用 MSFS 2024 / X-Plane 12)" required>
+                </div>
+
+                <!-- 訊息內容 -->
+                <div class="form-group">
+                    <label class="form-label">訊息內容 / 飛行經驗簡述 <span class="req">*</span></label>
+                    <textarea name="message" class="form-textarea" placeholder="請簡述您的飛行模擬經驗、喜愛的機型，或是對加入虛擬台灣虎航的想法與建議..." required></textarea>
+                </div>
+
+                <!-- 隱藏設定：自動回信主旨 -->
+                <input type="hidden" name="_subject" value="【虛擬臺灣虎航】新的飛行員招募申請表單">
+
+                <!-- 送出按鈕 (比照截圖圖標與文字) -->
+                <button type="submit" class="btn-submit">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    發送申請訊息
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 擬真台灣虎航風格頁尾 -->
+    <footer class="tiger-footer">
+        <div class="tiger-footer-top">
+            <div class="footer-col">
+                <h4>關於虛擬台虎</h4>
+                <ul>
+                    <li><a href="index.html#about">最新消息</a></li>
+                    <li><a href="index.html#about">公司簡介</a></li>
+                    <li><a href="index.html#fleet">機隊資料</a></li>
+                    <li><a href="join.html">招募加入我們</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>航務專區</h4>
+                <ul>
+                    <li><a href="routes.html">航線網絡</a></li>
+                    <li><a href="timetable.html">航班時刻表</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>飛行員指南</h4>
+                <ul>
+                    <li><a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">新手報到須知</a></li>
+                    <li><a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">常見問題</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>關注我們</h4>
+                <ul>
+                    <li><a href="https://facebook.com" target="_blank" class="social-link">📘 Facebook 社團</a></li>
+                    <li><a href="https://youtube.com" target="_blank" class="social-link">▶️ Youtube 頻道</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>飛行模擬支援工具</h4>
+                <div class="app-btn-box">
+                    <a href="https://vamsys.io" target="_blank" class="app-btn">
+                        <span class="app-btn-icon">✈️</span>
+                        <div class="app-btn-text">
+                            <small>Download ACARS</small>
+                            <span>vAMSYS Pegasus</span>
+                        </div>
+                    </a>
+                    <a href="https://simbrief.com" target="_blank" class="app-btn">
+                        <span class="app-btn-icon">📋</span>
+                        <div class="app-btn-text">
+                            <small>Flight Dispatch</small>
+                            <span>SimBrief by Navigraph</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tiger-footer-bottom">
+            <div class="footer-bottom-inner">
+                <div class="footer-brand-logo">
+                    <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan" class="footer-logo-img">
+                </div>
+                <div class="footer-legal">
+                    <div>Copyright &copy; 2026 Virtual Tigerair Taiwan. All rights reserved.</div>
+                    <div style="margin-top: 4px; color: #777; font-size: 0.75rem;">
+                        <strong>⚠️ 虛擬航空社群免責聲明 (Disclaimer)：</strong>本網站與社群為非營利之飛行模擬愛好者團體（Virtual Airline），專供飛行模擬愛好者交流使用。支援微軟模擬飛行 (MSFS)、X-Plane 及 Prepar3D 等主流平台，且不限制連線網絡。本團體與真實世界的「台灣虎航股份有限公司 (Tigerair Taiwan)」無任何商業、法律或實質隸屬關係。所有商標與識別權利歸原版權所有者所有。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/site.js"></script>
+</body>
+</html>
