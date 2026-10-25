@@ -26,7 +26,7 @@
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.06);
             border-top: 5px solid var(--tiger-yellow);
-            height: 750px;
+            height: 780px;
             overflow-y: auto;
             padding: 16px 20px;
         }
@@ -132,12 +132,12 @@
             line-height: 1.5;
         }
 
-        /* 右側虎航航網地圖容器 (黑底 #1a1c22) */
+        /* 右側虎航航網地圖容器 */
         .station-map-view {
             background-color: #1a1c22;
             border-radius: 12px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-            height: 750px;
+            height: 780px;
             position: sticky;
             top: 85px;
             border: 2px solid #2d3139;
@@ -189,7 +189,7 @@
             background: #e5ae0c;
         }
 
-        /* 航線線條動畫 */
+        /* 航線線條 */
         .flight-arc {
             fill: none;
             stroke: var(--tiger-yellow);
@@ -213,13 +213,13 @@
             transition: r 0.2s, fill 0.2s;
         }
         .city-marker:hover {
-            r: 8px;
+            r: 7px;
             fill: #ffffff;
         }
 
         .city-label {
             fill: #ffffff;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: bold;
             font-family: 'PingFang TC', sans-serif;
             text-shadow: 0 1px 4px #000;
@@ -227,7 +227,7 @@
         }
 
         .region-watermark {
-            fill: rgba(255, 255, 255, 0.5);
+            fill: rgba(255, 255, 255, 0.4);
             font-size: 26px;
             font-weight: 900;
             letter-spacing: 12px;
@@ -268,6 +268,7 @@
             <a href="index.html#about">關於我們</a>
             <a href="index.html#fleet">機隊資料</a>
             <a href="routes.html" style="color: var(--tiger-orange);">航線網絡</a>
+            <a href="timetable.html">時刻表</a>
             <a href="https://discord.gg/YOUR_DISCORD_LINK" target="_blank">Discord 社群</a>
             <a href="https://vamsys.io" target="_blank" class="nav-btn">vAMSYS 登入</a>
         </nav>
@@ -276,7 +277,7 @@
     <!-- 頁面 Banner -->
     <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600') center/cover; color: white; text-align: center; padding: 50px 20px;">
         <h1 style="font-size: 2.3rem; font-weight: 800; margin-bottom: 8px;">航線網絡與航點資訊 <span style="color: var(--tiger-yellow);">Station Map</span></h1>
-        <p style="font-size: 1rem; color: #eee; max-width: 800px; margin: 0 auto;">探索 vTGW 涵蓋台灣基地的日、韓、東南亞動態航線圖，點選左側卡片即可檢視專屬飛行航路。</p>
+        <p style="font-size: 1rem; color: #eee; max-width: 800px; margin: 0 auto;">依據真實虎航最新班表規劃，點選左側卡片即可檢視專屬飛行航路與航班資訊。</p>
     </section>
 
     <!-- 主內容區 -->
@@ -290,8 +291,8 @@
                 
                 <!-- 台灣營運基地 -->
                 <div class="station-category">
-                    <span>台灣主營運基地</span>
-                    <span style="font-size: 0.75rem; color: var(--tiger-orange);">Hubs</span>
+                    <span>台灣營運基地</span>
+                    <span style="font-size: 0.75rem; color: var(--tiger-orange);">Bases</span>
                 </div>
                 
                 <div class="station-card active" onclick="selectStation('TPE')">
@@ -327,6 +328,17 @@
                     </div>
                 </div>
 
+                <div class="station-card" onclick="selectStation('TNN')">
+                    <img src="https://images.unsplash.com/photo-1571216332002-282dce467b32?q=80&w=300" class="station-thumb" alt="台南">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">TNN</span>
+                            <span class="station-name">台南</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RCNN<br><strong>特色：</strong>季節性包機航點 (沖繩/熊本)</div>
+                    </div>
+                </div>
+
                 <!-- 日本航點 -->
                 <div class="station-category">
                     <span>日本航點</span>
@@ -340,7 +352,7 @@
                             <span class="station-code">NRT</span>
                             <span class="station-name">東京 (成田)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJAA<br><strong>航廈：</strong>第二航廈</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJAA | <strong>班次：</strong>IT200/202/280</div>
                     </div>
                 </div>
 
@@ -351,7 +363,7 @@
                             <span class="station-code">HND</span>
                             <span class="station-name">東京 (羽田)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJTT<br><strong>航廈：</strong>第三航廈</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJTT | <strong>班次：</strong>IT216/217</div>
                     </div>
                 </div>
 
@@ -362,7 +374,7 @@
                             <span class="station-code">KIX</span>
                             <span class="station-name">大阪 (關西)</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJBB<br><strong>航廈：</strong>第一航廈</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJBB | <strong>班次：</strong>IT210/212/284</div>
                     </div>
                 </div>
 
@@ -373,4 +385,336 @@
                             <span class="station-code">FUK</span>
                             <span class="station-name">福岡</span>
                         </div>
-                        <div class="station-info"><strong>ICAO：</strong>RJFF<br><strong>航廈：</strong>國際航廈</div>
+                        <div class="station-info"><strong>ICAO：</strong>RJFF | <strong>班次：</strong>IT240/720/270</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('OKA')">
+                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=300" class="station-thumb" alt="沖繩">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">OKA</span>
+                            <span class="station-name">沖繩 (那霸)</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>ROAH | <strong>航線：</strong>桃/中/高/南皆有飛航</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('CTS')">
+                    <img src="https://images.unsplash.com/photo-1578637387939-43c525550085?q=80&w=300" class="station-thumb" alt="札幌">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">CTS</span>
+                            <span class="station-name">札幌 (新千歲)</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJCC | <strong>班次：</strong>IT234/260</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('HKD')">
+                    <img src="https://images.unsplash.com/photo-1578637387939-43c525550085?q=80&w=300" class="station-thumb" alt="函館">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">HKD</span>
+                            <span class="station-name">函館</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJCH | <strong>班次：</strong>IT236/237</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('SDJ')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="仙台">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">SDJ</span>
+                            <span class="station-name">仙台</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJSS | <strong>班次：</strong>IT254/772</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('HNA')">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=300" class="station-thumb" alt="花卷">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">HNA</span>
+                            <span class="station-name">花卷</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RJSI | <strong>班次：</strong>IT258/259</div>
+                    </div>
+                </div>
+
+                <!-- 韓國航點 -->
+                <div class="station-category">
+                    <span>韓國航點</span>
+                    <span style="font-size: 0.75rem; color: #888;">South Korea</span>
+                </div>
+
+                <div class="station-card" onclick="selectStation('ICN')">
+                    <img src="https://images.unsplash.com/photo-1538485399081-06af2fc99641?q=80&w=300" class="station-thumb" alt="首爾仁川">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">ICN</span>
+                            <span class="station-name">首爾 (仁川)</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RKSI | <strong>班次：</strong>IT602/603</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('GMP')">
+                    <img src="https://images.unsplash.com/photo-1538485399081-06af2fc99641?q=80&w=300" class="station-thumb" alt="首爾金浦">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">GMP</span>
+                            <span class="station-name">首爾 (金浦)</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RKSS | <strong>班次：</strong>IT662/663 (高雄直飛)</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('PUS')">
+                    <img src="https://images.unsplash.com/photo-1578335596538-2819cdb64426?q=80&w=300" class="station-thumb" alt="釜山">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">PUS</span>
+                            <span class="station-name">釜山</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RKPK | <strong>班次：</strong>IT606/607</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('CJU')">
+                    <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=300" class="station-thumb" alt="濟州">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">CJU</span>
+                            <span class="station-name">濟州</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>RKPC | <strong>航線：</strong>桃/中/高皆有飛航</div>
+                    </div>
+                </div>
+
+                <!-- 東南亞航點 -->
+                <div class="station-category">
+                    <span>東南亞航點</span>
+                    <span style="font-size: 0.75rem; color: #888;">Southeast Asia</span>
+                </div>
+
+                <div class="station-card" onclick="selectStation('HKT')">
+                    <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?q=80&w=300" class="station-thumb" alt="普吉島">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">HKT</span>
+                            <span class="station-name">泰國普吉島</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>VTSP | <strong>班次：</strong>IT503/504</div>
+                    </div>
+                </div>
+
+                <div class="station-card" onclick="selectStation('DAD')">
+                    <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?q=80&w=300" class="station-thumb" alt="峴港">
+                    <div class="station-details">
+                        <div class="station-title-row">
+                            <span class="station-code">DAD</span>
+                            <span class="station-name">越南峴港</span>
+                        </div>
+                        <div class="station-info"><strong>ICAO：</strong>VVDN | <strong>班次：</strong>IT551/585 (桃/高直飛)</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 右側：完整深色 SVG 向量地圖 -->
+            <div class="station-map-view">
+                <svg id="tiger-svg-map" viewBox="0 0 950 820" preserveAspectRatio="xMidYMid meet">
+                    <!-- 陸地輪廓 (涵蓋東南亞、華南、台灣、日韓) -->
+                    <g fill="#2b2d35" stroke="#383c46" stroke-width="1.2">
+                        <!-- 中國大陸與中南半島 -->
+                        <path d="M 0,220 L 150,220 L 220,290 L 260,390 L 270,510 L 230,620 L 170,700 L 90,750 L 0,780 Z" />
+                        <!-- 朝鮮半島 -->
+                        <path d="M 330,220 L 400,230 L 430,280 L 445,345 L 430,420 L 375,415 L 340,360 L 335,280 Z" />
+                        <!-- 濟州島 -->
+                        <path d="M 360,455 Q 375,450 385,460 Q 375,470 360,465 Z" />
+                        <!-- 台灣本島 -->
+                        <path d="M 270,620 Q 295,640 290,695 Q 265,745 250,735 Q 245,670 270,620 Z" />
+                        <!-- 日本北海道 -->
+                        <path d="M 750,90 L 850,95 L 880,165 L 820,195 L 755,180 L 730,135 Z" />
+                        <!-- 日本本州 -->
+                        <path d="M 715,220 L 770,250 L 785,340 L 710,430 L 610,470 L 525,485 L 535,460 L 635,420 L 685,320 L 685,245 Z" />
+                        <!-- 日本四國 -->
+                        <path d="M 545,500 L 615,485 L 610,540 L 540,535 Z" />
+                        <!-- 日本九州 -->
+                        <path d="M 455,485 L 505,480 L 515,555 L 475,595 L 440,550 Z" />
+                        <!-- 沖繩群島 -->
+                        <path d="M 410,650 Q 430,645 440,655 Q 425,665 410,660 Z" />
+                    </g>
+
+                    <!-- 大字區域標籤 -->
+                    <text x="205" y="685" class="region-watermark">台 灣</text>
+                    <text x="350" y="320" class="region-watermark">韓 國</text>
+                    <text x="670" y="350" class="region-watermark">日 本</text>
+
+                    <!-- 動態航線層 -->
+                    <g id="routes-layer"></g>
+
+                    <!-- 航點與標籤層 -->
+                    <g id="cities-layer"></g>
+                </svg>
+
+                <div class="map-overlay-badge">
+                    <div>當前航網：<strong id="current-station-label">台北 (桃園) - 輻射航線</strong></div>
+                    <button class="btn-show-all" onclick="drawAllRoutes()">顯示全航網連線</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 頁尾 -->
+    <footer>
+        <p>&copy; 2026 Virtual Tigerair Taiwan (vTGW). All Rights Reserved.</p>
+        <p class="footer-disclaimer">
+            For Flight Simulation Use Only on the VATSIM Network. Not affiliated with Tigerair Taiwan.
+        </p>
+    </footer>
+
+    <script>
+        // 航點資料庫 (依據 PDF 全面補齊)
+        const STATIONS = {
+            TPE: { name: "台北桃園", icao: "RCTP", x: 275, y: 640, isHub: true },
+            KHH: { name: "高雄",     icao: "RCKH", x: 265, y: 710, isHub: true },
+            RMQ: { name: "台中",     icao: "RCMQ", x: 270, y: 665, isHub: true },
+            TNN: { name: "台南",     icao: "RCNN", x: 260, y: 690, isHub: true },
+            NRT: { name: "東京成田", icao: "RJAA", x: 745, y: 395 },
+            HND: { name: "東京羽田", icao: "RJTT", x: 730, y: 405 },
+            KIX: { name: "大阪關西", icao: "RJBB", x: 625, y: 465 },
+            FUK: { name: "福岡",     icao: "RJFF", x: 480, y: 505 },
+            OKA: { name: "沖繩",     icao: "ROAH", x: 425, y: 655 },
+            CTS: { name: "札幌新千歲",icao: "RJCC", x: 790, y: 175 },
+            HKD: { name: "函館",     icao: "RJCH", x: 755, y: 220 },
+            SDJ: { name: "仙台",     icao: "RJSS", x: 740, y: 330 },
+            HNA: { name: "花卷",     icao: "RJSI", x: 750, y: 280 },
+            ICN: { name: "首爾仁川", icao: "RKSI", x: 380, y: 285 },
+            GMP: { name: "首爾金浦", icao: "RKSS", x: 395, y: 295 },
+            PUS: { name: "釜山",     icao: "RKPK", x: 425, y: 375 },
+            CJU: { name: "濟州",     icao: "RKPC", x: 370, y: 460 },
+            HKT: { name: "普吉島",   icao: "VTSP", x: 80,  y: 790 },
+            DAD: { name: "峴港",     icao: "VVDN", x: 150, y: 720 }
+        };
+
+        const ROUTES = [
+            // 桃園
+            { from: 'TPE', to: 'NRT' }, { from: 'TPE', to: 'HND' }, { from: 'TPE', to: 'KIX' },
+            { from: 'TPE', to: 'FUK' }, { from: 'TPE', to: 'OKA' }, { from: 'TPE', to: 'CTS' },
+            { from: 'TPE', to: 'HKD' }, { from: 'TPE', to: 'SDJ' }, { from: 'TPE', to: 'HNA' },
+            { from: 'TPE', to: 'ICN' }, { from: 'TPE', to: 'PUS' }, { from: 'TPE', to: 'CJU' },
+            { from: 'TPE', to: 'HKT' }, { from: 'TPE', to: 'DAD' },
+            // 高雄
+            { from: 'KHH', to: 'NRT' }, { from: 'KHH', to: 'KIX' }, { from: 'KHH', to: 'FUK' },
+            { from: 'KHH', to: 'OKA' }, { from: 'KHH', to: 'CTS' }, { from: 'KHH', to: 'SDJ' },
+            { from: 'KHH', to: 'GMP' }, { from: 'KHH', to: 'CJU' }, { from: 'KHH', to: 'DAD' },
+            // 台中
+            { from: 'RMQ', to: 'NRT' }, { from: 'RMQ', to: 'OKA' }, { from: 'RMQ', to: 'CJU' },
+            // 台南
+            { from: 'TNN', to: 'OKA' }
+        ];
+
+        const routesLayer = document.getElementById('routes-layer');
+        const citiesLayer = document.getElementById('cities-layer');
+
+        // 繪製航點
+        Object.keys(STATIONS).forEach(code => {
+            const st = STATIONS[code];
+
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            g.style.cursor = 'pointer';
+            g.onclick = () => selectStation(code);
+
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', st.x);
+            circle.setAttribute('cy', st.y);
+            circle.setAttribute('r', st.isHub ? 6.5 : 4.5);
+            circle.setAttribute('fill', st.isHub ? '#ffc20e' : '#ffffff');
+            circle.setAttribute('stroke', st.isHub ? '#f37021' : '#ffc20e');
+            circle.setAttribute('stroke-width', 2);
+            circle.setAttribute('class', 'city-marker');
+
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', st.x + 8);
+            text.setAttribute('y', st.y + 4);
+            text.setAttribute('class', 'city-label');
+            text.textContent = `${st.name} (${code})`;
+
+            g.appendChild(circle);
+            g.appendChild(text);
+            citiesLayer.appendChild(g);
+        });
+
+        // 弧線計算
+        function getArcPath(p1, p2) {
+            const midX = (p1.x + p2.x) / 2;
+            const midY = (p1.y + p2.y) / 2;
+            const dx = p2.x - p1.x;
+            const dy = p2.y - p1.y;
+            const ctrlX = midX - dy * 0.16;
+            const ctrlY = midY + dx * 0.16;
+            return `M ${p1.x},${p1.y} Q ${ctrlX},${ctrlY} ${p2.x},${p2.y}`;
+        }
+
+        function selectStation(code) {
+            routesLayer.innerHTML = '';
+
+            document.querySelectorAll('.station-card').forEach(card => card.classList.remove('active'));
+            const selectedCard = Array.from(document.querySelectorAll('.station-card')).find(card => card.textContent.includes(code));
+            if (selectedCard) selectedCard.classList.add('active');
+
+            const isHub = STATIONS[code].isHub;
+            document.getElementById('current-station-label').textContent = `${STATIONS[code].name} (${code}) - 輻射航線`;
+
+            const filteredRoutes = ROUTES.filter(r => isHub ? r.from === code : (r.to === code || r.from === code));
+
+            filteredRoutes.forEach(r => {
+                const p1 = STATIONS[r.from];
+                const p2 = STATIONS[r.to];
+                const d = getArcPath(p1, p2);
+
+                const glow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                glow.setAttribute('d', d);
+                glow.setAttribute('class', 'flight-arc-glow');
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', d);
+                path.setAttribute('class', 'flight-arc');
+
+                routesLayer.appendChild(glow);
+                routesLayer.appendChild(path);
+            });
+        }
+
+        function drawAllRoutes() {
+            routesLayer.innerHTML = '';
+            document.querySelectorAll('.station-card').forEach(card => card.classList.remove('active'));
+            document.getElementById('current-station-label').textContent = "全航線網絡展示 (All Routes)";
+
+            ROUTES.forEach(r => {
+                const p1 = STATIONS[r.from];
+                const p2 = STATIONS[r.to];
+                const d = getArcPath(p1, p2);
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', d);
+                path.setAttribute('class', 'flight-arc');
+                path.style.opacity = '0.55';
+                path.style.strokeWidth = '1.6';
+
+                routesLayer.appendChild(path);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            selectStation('TPE');
+        });
+    </script>
+</body>
+</html>
