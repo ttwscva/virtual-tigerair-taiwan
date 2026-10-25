@@ -118,28 +118,35 @@
             box-shadow: none;
         }
 
+        /* 成功提示框（強化可見度） */
         #result-box {
             display: none;
-            padding: 18px 20px;
+            padding: 20px;
             margin-top: 25px;
             border-radius: 10px;
             text-align: center;
-            font-size: 1rem;
+            font-size: 1.05rem;
             line-height: 1.6;
+            animation: fadeIn 0.4s ease-in-out;
         }
 
         #result-box.success {
-            display: block;
-            background: #e6f9f0;
-            color: #046c4e;
-            border: 1.5px solid #31c48d;
+            display: block !important;
+            background: #def7ec !important;
+            color: #03543f !important;
+            border: 2px solid #31c48d !important;
         }
 
         #result-box.error {
-            display: block;
-            background: #fde8e8;
-            color: #9b1c1c;
-            border: 1.5px solid #f8b4b4;
+            display: block !important;
+            background: #fde8e8 !important;
+            color: #9b1c1c !important;
+            border: 2px solid #f8b4b4 !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 650px) {
@@ -173,33 +180,33 @@
                 <p>歡迎熱愛飛行模擬的朋友加入 SMARTCAT 行列！填寫下方表單將直接遞交申請至審核小組信箱。</p>
             </div>
 
-            <form id="joinForm">
+            <div>
                 <!-- 姓名 -->
                 <div class="form-group">
                     <label class="form-label">姓名 <span class="req">*</span></label>
-                    <input type="text" name="name" class="form-input" placeholder="請輸入您的姓名或暱稱" required>
+                    <input type="text" id="app_name" class="form-input" placeholder="請輸入您的姓名或暱稱" required>
                 </div>
 
                 <!-- 電子郵件 -->
                 <div class="form-group">
                     <label class="form-label">電子郵件 <span class="req">*</span></label>
-                    <input type="email" name="email" class="form-input" placeholder="your.email@example.com" required>
+                    <input type="email" id="app_email" class="form-input" placeholder="your.email@example.com" required>
                 </div>
 
                 <!-- 主旨 / 主要飛行平台 -->
                 <div class="form-group">
                     <label class="form-label">主旨 / 主要飛行平台 <span class="req">*</span></label>
-                    <input type="text" name="subject" class="form-input" placeholder="例如：申請加入飛行員 (主要使用 MSFS / X-Plane / P3D)" required>
+                    <input type="text" id="app_subject" class="form-input" placeholder="例如：申請加入飛行員 (主要使用 MSFS / X-Plane / P3D)" required>
                 </div>
 
                 <!-- 訊息內容 -->
                 <div class="form-group">
                     <label class="form-label">訊息內容 / 飛行經驗簡述 <span class="req">*</span></label>
-                    <textarea name="message" class="form-textarea" placeholder="請簡述您的飛行模擬經驗、喜愛的機型，或是對加入虛擬台灣虎航的想法與建議..." required></textarea>
+                    <textarea id="app_message" class="form-textarea" placeholder="請簡述您的飛行模擬經驗、喜愛的機型，或是對加入虛擬台灣虎航的想法與建議..." required></textarea>
                 </div>
 
                 <!-- 送出按鈕 -->
-                <button type="submit" id="submitBtn" class="btn-submit">
+                <button type="button" id="submitBtn" class="btn-submit" onclick="handleSendForm()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13"></line>
                         <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -209,14 +216,13 @@
 
                 <!-- 狀態提示框 -->
                 <div id="result-box"></div>
-            </form>
+            </div>
         </div>
     </div>
 
     <!-- 擬真台灣虎航風格頁尾 -->
     <footer class="tiger-footer">
         <div class="tiger-footer-top">
-            <!-- 欄位 1：關於虛擬台虎 -->
             <div class="footer-col">
                 <h4>關於虛擬台虎</h4>
                 <ul>
@@ -227,7 +233,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 2：航務專區 -->
             <div class="footer-col">
                 <h4>航務專區</h4>
                 <ul>
@@ -236,7 +241,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 3：飛行員指南 -->
             <div class="footer-col">
                 <h4>飛行員指南</h4>
                 <ul>
@@ -245,7 +249,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 4：關注我們 -->
             <div class="footer-col">
                 <h4>關注我們</h4>
                 <ul>
@@ -254,7 +257,6 @@
                 </ul>
             </div>
 
-            <!-- 欄位 5：飛行模擬支援工具 -->
             <div class="footer-col">
                 <h4>飛行模擬支援工具</h4>
                 <div class="app-btn-box">
@@ -276,7 +278,6 @@
             </div>
         </div>
 
-        <!-- 下方白色版權條 -->
         <div class="tiger-footer-bottom">
             <div class="footer-bottom-inner">
                 <div class="footer-brand-logo">
@@ -293,25 +294,35 @@
     </footer>
 
     <script>
-        const form = document.getElementById('joinForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const btnText = document.getElementById('btnText');
-        const resultBox = document.getElementById('result-box');
+        function handleSendForm() {
+            const name = document.getElementById('app_name').value.trim();
+            const email = document.getElementById('app_email').value.trim();
+            const subject = document.getElementById('app_subject').value.trim();
+            const message = document.getElementById('app_message').value.trim();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const resultBox = document.getElementById('result-box');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+            if (!name || !email || !subject || !message) {
+                alert('請完整填寫所有標註 * 的必填欄位！');
+                return;
+            }
 
             submitBtn.disabled = true;
             btnText.textContent = '傳送中，請稍候...';
             resultBox.className = '';
             resultBox.style.display = 'none';
 
-            const formData = new FormData(form);
-            const object = Object.fromEntries(formData);
-
-            // 綁定專屬 Access Key
-            object.access_key = '3c745982-96e8-4067-9c44-25c00cd45e7e';
-            object.from_name = '虛擬臺灣虎航官網申請系統';
+            const payload = {
+                access_key: '3c745982-96e8-4067-9c44-25c00cd45e7e',
+                from_name: '虛擬臺灣虎航官網申請系統',
+                subject: `【新飛行員加入申請】${subject} - ${name}`,
+                name: name,
+                email: email,
+                platform_and_subject: subject,
+                message: message
+            };
 
             fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
@@ -319,28 +330,39 @@
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify(object)
+                body: JSON.stringify(payload)
             })
             .then(async (response) => {
                 const res = await response.json();
-                if (response.status === 200) {
+                if (response.status === 200 || res.success) {
+                    // 1. 下方顯示綠色區塊
                     resultBox.className = 'success';
-                    resultBox.innerHTML = '<strong>🎉 發送成功！敬請等候審核通知。</strong><br><span style="font-size: 0.88rem; opacity: 0.9;">審核小組將盡速發送審核結果至您的電子信箱，感謝您的申請！</span>';
-                    form.reset();
+                    resultBox.innerHTML = '<strong style="font-size: 1.15rem;">🎉 發送成功！敬請等候審核通知。</strong><br><span style="font-size: 0.9rem; opacity: 0.9;">審核小組已收到您的資料，將盡速透過電子信箱與您聯繫！</span>';
+                    
+                    // 2. 清空輸入框
+                    document.getElementById('app_name').value = '';
+                    document.getElementById('app_email').value = '';
+                    document.getElementById('app_subject').value = '';
+                    document.getElementById('app_message').value = '';
+
+                    // 3. 彈出系統提示視窗確保使用者一定能看見
+                    alert('發送成功！敬請等候審核通知。');
                 } else {
                     resultBox.className = 'error';
                     resultBox.innerHTML = res.message || '傳送失敗，請稍候再試。';
+                    alert('傳送失敗：' + (res.message || '請確認後再試'));
                 }
             })
             .catch(() => {
                 resultBox.className = 'error';
                 resultBox.innerHTML = '連線異常，請確認網路連線或稍後再試。';
+                alert('連線異常，請確認網路連線。');
             })
             .finally(() => {
                 submitBtn.disabled = false;
                 btnText.textContent = '發送申請訊息';
             });
-        });
+        }
     </script>
 </body>
 </html>
