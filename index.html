@@ -88,6 +88,88 @@
             font-family: inherit;
         }
 
+        /* 影片主視覺 Banner 樣式 */
+        .hero-video-container {
+            position: relative;
+            width: 100%;
+            height: 85vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .hero-video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 2;
+        }
+
+        .hero-video-content {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            padding: 0 20px;
+            color: #ffffff;
+        }
+
+        .hero-video-content h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero-video-content h1 span {
+            color: var(--tiger-yellow);
+        }
+
+        .hero-video-content p {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #f1f5f9;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+        }
+
+        .hero-video-cta {
+            display: inline-block;
+            background-color: var(--tiger-yellow);
+            color: var(--tiger-black);
+            font-weight: 800;
+            font-size: 1.05rem;
+            padding: 14px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(255, 194, 14, 0.4);
+            transition: all 0.25s ease;
+        }
+
+        .hero-video-cta:hover {
+            transform: translateY(-2px);
+            background-color: #ffd000;
+            box-shadow: 0 6px 20px rgba(255, 194, 14, 0.6);
+        }
+
         /* 最新消息樣式 */
         .news-section {
             margin: 45px 0 60px;
@@ -146,12 +228,6 @@
             background: #fef08a;
             color: #713f12;
             border: 1px solid rgba(234, 179, 8, 0.4);
-        }
-
-        .badge-red {
-            background: #fee2e2;
-            color: #b91c1c;
-            border: 1px solid rgba(220, 38, 38, 0.3);
         }
 
         .news-body {
@@ -244,6 +320,9 @@
             .news-meta {
                 min-width: auto;
             }
+            .hero-video-content h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -276,21 +355,26 @@
             <a href="timetable.html" data-i18n="nav_timetable">時刻表</a>
             <a href="fleet.html" data-i18n="nav_fleet">機隊資料</a>
             <a href="team.html" data-i18n="nav_team">組織成員</a>
-            <a href="#about" data-i18n="nav_about">關於我們</a>
+            <a href="about.html" data-i18n="nav_about">關於我們</a>
             <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;" data-i18n="nav_join">加入我們</a>
         </nav>
     </header>
 
-    <!-- 主視覺 Banner -->
-    <section class="hero-slider">
-        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600');"></div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600');"></div>
-        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1500835556837-99ac94a94552?q=80&w=1600');"></div>
+    <!-- 主視覺 Banner 影片背景 -->
+    <section class="hero-video-container">
+        <!-- 背景影片 (請確保 assets/promo-video.mp4 存在) -->
+        <video autoplay muted loop playsinline class="hero-video-bg">
+            <source src="assets/promo-video.mp4" type="video/mp4">
+            您的瀏覽器不支援 HTML5 影片標籤。
+        </video>
+        <!-- 半透明遮罩層 -->
+        <div class="hero-video-overlay"></div>
 
-        <div class="hero-content">
+        <!-- 內容文字與按鈕 -->
+        <div class="hero-video-content">
             <h1 data-i18n="hero_title">熱情、專注、滑順 <span>想飛就飛！</span></h1>
             <p data-i18n="hero_desc">專為飛行模擬同好打造的擬真低成本航空體驗。桃園/高雄/台中/台南直飛日、韓、東南亞，邀請您加入 SMARTCAT 行列！</p>
-            <a href="join.html" class="hero-cta" data-i18n="hero_cta">立即申請加入飛行員</a>
+            <a href="join.html" class="hero-video-cta" data-i18n="hero_cta">立即申請加入飛行員</a>
         </div>
     </section>
 
@@ -299,13 +383,13 @@
         <!-- 最新消息公告專區 -->
         <section class="news-section" id="news">
             <h2 class="section-title" data-i18n="news_section_title">最新消息</h2>
-            <div class="news-card-wrapper" id="news-container">
+            <div class="news-card-wrapper">
                 
-                <!-- 第一項：官方網站全新整備上線 (已加上 data-i18n) -->
+                <!-- 第一項：官方網站全新整備上線 -->
                 <div class="news-item">
                     <div class="news-meta">
                         <span class="news-date">2026-10-25</span>
-                        <span class="news-badge badge-red" data-i18n="news_badge_primary">重要公告</span>
+                        <span class="news-badge badge-primary" data-i18n="news_badge_primary">重要公告</span>
                     </div>
                     <div class="news-body">
                         <h3 class="news-title" data-i18n="news_title_1">
@@ -329,11 +413,11 @@
                     </div>
                 </div>
 
-                <!-- 第三項：vAMSYS Pegasus ACARS 系統對接就緒 (已加上 data-i18n) -->
+                <!-- 第三項：vAMSYS Pegasus ACARS 系統對接就緒 -->
                 <div class="news-item">
                     <div class="news-meta">
                         <span class="news-date">2026-10-15</span>
-                        <span class="news-badge badge-red" data-i18n="news_badge_primary">航務資訊</span>
+                        <span class="news-badge badge-primary" data-i18n="news_badge_primary">航務資訊</span>
                     </div>
                     <div class="news-body">
                         <h3 class="news-title" data-i18n="news_title_3">
@@ -400,7 +484,7 @@
                 <a href="https://ourairports.com" target="_blank" class="partner-card">
                     <div class="partner-icon">🌐</div>
                     <div class="partner-name">OurAirports</div>
-                    <div class="partner-role" data-i18n="partner_ourairports_role">全球開源機場座標、跑道與航行資料庫支援</div>
+                    <div class="partner-role" data-i18n="partner_ourairports_role">全球開源機場座標, 跑道與航行資料庫支援</div>
                 </a>
 
             </div>
@@ -415,7 +499,7 @@
                 <h4 data-i18n="footer_col1_title">關於虛擬台虎</h4>
                 <ul>
                     <li><a href="#news" data-i18n="news_section_title">最新消息</a></li>
-                    <li><a href="#about" data-i18n="nav_about">公司簡介</a></li>
+                    <li><a href="about.html" data-i18n="nav_about">公司簡介</a></li>
                     <li><a href="fleet.html" data-i18n="nav_fleet">機隊資料</a></li>
                     <li><a href="team.html" data-i18n="nav_team">組織成員</a></li>
                     <li><a href="join.html" data-i18n="nav_join">招募加入我們</a></li>
@@ -433,8 +517,8 @@
             <div class="footer-col">
                 <h4 data-i18n="footer_col3_title">飛行員指南</h4>
                 <ul>
-                    <li><a href="#about" data-i18n="footer_novice">新手報到須知</a></li>
-                    <li><a href="#about" data-i18n="footer_faq">常見問題</a></li>
+                    <li><a href="about.html" data-i18n="footer_novice">新手報到須知</a></li>
+                    <li><a href="about.html" data-i18n="footer_faq">常見問題</a></li>
                 </ul>
             </div>
 
