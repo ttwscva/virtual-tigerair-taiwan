@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>組織成員與管理團隊 | Virtual Tigerair Taiwan 虛擬台灣虎航</title>
+    <title>組織成員 | Virtual Tigerair Taiwan 虛擬台灣虎航</title>
     
     <!-- 網站 Favicon 圖示 -->
     <link rel="icon" type="image/png" href="assets/vTTW_icon_128x128.png?v=3">
@@ -86,89 +86,100 @@
 
         .team-container {
             max-width: 1200px;
-            margin: 40px auto 80px;
+            margin: 40px auto 60px;
             padding: 0 20px;
         }
 
-        .team-section {
-            margin-bottom: 50px;
-        }
-
-        .team-section h2 {
-            font-size: 1.45rem;
-            color: var(--tiger-black);
+        .team-section-title {
+            font-size: 1.5rem;
             font-weight: 800;
-            border-bottom: 2px solid var(--tiger-yellow);
-            padding-bottom: 8px;
-            margin-bottom: 25px;
+            color: var(--tiger-black);
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            border-bottom: 3px solid var(--tiger-yellow);
+            padding-bottom: 10px;
         }
 
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
         }
 
-        .member-card {
+        .team-card {
             background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--tiger-yellow);
-            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            border-top: 5px solid var(--tiger-yellow);
+            padding: 30px 24px;
             text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
-        .member-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 24px rgba(255, 194, 14, 0.18);
+        .team-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(255, 194, 14, 0.2);
         }
 
-        .member-avatar {
-            width: 80px;
-            height: 80px;
+        .team-avatar-box {
+            width: 90px;
+            height: 90px;
+            background: #fffdf5;
+            border: 2.5px solid var(--tiger-yellow);
             border-radius: 50%;
-            background: #f1f3f5;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 2.2rem;
-            border: 2px solid var(--tiger-yellow);
+            margin: 0 auto 18px;
+            font-size: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        .member-role {
+        .team-badge {
             display: inline-block;
             background: #fff4ea;
             color: var(--tiger-orange);
-            font-size: 0.78rem;
+            border: 1px solid rgba(243, 112, 33, 0.25);
+            font-size: 0.8rem;
             font-weight: 800;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
-            margin-bottom: 10px;
-        }
-
-        .member-name {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--tiger-black);
-            margin-bottom: 4px;
-        }
-
-        .member-callsign {
-            font-family: monospace;
-            font-size: 0.88rem;
-            color: #6c757d;
             margin-bottom: 12px;
         }
 
-        .member-desc {
-            font-size: 0.86rem;
-            color: #555;
-            line-height: 1.55;
+        .team-name {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--tiger-black);
+            margin-bottom: 6px;
+        }
+
+        .team-id {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: #f8fafc;
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .team-desc {
+            font-size: 0.92rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin: 0;
+            text-align: left;
+            background: #fbfbfc;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border: 1px solid #edf0f2;
         }
     </style>
 </head>
@@ -207,62 +218,37 @@
     </header>
 
     <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600') center/cover; color: white; text-align: center; padding: 45px 20px;">
-        <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">組織成員與管理團隊 <span style="color: var(--tiger-yellow);">Staff &amp; Operations</span></h1>
-        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">致力於打造真實、專注且充滿熱情的虛擬飛行社群環境。</p>
+        <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">組織成員與管理團隊 <span style="color: var(--tiger-yellow);">Executive Team</span></h1>
+        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">帶領 Virtual Tigerair Taiwan 不斷前行、提供頂級模擬飛行體驗的核心幹部團隊。</p>
     </section>
 
     <div class="team-container">
-        <div class="team-section">
-            <h2>👔 核心管理團隊 (Executive Leadership)</h2>
-            <div class="team-grid">
-                <div class="member-card">
-                    <div class="member-avatar">👨‍✈️</div>
-                    <span class="member-role">執行長 / 創辦人</span>
-                    <h3 class="member-name">管理員</h3>
-                    <div class="member-callsign">TTW0001 / SMARTCAT 01</div>
-                    <p class="member-desc">綜理虛擬台灣虎航整體營運規劃、官方合作以及社群整體發展決策。</p>
-                </div>
-
-                <div class="member-card">
-                    <div class="member-avatar">🛫</div>
-                    <span class="member-role">航務主管</span>
-                    <h3 class="member-name">航務總監</h3>
-                    <div class="member-callsign">TTW0002 / SMARTCAT 02</div>
-                    <p class="member-desc">督導航線時刻規劃、標準作業程序 (SOP) 制定以及 vAMSYS 簽派資料庫維護。</p>
-                </div>
-            </div>
+        <div class="team-section-title">
+            <span>👔</span> 核心管理團隊 (Executive Leadership)
         </div>
 
-        <div class="team-section">
-            <h2>🛠️ 航務技術與組員發展 (Technical &amp; HR)</h2>
-            <div class="team-grid">
-                <div class="member-card">
-                    <div class="member-avatar">💻</div>
-                    <span class="member-role">資訊工程與網管</span>
-                    <h3 class="member-name">IT 管理小組</h3>
-                    <div class="member-callsign">TTW0003</div>
-                    <p class="member-desc">負責官網前端建置維護、GitHub Pages 部署及系統整合運作。</p>
-                </div>
+        <div class="team-grid">
+            <!-- 執行長 -->
+            <div class="team-card">
+                <div class="team-avatar-box">👨‍✈️</div>
+                <div class="team-badge">創辦人</div>
+                <div class="team-name">執行長</div>
+                <div class="team-id">TTW0001</div>
+                <p class="team-desc">綜理虛擬台灣虎航整體營運規劃、官方合作以及社群整體發展決策。</p>
+            </div>
 
-                <div class="member-card">
-                    <div class="member-avatar">📋</div>
-                    <span class="member-role">人事與組員審查</span>
-                    <h3 class="member-name">組員招募小組</h3>
-                    <div class="member-callsign">TTW0005</div>
-                    <p class="member-desc">負責新進飛行員資格審核、報到引導以及日常飛行紀錄稽核。</p>
-                </div>
-
-                <div class="member-card">
-                    <div class="member-avatar">🎨</div>
-                    <span class="member-role">塗裝與美工設計</span>
-                    <h3 class="member-name">視覺設計小組</h3>
-                    <div class="member-callsign">TTW0008</div>
-                    <p class="member-desc">負責 A320 虎斑彩繪塗裝繪製與官網各項多媒體視覺設計支援。</p>
-                </div>
+            <!-- 航務總監 -->
+            <div class="team-card">
+                <div class="team-avatar-box">✈️</div>
+                <div class="team-badge">航務主管</div>
+                <div class="team-name">航務總監</div>
+                <div class="team-id">TTW0002</div>
+                <p class="team-desc">督導航線時刻規劃、標準作業程序 (SOP) 制定以及 vAMSYS 簽派資料庫維護。</p>
             </div>
         </div>
     </div>
 
+    <!-- 頁尾 -->
     <footer class="tiger-footer">
         <div class="tiger-footer-top">
             <div class="footer-col">
@@ -293,7 +279,7 @@
             </div>
 
             <div class="footer-col">
-                <h4 data-i18n="footer_col4_title">關注我們</h4>
+                <h4>關注我們</h4>
                 <ul>
                     <li><a href="https://facebook.com" target="_blank" class="social-link" data-i18n="footer_fb">📘 Facebook 社團</a></li>
                     <li><a href="https://youtube.com" target="_blank" class="social-link" data-i18n="footer_yt">▶️ Youtube 頻道</a></li>
