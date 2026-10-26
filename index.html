@@ -265,7 +265,7 @@
 
         .partners-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
             margin-top: 25px;
         }
@@ -292,16 +292,18 @@
             box-shadow: 0 10px 24px rgba(255, 194, 14, 0.2);
         }
 
-        .partner-icon {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
+        .partner-logo {
+            height: 60px;
+            max-width: 100%;
+            object-fit: contain;
+            margin-bottom: 14px;
         }
 
         .partner-name {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--tiger-black);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .partner-role {
@@ -458,34 +460,26 @@
             </div>
         </div>
 
-        <!-- 合作夥伴專區 -->
+        <!-- 合作夥伴專區（已更新為 CatSim、FTAC、MFIS Production） -->
         <section class="partners-section" id="partners">
-            <h2 class="section-title">合作夥伴與技術支援</h2>
+            <h2 class="section-title">合作夥伴</h2>
             <div class="partners-grid">
                 
-                <a href="https://phpvms.net" target="_blank" class="partner-card">
-                    <div class="partner-icon">📊</div>
-                    <div class="partner-name">phpVMS</div>
-                    <div class="partner-role">開源航司運營核心與 ACARS 自動記錄系統</div>
-                </a>
+                <div class="partner-card">
+                    <img src="assets/CatSim.png" alt="CatSim Aviation Taipei" class="partner-logo">
+                    <div class="partner-name">CatSim Aviation Taipei</div>
+                </div>
 
-                <a href="https://simbrief.com" target="_blank" class="partner-card">
-                    <div class="partner-icon">📋</div>
-                    <div class="partner-name">SimBrief</div>
-                    <div class="partner-role">Navigraph 專業飛行簽派 (OFP) 與油量酬載計算</div>
-                </a>
+                <div class="partner-card">
+                    <img src="assets/FTAC.png" alt="飛虎戰術訓練中心" class="partner-logo">
+                    <div class="partner-name">飛虎戰術訓練中心</div>
+                    <div class="partner-role">Flying Tiger ACMI Center</div>
+                </div>
 
-                <a href="https://vatsim.net" target="_blank" class="partner-card">
-                    <div class="partner-icon">🎙️</div>
-                    <div class="partner-name">VATSIM</div>
-                    <div class="partner-role">全球擬真即時航管與線上虛擬飛行連線網絡</div>
-                </a>
-
-                <a href="https://ourairports.com" target="_blank" class="partner-card">
-                    <div class="partner-icon">🌐</div>
-                    <div class="partner-name">OurAirports</div>
-                    <div class="partner-role">全球開源機場座標, 跑道與航行資料庫支援</div>
-                </a>
+                <div class="partner-card">
+                    <img src="assets/mfis.png" alt="MFIS Production" class="partner-logo">
+                    <div class="partner-name">MFIS Production</div>
+                </div>
 
             </div>
         </section>
@@ -566,7 +560,7 @@
         </div>
     </footer>
 
-    <!-- 載入基本腳本（已移除 i18n.js） -->
+    <!-- 載入基本腳本 -->
     <script src="assets/site.js"></script>
     <script>
         function updateZuluClock() {
