@@ -88,6 +88,63 @@
             font-family: inherit;
         }
 
+        /* 手機版漢堡選單按鈕 */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--tiger-black);
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        @media (max-width: 992px) {
+            header {
+                justify-content: space-between;
+                padding: 12px 20px;
+                position: relative;
+            }
+            .mobile-menu-toggle {
+                display: block;
+            }
+            header nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #ffffff;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+                padding: 20px;
+                gap: 12px;
+                align-items: stretch;
+                z-index: 2000;
+                box-sizing: border-box;
+            }
+            header nav.active {
+                display: flex;
+            }
+            header nav a {
+                text-align: center;
+                padding: 10px;
+                border-radius: 6px;
+                background: #f8fafc;
+            }
+            .zulu-badge {
+                justify-content: center;
+            }
+            .lang-picker-wrap {
+                justify-content: center;
+                width: 100%;
+            }
+            .lang-select {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
         /* 影片主視覺 Banner 樣式 (高度 380px) */
         .hero-video-container {
             position: relative;
@@ -333,6 +390,10 @@
         <a href="index.html" class="tiger-logo-link">
             <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬台灣虎航" class="tiger-logo-img">
         </a>
+        
+        <!-- 手機版漢堡選單按鈕 -->
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+
         <nav>
             <div class="lang-picker-wrap">
                 <span>🌐</span>
@@ -368,7 +429,7 @@
         <div class="hero-video-content">
             <h1>熱情、專注、流暢 <span>想飛就飛！</span></h1>
             <p>專為飛行模擬同好打造的擬真低成本航空體驗。桃園/高雄/台中/台南直飛日、韓、東南亞，邀請您加入 SMARTCAT 行列！</p>
-            <a href="join.html" class="hero-video-cta">立即申請加入飛行員行列</a>
+            <a href="join.html" class="hero-video-cta">立即申請加入飛行員行列[span_2](start_span)[span_2](end_span)</a>
         </div>
     </section>
 
@@ -510,7 +571,7 @@
                     <li><a href="about.html">關於我們</a></li>
                     <li><a href="fleet.html">機隊資料</a></li>
                     <li><a href="team.html">組織成員</a></li>
-                    <li><a href="join.html">加入我們</a></li>
+                    <li><a href="join.html">加入我們[span_3](start_span)[span_3](end_span)</a></li>
                 </ul>
             </div>
 
@@ -576,6 +637,11 @@
 
     <script src="assets/site.js"></script>
     <script>
+        function toggleMobileMenu() {
+            const nav = document.querySelector('header nav');
+            nav.classList.toggle('active');
+        }
+
         function updateZuluClock() {
             const now = new Date();
             const h = String(now.getUTCHours()).padStart(2, '0');
