@@ -88,17 +88,17 @@
             font-family: inherit;
         }
 
-        /* 影片主視覺 Banner 樣式 */
+        /* 影片主視覺 Banner 樣式 (高度已縮小至 500px) */
         .hero-video-container {
             position: relative;
             width: 100%;
-            height: 85vh;
-            min-height: 500px;
+            height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             text-align: center;
+            background: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600') center/cover no-repeat;
         }
 
         .hero-video-bg {
@@ -133,9 +133,9 @@
         }
 
         .hero-video-content h1 {
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             font-weight: 800;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
@@ -144,9 +144,9 @@
         }
 
         .hero-video-content p {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             color: #f1f5f9;
             text-shadow: 0 1px 6px rgba(0,0,0,0.5);
         }
@@ -156,8 +156,8 @@
             background-color: var(--tiger-yellow);
             color: var(--tiger-black);
             font-weight: 800;
-            font-size: 1.05rem;
-            padding: 14px 32px;
+            font-size: 1rem;
+            padding: 12px 28px;
             border-radius: 30px;
             text-decoration: none;
             box-shadow: 0 4px 15px rgba(255, 194, 14, 0.4);
@@ -323,6 +323,9 @@
             .hero-video-content h1 {
                 font-size: 2rem;
             }
+            .hero-video-container {
+                height: 400px;
+            }
         }
     </style>
 </head>
@@ -360,10 +363,10 @@
         </nav>
     </header>
 
-    <!-- 主視覺 Banner 影片背景 -->
+    <!-- 主視覺 Banner 影片背景 (高度 500px，附帶備援圖片底圖) -->
     <section class="hero-video-container">
-        <!-- 背景影片 (請確保 assets/promo-video.mp4 存在) -->
-        <video autoplay muted loop playsinline class="hero-video-bg">
+        <!-- 背景影片 -->
+        <video autoplay muted loop playsinline preload="auto" class="hero-video-bg">
             <source src="assets/promo-video.mp4" type="video/mp4">
             您的瀏覽器不支援 HTML5 影片標籤。
         </video>
@@ -372,7 +375,7 @@
 
         <!-- 內容文字與按鈕 -->
         <div class="hero-video-content">
-            <h1 data-i18n="hero_title">熱情、專注、滑順 <span>想飛就飛！</span></h1>
+            <h1 data-i18n="hero_title">熱情、專注、流暢 <span>想飛就飛！</span></h1>
             <p data-i18n="hero_desc">專為飛行模擬同好打造的擬真低成本航空體驗。桃園/高雄/台中/台南直飛日、韓、東南亞，邀請您加入 SMARTCAT 行列！</p>
             <a href="join.html" class="hero-video-cta" data-i18n="hero_cta">立即申請加入飛行員</a>
         </div>
@@ -421,9 +424,9 @@
                     </div>
                     <div class="news-body">
                         <h3 class="news-title" data-i18n="news_title_3">
-                            vAMSYS Pegasus ACARS 系統對接就緒
+                            phpVMS 航務與 ACARS 系統對接就緒
                         </h3>
-                        <p class="news-desc" data-i18n="news_desc_3">vTTW 樞紐基地（RCTP）與呼號通訊參數已配置完成，支援自動 PIREP 與連線記錄，歡迎飛行員依指引完成報到。</p>
+                        <p class="news-desc" data-i18n="news_desc_3">vTTW 樞紐基地（RCTP）與呼號通訊參數已配置完成，支援線上報到、航班派遣與自動 PIREP 記錄，歡迎飛行員依指引完成報到。</p>
                     </div>
                 </div>
 
@@ -435,8 +438,8 @@
         <div class="cards-grid">
             <div class="card">
                 <div class="card-content">
-                    <h3 data-i18n="card1_title">✈️ 擬真航線與 vAMSYS</h3>
-                    <p data-i18n="card1_desc">串接業界頂尖 vAMSYS 系統，支援自動 PIREP 航班記錄與階級晉升考核，體驗真實 LCC 的營運快感。</p>
+                    <h3 data-i18n="card1_title">✈️ 擬真航線與系統</h3>
+                    <p data-i18n="card1_desc">串接高效 phpVMS 系統，支援線上報到、航班派遣與自動 PIREP 記錄，體驗真實 LCC 的營運快感。</p>
                     <a href="routes.html" class="card-link" data-i18n="card1_link">前往航線網絡 &rarr;</a>
                 </div>
             </div>
@@ -444,7 +447,7 @@
             <div class="card">
                 <div class="card-content">
                     <h3 data-i18n="card2_title">🎯 A320 機隊與高品質塗裝</h3>
-                    <p data-i18n="card2_desc">主力營運 Airbus A320ceo 與 A320neo，包含官方聯名與董陽孜書法等專屬彩繪機，讓您每一次進場都充滿自信。</p>
+                    <p data-i18n="card2_desc">主力營運 Airbus A320ceo 與 A320neo，包含官方聯名與專屬彩繪機，並持續解鎖現實未營運之特色機型。</p>
                     <a href="fleet.html" class="card-link" data-i18n="card2_link">查看完整機隊名冊 &rarr;</a>
                 </div>
             </div>
@@ -463,10 +466,10 @@
             <h2 class="section-title" data-i18n="partners_title">合作夥伴與技術支援</h2>
             <div class="partners-grid">
                 
-                <a href="https://vamsys.io" target="_blank" class="partner-card">
+                <a href="https://phpvms.net" target="_blank" class="partner-card">
                     <div class="partner-icon">📊</div>
-                    <div class="partner-name">vAMSYS</div>
-                    <div class="partner-role" data-i18n="partner_vamsys_role">航司運營核心與 Pegasus ACARS 自動記錄系統</div>
+                    <div class="partner-name">phpVMS</div>
+                    <div class="partner-role" data-i18n="partner_vamsys_role">開源航司運營核心與 ACARS 自動記錄系統</div>
                 </a>
 
                 <a href="https://simbrief.com" target="_blank" class="partner-card">
@@ -533,11 +536,11 @@
             <div class="footer-col">
                 <h4 data-i18n="footer_col5_title">飛行模擬支援工具</h4>
                 <div class="app-btn-box">
-                    <a href="https://vamsys.io" target="_blank" class="app-btn">
+                    <a href="https://phpvms.net" target="_blank" class="app-btn">
                         <span class="app-btn-icon">✈️</span>
                         <div class="app-btn-text">
-                            <small>Download ACARS</small>
-                            <span>vAMSYS Pegasus</span>
+                            <small>VA Management</small>
+                            <span>phpVMS System</span>
                         </div>
                     </a>
                     <a href="https://simbrief.com" target="_blank" class="app-btn">
@@ -559,7 +562,7 @@
                 <div class="footer-legal">
                     <div>Copyright &copy; 2026 Virtual Tigerair Taiwan. All rights reserved.</div>
                     <div style="margin-top: 4px; color: #777; font-size: 0.75rem;" data-i18n="footer_disclaimer">
-                        ⚠️ 虛擬航空社群免責聲明 (Disclaimer)：本網站與社群為非營利之飛行模擬愛好者團體（Virtual Airline），專供飛行模擬愛好者交流使用。支援微軟模擬飛行 (MSFS)、X-Plane 及 Prepar3D 等主流平台，且不限制連線網絡。本團體與真實世界的「台灣虎航股份有限公司 (Tigerair Taiwan)」無任何商業、法律或實質隸屬關係。所有商標與識別權利歸原版權所有者所有。
+                        ⚠️ 虛擬航空社群免責聲明 (Disclaimer)：本網站與社群為非營利之飛行模擬愛好者團體（Virtual Airline），專供飛行模擬愛好者交流使用。支援微軟模擬飛行 (MSFS)、X-Plane 及 Prepar3D 等主流平台，且不限制連線網絡。本團體與真實世界的「台灣虎航股份有限公司 (Tigerair Taiwan)」無任何商業, 法律或實質隸屬關係。所有商標與識別權利歸原版權所有者所有。
                     </div>
                 </div>
             </div>
