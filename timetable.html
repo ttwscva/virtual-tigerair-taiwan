@@ -3,391 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>航班時刻表 (Timetable) | Virtual Tigerair Taiwan 虛擬台灣虎航</title>
+    <title>航班時刻表 | Virtual Tigerair Taiwan 虛擬台灣虎航</title>
     
-    <!-- 網站 Favicon 圖示 -->
     <link rel="icon" type="image/png" href="assets/vTTW_icon_128x128.png?v=3">
     <link rel="icon" type="image/png" href="assets/favicon.png?v=3">
     <link rel="apple-touch-icon" href="assets/vTTW_icon_128x128.png?v=3">
 
     <link rel="stylesheet" href="assets/styles.css">
     <style>
+        body { background-color: #f8fafc; }
+        .page-header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff; padding: 50px 20px; text-align: center; margin-bottom: 40px;
+        }
+        .page-header h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; }
+        .page-header h1 span { color: var(--tiger-yellow); }
+        .page-header p { font-size: 1rem; color: #cbd5e1; max-width: 700px; margin: 0 auto; }
+        
+        .content-section {
+            background: #ffffff; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+            border-top: 5px solid var(--tiger-yellow); padding: 35px 40px; margin-bottom: 35px; overflow-x: auto;
+        }
+        .content-section h2 { font-size: 1.5rem; font-weight: 800; color: var(--tiger-black); margin-bottom: 20px; }
+        
+        table.timetable {
+            width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95rem; text-align: left;
+        }
+        table.timetable th, table.timetable td {
+            padding: 14px 16px; border-bottom: 1px solid #edf0f2; color: #334155;
+        }
+        table.timetable th {
+            background: #f8fafc; font-weight: 800; color: var(--tiger-black); border-top: 1px solid #e2e8f0; border-bottom: 2px solid #cbd5e1;
+        }
+        table.timetable tr:hover { background: #fffaf0; }
+
         .zulu-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-size: 0.85rem;
-            color: #1e293b;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+            display: inline-flex; align-items: center; gap: 8px; background: #f8fafc;
+            border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 12px; font-size: 0.85rem; color: #1e293b; font-weight: 700;
         }
-
-        .zulu-dot {
-            width: 7px;
-            height: 7px;
-            background-color: #10b981;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-            animation: zuluPulse 2s infinite;
-        }
-
-        .zulu-label {
-            font-size: 0.72rem;
-            font-weight: 800;
-            color: #64748b;
-            letter-spacing: 1px;
-        }
-
-        #zulu-clock {
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: #0f172a;
-            font-weight: 800;
-        }
-
-        @keyframes zuluPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.9); }
-        }
-
-        /* 語言切換選單樣式 */
-        .lang-picker-wrap {
-            display: inline-flex;
-            align-items: center;
-            background: #ffffff;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 2px 6px;
-            margin-right: 5px;
-            transition: border-color 0.2s;
-        }
-
-        .lang-picker-wrap:hover {
-            border-color: var(--tiger-yellow);
-        }
-
-        .lang-select {
-            border: none;
-            background: transparent;
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: #334155;
-            outline: none;
-            cursor: pointer;
-            padding: 3px 2px;
-            font-family: inherit;
-        }
-
-        .tt-container {
-            max-width: 1300px;
-            margin: 30px auto 60px;
-            padding: 0 20px;
-        }
-
-        .filter-toolbar {
-            background: #ffffff;
-            border-radius: 10px;
-            padding: 20px 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--tiger-yellow);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-        }
-
-        .hub-pills {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .hub-btn {
-            background: #f1f3f5;
-            color: var(--tiger-black);
-            border: 1px solid #ddd;
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .hub-btn:hover {
-            background: #e9ecef;
-        }
-
-        .hub-btn.active {
-            background: var(--tiger-yellow);
-            border-color: var(--tiger-orange);
-            color: #111;
-            box-shadow: 0 2px 6px rgba(255,194,14,0.4);
-        }
-
-        .search-box {
-            position: relative;
-            min-width: 280px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 9px 15px 9px 35px;
-            border: 1.5px solid #ddd;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .search-input:focus {
-            border-color: var(--tiger-yellow);
-        }
-
-        .search-box::before {
-            content: "🔍";
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.85rem;
-        }
-
-        .route-schedule-card {
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-            margin-bottom: 20px;
-            border-left: 5px solid var(--tiger-yellow);
-            overflow: hidden;
-        }
-
-        .route-header {
-            padding: 16px 22px;
-            background: #fafbfc;
-            border-bottom: 1px solid #edf0f2;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .route-title {
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: var(--tiger-black);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .route-tag {
-            background: var(--tiger-black);
-            color: var(--tiger-yellow);
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        .schedule-table-wrap {
-            overflow-x: auto;
-        }
-
-        .schedule-table {
-            width: 100%;
-            min-width: 800px;
-            table-layout: fixed;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        .schedule-table th:nth-child(1), .schedule-table td:nth-child(1) { width: 14%; }
-        .schedule-table th:nth-child(2), .schedule-table td:nth-child(2) { width: 12%; }
-        .schedule-table th:nth-child(3), .schedule-table td:nth-child(3) { width: 12%; }
-        .schedule-table th:nth-child(4), .schedule-table td:nth-child(4) { width: 26%; }
-        .schedule-table th:nth-child(5), .schedule-table td:nth-child(5) { width: 36%; }
-
-        .schedule-table th {
-            background: #f8fafc;
-            color: #475569;
-            font-weight: 700;
-            padding: 12px 14px;
-            border-bottom: 1px solid #e2e8f0;
-            white-space: nowrap;
-        }
-
-        .schedule-table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid #edf2f7;
-            color: #334155;
-            white-space: nowrap;
-            vertical-align: middle;
-        }
-
-        .schedule-table tr:hover {
-            background: #fffdf5;
-        }
-
-        .fn-badge {
-            font-weight: 800;
-            color: var(--tiger-orange);
-            background: #fff4ea;
-            padding: 3px 10px;
-            border-radius: 4px;
-            display: inline-block;
-        }
-
-        .time-cell {
-            font-weight: 700;
-            color: #111;
-            font-size: 0.95rem;
-        }
-
-        .days-pill {
-            display: inline-flex;
-            gap: 6px;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .day-dot {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.72rem;
-            font-weight: 800;
-            line-height: 1;
-            background: #e2e8f0;
-            color: #94a3b8;
-            flex-shrink: 0;
-            user-select: none;
-            box-sizing: border-box;
-        }
-
-        .day-dot.on {
-            background: var(--tiger-yellow);
-            color: #111;
-        }
-
-        .day-dot.weekend {
-            background: var(--tiger-orange);
-            color: #fff;
-        }
-
-        .period-text {
-            font-size: 0.82rem;
-            color: #64748b;
-        }
+        .zulu-dot { width: 7px; height: 7px; background-color: #10b981; border-radius: 50%; display: inline-block; animation: zuluPulse 2s infinite; }
+        .zulu-label { font-size: 0.72rem; font-weight: 800; color: #64748b; }
+        #zulu-clock { font-family: monospace; font-size: 0.9rem; color: #0f172a; font-weight: 800; }
+        @keyframes zuluPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.9); } }
     </style>
 </head>
 <body>
 
     <header>
         <a href="index.html" class="tiger-logo-link">
-            <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬台灣虎航" class="tiger-logo-img">
+            <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan" class="tiger-logo-img">
         </a>
         <nav>
-            <!-- 語言切換選單 -->
-            <div class="lang-picker-wrap">
-                <span>🌐</span>
-                <select id="langSelect" class="lang-select" onchange="setLanguage(this.value)">
-                    <option value="zh">繁體中文</option>
-                    <option value="en">English</option>
-                    <option value="ja">日本語</option>
-                </select>
-            </div>
-
-            <!-- ZULU 即時時鐘 -->
             <div class="zulu-badge">
                 <span class="zulu-dot"></span>
                 <span class="zulu-label">ZULU</span>
                 <span id="zulu-clock">00:00:00Z</span>
             </div>
-
-            <!-- 統一順序：航線網絡 -> 時刻表 -> 機隊資料 -> 組織成員 -> 關於我們 -->
-            <a href="routes.html" data-i18n="nav_routes">航線網絡</a>
-            <a href="timetable.html" style="color: var(--tiger-orange);" data-i18n="nav_timetable">時刻表</a>
-            <a href="fleet.html" data-i18n="nav_fleet">機隊資料</a>
-            <a href="team.html" data-i18n="nav_team">組織成員</a>
-            <a href="index.html#about" data-i18n="nav_about">關於我們</a>
-            <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;" data-i18n="nav_join">加入我們</a>
+            <a href="routes.html">航線網絡</a>
+            <a href="timetable.html" style="color: var(--tiger-orange);">時刻表</a>
+            <a href="fleet.html">機隊資料</a>
+            <a href="team.html">組織成員</a>
+            <a href="about.html">關於我們</a>
+            <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
         </nav>
     </header>
 
-    <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1600') center/cover; color: white; text-align: center; padding: 45px 20px;">
-        <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">航班時刻表 <span style="color: var(--tiger-yellow);">Flight Timetable</span></h1>
-        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">即時同步台灣虎航最新夏季/冬季班表。專供虛擬航空飛行員連線派遣與 SimBrief 導航規劃。</p>
+    <section class="page-header">
+        <h1>vTTW <span>航班時刻表</span></h1>
+        <p>掌握最新定期航班與包機資訊，透過 vAMSYS 系統輕鬆完成航班排定與報到。</p>
     </section>
 
-    <div class="tt-container">
-        <div class="filter-toolbar">
-            <div class="hub-pills">
-                <button class="hub-btn active" onclick="filterHub('ALL', this)">全部出發地</button>
-                <button class="hub-btn" onclick="filterHub('TPE', this)">台北桃園 (TPE)</button>
-                <button class="hub-btn" onclick="filterHub('KHH', this)">高雄 (KHH)</button>
-                <button class="hub-btn" onclick="filterHub('RMQ', this)">台中 (RMQ)</button>
-                <button class="hub-btn" onclick="filterHub('TNN', this)">台南 (TNN)</button>
-            </div>
-            <div class="search-box">
-                <input type="text" id="searchInput" class="search-input" placeholder="搜尋班次 (如 IT200) 或目的地..." oninput="filterSearch()">
-            </div>
-        </div>
-
-        <div id="timetable-list"></div>
+    <div class="container">
+        <section class="content-section">
+            <h2>📅 熱門航線時刻參考</h2>
+            <p>以下為 vTTW 主要營運航班班表範例，實際調派與即時航班請登入 vAMSYS 查詢與檢索。</p>
+            
+            <table class="timetable">
+                <thead>
+                    <tr>
+                        <th>航班編號</th>
+                        <th>起飛 (DEP)</th>
+                        <th>抵達 (ARR)</th>
+                        <th>起飛時間 (UTC)</th>
+                        <th>抵達時間 (UTC)</th>
+                        <th>使用機型</th>
+                        <th>班期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>IT-200</strong></td>
+                        <td>RCTP (台北)</td>
+                        <td>RJTT (東京羽田)</td>
+                        <td>21:30</td>
+                        <td>01:45+1</td>
+                        <td>A320neo</td>
+                        <td>每日</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IT-210</strong></td>
+                        <td>RCTP (台北)</td>
+                        <td>RJBB (大阪關西)</td>
+                        <td>23:00</td>
+                        <td>03:05+1</td>
+                        <td>A320ceo</td>
+                        <td>一、三、五、日</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IT-602</strong></td>
+                        <td>RCTP (台北)</td>
+                        <td>RKSI (首爾仁川)</td>
+                        <td>00:45</td>
+                        <td>04:10</td>
+                        <td>A320neo</td>
+                        <td>每日</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IT-505</strong></td>
+                        <td>RCKH (高雄)</td>
+                        <td>WSSS (新加坡)</td>
+                        <td>05:00</td>
+                        <td>09:30</td>
+                        <td>A320neo</td>
+                        <td>二、四、六</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
     </div>
 
     <footer class="tiger-footer">
         <div class="tiger-footer-top">
             <div class="footer-col">
-                <h4 data-i18n="footer_col1_title">關於虛擬台虎</h4>
+                <h4>關於虛擬台虎</h4>
                 <ul>
-                    <li><a href="index.html#news" data-i18n="news_section_title">最新消息</a></li>
-                    <li><a href="index.html#about" data-i18n="nav_about">公司簡介</a></li>
-                    <li><a href="fleet.html" data-i18n="nav_fleet">機隊資料</a></li>
-                    <li><a href="team.html" data-i18n="nav_team">組織成員</a></li>
-                    <li><a href="join.html" data-i18n="nav_join">招募加入我們</a></li>
+                    <li><a href="index.html#news">最新消息</a></li>
+                    <li><a href="about.html">關於我們</a></li>
+                    <li><a href="fleet.html">機隊資料</a></li>
+                    <li><a href="team.html">組織成員</a></li>
+                    <li><a href="join.html">招募加入我們</a></li>
                 </ul>
             </div>
-
             <div class="footer-col">
-                <h4 data-i18n="footer_col2_title">航務專區</h4>
+                <h4>航務專區</h4>
                 <ul>
-                    <li><a href="routes.html" data-i18n="nav_routes">航線網絡</a></li>
-                    <li><a href="timetable.html" data-i18n="nav_timetable">航班時刻表</a></li>
+                    <li><a href="routes.html">航線網絡</a></li>
+                    <li><a href="timetable.html">航班時刻表</a></li>
                 </ul>
             </div>
-
             <div class="footer-col">
-                <h4 data-i18n="footer_col3_title">飛行員指南</h4>
+                <h4>飛行員指南</h4>
                 <ul>
-                    <li><a href="index.html#about" data-i18n="footer_novice">新手報到須知</a></li>
-                    <li><a href="index.html#about" data-i18n="footer_faq">常見問題</a></li>
+                    <li>新手報到須知</li>
+                    <li>常見問題</li>
                 </ul>
             </div>
-
             <div class="footer-col">
-                <h4 data-i18n="footer_col4_title">關注我們</h4>
+                <h4>關注我們</h4>
                 <ul>
-                    <li><a href="https://facebook.com" target="_blank" class="social-link" data-i18n="footer_fb">📘 Facebook 社團</a></li>
-                    <li><a href="https://youtube.com" target="_blank" class="social-link" data-i18n="footer_yt">▶️ Youtube 頻道</a></li>
+                    <li><a href="https://facebook.com" target="_blank" class="social-link">📘 Facebook 社團</a></li>
+                    <li><a href="https://youtube.com" target="_blank" class="social-link">▶️ Youtube 頻道</a></li>
                 </ul>
             </div>
-
             <div class="footer-col">
-                <h4 data-i18n="footer_col5_title">飛行模擬支援工具</h4>
+                <h4>飛行模擬支援工具</h4>
                 <div class="app-btn-box">
                     <a href="https://vamsys.io" target="_blank" class="app-btn">
                         <span class="app-btn-icon">✈️</span>
@@ -406,7 +185,6 @@
                 </div>
             </div>
         </div>
-
         <div class="tiger-footer-bottom">
             <div class="footer-bottom-inner">
                 <div class="footer-brand-logo">
@@ -414,252 +192,23 @@
                 </div>
                 <div class="footer-legal">
                     <div>Copyright &copy; 2026 Virtual Tigerair Taiwan. All rights reserved.</div>
-                    <div style="margin-top: 4px; color: #777; font-size: 0.75rem;" data-i18n="footer_disclaimer">
-                        ⚠️ 虛擬航空社群免責聲明 (Disclaimer)：本網站與社群為非營利之飛行模擬愛好者團體（Virtual Airline），專供飛行模擬愛好者交流使用。支援微軟模擬飛行 (MSFS)、X-Plane 及 Prepar3D 等主流平台，且不限制連線網絡。本團體與真實世界的「台灣虎航股份有限公司 (Tigerair Taiwan)」無任何商業、法律或實質隸屬關係。所有商標與識別權利歸原版權所有者所有。
-                    </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="assets/i18n.js"></script>
+    <script src="assets/site.js"></script>
     <script>
-        const TIMETABLE_DATA = [
-            // 日本 - 桃園
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '東京 (成田)', toCode: 'NRT', country: '日本', flights: [
-                { fn: 'IT200', dep: '06:10', arr: '10:35', days: [1,1,1,1,1,1,1], period: '2026/10/25 - 2027/03/27' },
-                { fn: 'IT202', dep: '13:30', arr: '17:30', days: [1,1,1,1,1,1,1], period: '冬季班表日常營運' },
-                { fn: 'IT700', dep: '15:30', arr: '19:55', days: [1,1,0,1,1,0,1], period: '夏季/特定旺季增班' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '東京 (羽田)', toCode: 'HND', country: '日本', flights: [
-                { fn: 'IT216', dep: '00:10', arr: '04:00', days: [1,1,1,1,1,1,1], period: '每日紅眼航班 (Night Shuttle)' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '大阪 (關西)', toCode: 'KIX', country: '日本', flights: [
-                { fn: 'IT210', dep: '06:55', arr: '10:25', days: [1,1,1,1,1,1,1], period: '2026/10/25 - 2027/03/27' },
-                { fn: 'IT212', dep: '14:40', arr: '17:55', days: [1,1,1,1,1,1,1], period: '午後主力航班' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '福岡', toCode: 'FUK', country: '日本', flights: [
-                { fn: 'IT240', dep: '06:45', arr: '10:00', days: [1,1,1,1,1,1,1], period: '每日早班執飛' },
-                { fn: 'IT720', dep: '13:40', arr: '16:55', days: [1,1,1,1,1,1,1], period: '午後常態航班' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '沖繩 (那霸)', toCode: 'OKA', country: '日本', flights: [
-                { fn: 'IT230', dep: '06:35', arr: '08:55', days: [1,1,1,1,1,1,1], period: '每日早出航班' },
-                { fn: 'IT232', dep: '18:20', arr: '20:40', days: [1,1,1,1,1,1,1], period: '每日晚班執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '札幌 (新千歲)', toCode: 'CTS', country: '日本', flights: [
-                { fn: 'IT234', dep: '06:20', arr: '10:55', days: [1,1,1,1,1,1,1], period: '北國主力航線' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '函館', toCode: 'HKD', country: '日本', flights: [
-                { fn: 'IT236', dep: '07:00', arr: '11:30', days: [1,0,1,0,1,0,1], period: '週二/四/六/日執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '仙台', toCode: 'SDJ', country: '日本', flights: [
-                { fn: 'IT254', dep: '14:35', arr: '18:45', days: [1,1,1,1,1,1,1], period: '東北門戶日常航班' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '花卷', toCode: 'HNA', country: '日本', flights: [
-                { fn: 'IT258', dep: '12:15', arr: '16:35', days: [0,0,1,0,0,1,0], period: '週三、週六定期包機' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '秋田', toCode: 'AXT', country: '日本', flights: [
-                { fn: 'IT256', dep: '08:30', arr: '12:40', days: [0,1,0,1,0,0,0], period: '週二、週四執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '高知', toCode: 'KCZ', country: '日本', flights: [
-                { fn: 'IT250', dep: '08:40', arr: '12:00', days: [0,0,1,0,0,1,0], period: '週三、週六執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '宮崎', toCode: 'KMI', country: '日本', flights: [
-                { fn: 'IT742', dep: '06:20', arr: '09:20', days: [1,0,1,0,0,1,0], period: '週一/三/六定期營運' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '佐賀', toCode: 'HSG', country: '日本', flights: [
-                { fn: 'IT246', dep: '07:10', arr: '10:25', days: [1,0,0,1,0,0,1], period: '週一/四/日執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '岡山', toCode: 'OKJ', country: '日本', flights: [
-                { fn: 'IT214', dep: '11:10', arr: '14:35', days: [1,1,1,1,1,1,1], period: '每日直飛' },
-                { fn: 'IT714', dep: '13:05', arr: '16:30', days: [1,1,1,1,1,1,1], period: '特定期間增班' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '新潟', toCode: 'KIJ', country: '日本', flights: [
-                { fn: 'IT228', dep: '13:55', arr: '18:00', days: [1,0,0,0,1,0,0], period: '週一、週五執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '石垣島', toCode: 'ISG', country: '日本', flights: [
-                { fn: 'IT736', dep: '06:35', arr: '08:35', days: [0,1,0,0,0,1,0], period: '海島航線' }
-            ]},
-
-            // 韓國 - 桃園
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '首爾 (仁川)', toCode: 'ICN', country: '韓國', flights: [
-                { fn: 'IT602', dep: '20:00', arr: '23:30', days: [1,1,1,1,1,1,1], period: '每日晚班執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '釜山', toCode: 'PUS', country: '韓國', flights: [
-                { fn: 'IT606', dep: '16:50', arr: '20:05', days: [1,1,1,1,1,1,1], period: '每日直航' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '濟州', toCode: 'CJU', country: '韓國', flights: [
-                { fn: 'IT654', dep: '06:40', arr: '09:50', days: [1,1,1,1,1,1,1], period: '晨間度假航班' }
-            ]},
-
-            // 東南亞 - 桃園
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '普吉島', toCode: 'HKT', country: '泰國', flights: [
-                { fn: 'IT503', dep: '13:50', arr: '17:15', days: [0,1,0,0,0,1,0], period: '南洋度假航線' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '峴港', toCode: 'DAD', country: '越南', flights: [
-                { fn: 'IT551', dep: '16:50', arr: '18:25', days: [1,1,1,1,1,1,1], period: '中越熱門航班' }
-            ]},
-
-            // 高雄 (KHH)
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '東京 (成田)', toCode: 'NRT', country: '日本', flights: [
-                { fn: 'IT280', dep: '08:00', arr: '12:10', days: [1,1,1,1,1,1,1], period: '南台灣直飛主力' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '大阪 (關西)', toCode: 'KIX', country: '日本', flights: [
-                { fn: 'IT284', dep: '06:55', arr: '10:40', days: [1,1,1,1,1,1,1], period: '每日早班直飛' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '福岡', toCode: 'FUK', country: '日本', flights: [
-                { fn: 'IT270', dep: '14:25', arr: '17:55', days: [1,1,1,1,1,1,1], period: '午後直飛航班' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '沖繩 (那霸)', toCode: 'OKA', country: '日本', flights: [
-                { fn: 'IT288', dep: '09:45', arr: '12:30', days: [1,1,1,1,1,1,1], period: '早班度假航線' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '札幌 (新千歲)', toCode: 'CTS', country: '日本', flights: [
-                { fn: 'IT260', dep: '08:15', arr: '12:55', days: [0,1,0,1,0,1,0], period: '定期北國航線' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '仙台', toCode: 'SDJ', country: '日本', flights: [
-                { fn: 'IT772', dep: '13:25', arr: '17:55', days: [1,0,1,0,0,1,0], period: '東北新航點' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '首爾 (金浦)', toCode: 'GMP', country: '韓國', flights: [
-                { fn: 'IT662', dep: '15:55', arr: '19:45', days: [1,1,1,1,1,1,1], period: '首爾商務熱門' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '濟州', toCode: 'CJU', country: '韓國', flights: [
-                { fn: 'IT670', dep: '16:00', arr: '19:30', days: [1,1,1,1,1,1,1], period: '每日濟州直航' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '峴港', toCode: 'DAD', country: '越南', flights: [
-                { fn: 'IT585', dep: '17:20', arr: '19:00', days: [1,1,1,1,1,1,1], period: '南台灣峴港直航' }
-            ]},
-
-            // 台中 (RMQ)
-            { hub: 'RMQ', from: '台中 (清泉崗)', fromCode: 'RMQ', to: '東京 (成田)', toCode: 'NRT', country: '日本', flights: [
-                { fn: 'IT778', dep: '16:45', arr: '20:25', days: [1,1,1,1,1,1,1], period: '中部直飛成田' }
-            ]},
-            { hub: 'RMQ', from: '台中 (清泉崗)', fromCode: 'RMQ', to: '沖繩 (那霸)', toCode: 'OKA', country: '日本', flights: [
-                { fn: 'IT792', dep: '07:10', arr: '09:40', days: [1,1,1,1,1,1,1], period: '中部那霸直航' }
-            ]},
-            { hub: 'RMQ', from: '台中 (清泉崗)', fromCode: 'RMQ', to: '濟州', toCode: 'CJU', country: '韓國', flights: [
-                { fn: 'IT632', dep: '07:00', arr: '10:15', days: [1,1,0,1,1,0,1], period: '中部度假航線' }
-            ]},
-
-            // 台南 (TNN)
-            { hub: 'TNN', from: '台南', fromCode: 'TNN', to: '沖繩 (那霸)', toCode: 'OKA', country: '日本', flights: [
-                { fn: 'IT796', dep: '15:20', arr: '17:50', days: [0,1,0,0,0,1,0], period: '定期/包機營運' }
-            ]},
-            { hub: 'TNN', from: '台南', fromCode: 'TNN', to: '熊本', toCode: 'KMJ', country: '日本', flights: [
-                { fn: 'IT794', dep: '15:55', arr: '19:00', days: [1,0,0,1,0,0,0], period: '南部特色直飛' }
-            ]}
-        ];
-
-        let activeHub = 'ALL';
-
-        function renderTimetable(data) {
-            const container = document.getElementById('timetable-list');
-            container.innerHTML = '';
-
-            if (data.length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding:50px; color:#888;">找不到符合條件的航班資訊。</div>';
-                return;
-            }
-
-            const dayNames = ['日', '一', '二', '三', '四', '五', '六'];
-
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'route-schedule-card';
-
-                let rowsHtml = '';
-                item.flights.forEach(f => {
-                    let dotsHtml = '';
-                    f.days.forEach((on, idx) => {
-                        const isWknd = (idx === 0 || idx === 6);
-                        dotsHtml += `<span class="day-dot ${on ? (isWknd ? 'weekend' : 'on') : ''}">${dayNames[idx]}</span>`;
-                    });
-
-                    rowsHtml += `
-                        <tr>
-                            <td><span class="fn-badge">${f.fn}</span></td>
-                            <td class="time-cell">${f.dep}</td>
-                            <td class="time-cell">${f.arr}</td>
-                            <td><div class="days-pill">${dotsHtml}</div></td>
-                            <td class="period-text">${f.period}</td>
-                        </tr>
-                    `;
-                });
-
-                card.innerHTML = `
-                    <div class="route-header">
-                        <div class="route-title">
-                            <span>${item.from} → ${item.to}</span>
-                            <span class="route-tag">${item.fromCode} - ${item.toCode}</span>
-                        </div>
-                        <span style="font-size:0.85rem; color:#666; font-weight:bold;">${item.country}</span>
-                    </div>
-                    <div class="schedule-table-wrap">
-                        <table class="schedule-table">
-                            <thead>
-                                <tr>
-                                    <th>航班號</th>
-                                    <th>起飛</th>
-                                    <th>抵達</th>
-                                    <th>飛航日</th>
-                                    <th>適合執飛/出發期間</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${rowsHtml}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function filterHub(hub, btn) {
-            activeHub = hub;
-            document.querySelectorAll('.hub-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            applyFilters();
-        }
-
-        function filterSearch() {
-            applyFilters();
-        }
-
-        function applyFilters() {
-            const query = document.getElementById('searchInput').value.trim().toLowerCase();
-            let filtered = TIMETABLE_DATA;
-
-            if (activeHub !== 'ALL') {
-                filtered = filtered.filter(item => item.hub === activeHub);
-            }
-
-            if (query) {
-                filtered = filtered.filter(item => {
-                    const matchCity = item.from.toLowerCase().includes(query) || item.to.toLowerCase().includes(query) || item.toCode.toLowerCase().includes(query);
-                    const matchFlight = item.flights.some(f => f.fn.toLowerCase().includes(query));
-                    return matchCity || matchFlight;
-                });
-            }
-
-            renderTimetable(filtered);
-        }
-
         function updateZuluClock() {
             const now = new Date();
             const h = String(now.getUTCHours()).padStart(2, '0');
             const m = String(now.getUTCMinutes()).padStart(2, '0');
             const s = String(now.getUTCSeconds()).padStart(2, '0');
             const clockEl = document.getElementById('zulu-clock');
-            if (clockEl) {
-                clockEl.textContent = `${h}:${m}:${s}Z`;
-            }
+            if (clockEl) clockEl.textContent = `${h}:${m}:${s}Z`;
         }
         setInterval(updateZuluClock, 1000);
         updateZuluClock();
-
-        window.addEventListener('DOMContentLoaded', () => {
-            renderTimetable(TIMETABLE_DATA);
-        });
     </script>
 </body>
 </html>
