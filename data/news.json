@@ -1,0 +1,50 @@
+[
+  {
+    "id": "news_1729840000001",
+    "date": "2026-10-25",
+    "tag_id": "tag_notice",
+    "title": {
+      "zh": "Virtual Tigerair Taiwan 官方網站全新整備上線",
+      "en": "Virtual Tigerair Taiwan Official Website Newly Overhauled and Online",
+      "ja": "Virtual Tigerair Taiwan 公式サイトが新しくリニューアルオープン"
+    },
+    "content": {
+      "zh": "全新官方網站正式啟用！完整整合 A320 家族機隊清冊、互動式全航網地圖及最新時刻表，為熱愛虛擬飛行的飛友提供擬真且流暢的營運環境。",
+      "en": "The new official website is officially live! Fully integrated with A320 family fleet rosters, interactive route maps, and the latest timetables, providing a realistic and smooth operational environment for flight simulation fans.",
+      "ja": "新しい公式サイトが正式公開！A320ファミリーの機材リスト、インタラクティブな路線図、最新の時刻表が完全に統合され、フライトシムファンにリアルでスムーズな運航環境を提供します。"
+    },
+    "link": ""
+  },
+  {
+    "id": "news_1729840000002",
+    "date": "2026-10-20",
+    "tag_id": "tag_recruit",
+    "title": {
+      "zh": "2026 SMARTCAT 飛行組員熱烈招募中",
+      "en": "2026 SMARTCAT Pilot Recruitment Now Open",
+      "ja": "2026 SMARTCAT パイロット募集中"
+    },
+    "content": {
+      "zh": "歡迎各主流飛行模擬平台（MSFS / X-Plane / P3D）愛好者加入行列。申請表單已改版為直通審核信箱，敬請踴躍投遞！",
+      "en": "Welcoming enthusiasts from all major flight simulation platforms (MSFS / X-Plane / P3D). Application forms now feature direct review emails, apply now!",
+      "ja": "主要なフライトシミュレーションプラットフォーム（MSFS / X-Plane / P3D）の愛好家を歓迎します。応募フォームが直接審査メールにリニューアルされました。奮ってご応募ください！"
+    },
+    "link": "join.html"
+  },
+  {
+    "id": "news_1729840000003",
+    "date": "2026-10-15",
+    "tag_id": "tag_flightops",
+    "title": {
+      "zh": "vAMSYS Pegasus ACARS 系統對接就緒",
+      "en": "vAMSYS Pegasus ACARS System Integration Ready",
+      "ja": "vAMSYS Pegasus ACARS システム接続準備完了"
+    },
+    "content": {
+      "zh": "vTTW 樞紐基地（RCTP）與呼號通訊參數已配置完成，支援自動 PIREP 與連線記錄，歡迎飛行員依指引完成報到。",
+      "en": "vTTW hub base (RCTP) and callsign communication parameters have been successfully configured, supporting automatic PIREP and flight tracking. Pilots are welcome to check in according to the guidelines.",
+      "ja": "vTTWハブ拠点（RCTP）およびコールサイン通信パラメータの設定が完了し、自動PIREPとフライト記録をサポートします。手順に従ってチェックインしてください。"
+    },
+    "link": ""
+  }
+]

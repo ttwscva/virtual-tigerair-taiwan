@@ -148,6 +148,12 @@
             border: 1px solid rgba(234, 179, 8, 0.4);
         }
 
+        .badge-red {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
         .news-body {
             flex-grow: 1;
         }
@@ -293,13 +299,13 @@
         <!-- 最新消息公告專區 -->
         <section class="news-section" id="news">
             <h2 class="section-title" data-i18n="news_section_title">最新消息</h2>
-            <div class="news-card-wrapper">
+            <div class="news-card-wrapper" id="news-container">
                 
                 <!-- 第一項：官方網站全新整備上線 (已加上 data-i18n) -->
                 <div class="news-item">
                     <div class="news-meta">
                         <span class="news-date">2026-10-25</span>
-                        <span class="news-badge badge-primary" data-i18n="news_badge_primary">重要公告</span>
+                        <span class="news-badge badge-red" data-i18n="news_badge_primary">重要公告</span>
                     </div>
                     <div class="news-body">
                         <h3 class="news-title" data-i18n="news_title_1">
@@ -327,7 +333,7 @@
                 <div class="news-item">
                     <div class="news-meta">
                         <span class="news-date">2026-10-15</span>
-                        <span class="news-badge badge-primary" data-i18n="news_badge_primary">航務資訊</span>
+                        <span class="news-badge badge-red" data-i18n="news_badge_primary">航務資訊</span>
                     </div>
                     <div class="news-body">
                         <h3 class="news-title" data-i18n="news_title_3">
