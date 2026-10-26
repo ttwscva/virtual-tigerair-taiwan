@@ -866,9 +866,14 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
 
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline" onclick="closeNewsModal()" style="color: #64748b; border-color: #cbd5e1;">取消</button>
-                    <button type="submit" class="btn btn-primary" id="submitBtn">儲存發布</button>
+                <div class="modal-footer" style="justify-content: space-between;">
+                    <div>
+                        <button type="button" class="btn btn-outline btn-sm" id="clearDraftBtn" onclick="clearCreateDraft()" style="color: #94a3b8; border-color: #cbd5e1;">清空重填</button>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="btn btn-outline" onclick="closeNewsModal()" style="color: #64748b; border-color: #cbd5e1;">取消</button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">儲存發布</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -898,6 +903,38 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
     </div>
 
     <script>
+        // 新增公告草稿暫存 (在不 refresh 情況下保留輸入內容)
+        let createDraft = null;
+
+        // 即時保存新增草稿
+        function saveCreateDraft() {
+            if (document.getElementById('formAction').value === 'create') {
+                createDraft = {
+                    date: document.getElementById('newsDate').value,
+                    badge_type: document.getElementById('badgeType').value,
+                    link: document.getElementById('newsLink').value,
+                    badge_zh: document.getElementById('badge_zh').value,
+                    title_zh: document.getElementById('title_zh').value,
+                    content_zh: document.getElementById('content_zh').value,
+                    badge_en: document.getElementById('badge_en').value,
+                    title_en: document.getElementById('title_en').value,
+                    content_en: document.getElementById('content_en').value,
+                    badge_ja: document.getElementById('badge_ja').value,
+                    title_ja: document.getElementById('title_ja').value,
+                    content_ja: document.getElementById('content_ja').value
+                };
+            }
+        }
+
+        // 監聽表單輸入與變更，隨時更新草稿
+        ['input', 'change'].forEach(evt => {
+            document.getElementById('newsForm').addEventListener(evt, function() {
+                if (document.getElementById('formAction').value === 'create') {
+                    saveCreateDraft();
+                }
+            });
+        });
+
         function switchTab(lang) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -913,19 +950,45 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
             document.getElementById('modalTitle').textContent = '新增公告';
             document.getElementById('formAction').value = 'create';
             document.getElementById('newsId').value = '';
-            document.getElementById('newsForm').reset();
-            document.getElementById('newsDate').value = new Date().toISOString().split('T')[0];
-            document.getElementById('badge_zh').value = '重要公告';
-            document.getElementById('badge_en').value = 'Notice';
-            document.getElementById('badge_ja').value = '重要告知';
+            document.getElementById('clearDraftBtn').style.display = 'inline-flex';
+
+            // 若已有暫存草稿則還原草稿，不清空使用者先前的輸入
+            if (createDraft) {
+                document.getElementById('newsDate').value = createDraft.date || new Date().toISOString().split('T')[0];
+                document.getElementById('badgeType').value = createDraft.badge_type || 'primary';
+                document.getElementById('newsLink').value = createDraft.link || '';
+
+                document.getElementById('badge_zh').value = createDraft.badge_zh || '';
+                document.getElementById('title_zh').value = createDraft.title_zh || '';
+                document.getElementById('content_zh').value = createDraft.content_zh || '';
+
+                document.getElementById('badge_en').value = createDraft.badge_en || '';
+                document.getElementById('title_en').value = createDraft.title_en || '';
+                document.getElementById('content_en').value = createDraft.content_en || '';
+
+                document.getElementById('badge_ja').value = createDraft.badge_ja || '';
+                document.getElementById('title_ja').value = createDraft.title_ja || '';
+                document.getElementById('content_ja').value = createDraft.content_ja || '';
+            } else {
+                document.getElementById('newsForm').reset();
+                document.getElementById('newsDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('badge_zh').value = '重要公告';
+                document.getElementById('badge_en').value = 'Notice';
+                document.getElementById('badge_ja').value = '重要告知';
+            }
+
             switchTab('zh');
             document.getElementById('newsModal').classList.add('active');
         }
 
         function openEditModal(item) {
+            // 打開編輯前，先暫存目前的新增草稿（若有）
+            saveCreateDraft();
+
             document.getElementById('modalTitle').textContent = '編輯公告';
             document.getElementById('formAction').value = 'update';
             document.getElementById('newsId').value = item.id;
+            document.getElementById('clearDraftBtn').style.display = 'none';
             
             document.getElementById('newsDate').value = item.date || '';
             document.getElementById('badgeType').value = item.badge_type || 'primary';
@@ -951,7 +1014,22 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
         }
 
         function closeNewsModal() {
+            // 關閉視窗時保存草稿
+            saveCreateDraft();
             document.getElementById('newsModal').classList.remove('active');
+        }
+
+        // 清空重填功能
+        function clearCreateDraft() {
+            if (confirm('確定要清空目前填寫的草稿內容重新開始嗎？')) {
+                createDraft = null;
+                document.getElementById('newsForm').reset();
+                document.getElementById('newsDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('badge_zh').value = '重要公告';
+                document.getElementById('badge_en').value = 'Notice';
+                document.getElementById('badge_ja').value = '重要告知';
+                switchTab('zh');
+            }
         }
 
         function openPwdModal() {
@@ -962,13 +1040,7 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
             document.getElementById('pwdModal').classList.remove('active');
         }
 
-        // 點擊背景關閉 Modal
-        window.onclick = function(e) {
-            const newsModal = document.getElementById('newsModal');
-            const pwdModal = document.getElementById('pwdModal');
-            if (e.target === newsModal) closeNewsModal();
-            if (e.target === pwdModal) closePwdModal();
-        };
+        // 注意：已移除點擊背景關閉 Modal 的設定，防止誤觸關閉
     </script>
 </body>
 </html>
