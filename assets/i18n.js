@@ -189,6 +189,79 @@ const translations = {
     }
 };
 
+// 動態公告資料緩存
+window.vttwNewsData = null;
+
+// HTML 字元跳脫防護 (XSS 防護)
+function escapeHtml(text) {
+    if (!text) return '';
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+// 依指定語系動態渲染公告
+function renderDynamicNews(lang) {
+    const container = document.getElementById('news-container');
+    if (!container || !window.vttwNewsData || window.vttwNewsData.length === 0) return;
+
+    const currentLang = lang || localStorage.getItem('vttw_lang') || 'zh';
+
+    let html = '';
+    window.vttwNewsData.forEach(item => {
+        const badgeText = (item.badge && (item.badge[currentLang] || item.badge['zh'])) || '公告';
+        const titleText = (item.title && (item.title[currentLang] || item.title['zh'])) || '';
+        const contentText = (item.content && (item.content[currentLang] || item.content['zh'])) || '';
+        const badgeClass = item.badge_type === 'alert' ? 'badge-alert' : 'badge-primary';
+        
+        const hasLink = item.link && item.link.trim() !== '';
+        const titleHtml = hasLink
+            ? `<a href="${encodeURI(item.link)}" class="news-title-link">${escapeHtml(titleText)} &rarr;</a>`
+            : escapeHtml(titleText);
+
+        html += `
+            <div class="news-item">
+                <div class="news-meta">
+                    <span class="news-date">${escapeHtml(item.date)}</span>
+                    <span class="news-badge ${badgeClass}">${escapeHtml(badgeText)}</span>
+                </div>
+                <div class="news-body">
+                    <h3 class="news-title">${titleHtml}</h3>
+                    <p class="news-desc">${escapeHtml(contentText)}</p>
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+// 向 API 非同步獲取最新公告
+function loadDynamicNews() {
+    const container = document.getElementById('news-container');
+    if (!container) return; // 若當前頁面無此容器則略過
+
+    fetch('api/news.php')
+        .then(response => {
+            if (!response.ok) throw new Error('API request failed');
+            return response.json();
+        })
+        .then(res => {
+            if (res && res.status === 'success' && Array.isArray(res.data) && res.data.length > 0) {
+                window.vttwNewsData = res.data;
+                const currentLang = localStorage.getItem('vttw_lang') || 'zh';
+                renderDynamicNews(currentLang);
+            }
+        })
+        .catch(err => {
+            // 在純靜態環境或尚未開 PHP 伺服器時，保留靜態 HTML 預設顯示 (優雅降級)
+            console.log('Dynamic news fallback: ' + err.message);
+        });
+}
+
 // 語言切換核心函式
 function setLanguage(lang) {
     if (!translations[lang]) return;
@@ -198,7 +271,7 @@ function setLanguage(lang) {
     const select = document.getElementById('langSelect');
     if (select) select.value = lang;
 
-    // 替換所有帶有 data-i18n 屬性的文字
+    // 替換所有帶有 data-i18n 屬性的靜態文字
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang][key]) {
@@ -209,10 +282,16 @@ function setLanguage(lang) {
             }
         }
     });
+
+    // 若動態公告已載入，同步切換公告語言
+    if (window.vttwNewsData && window.vttwNewsData.length > 0) {
+        renderDynamicNews(lang);
+    }
 }
 
-// 頁面載讀時初始化語系
+// 頁面載讀時初始化語系與載入動態公告
 document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('vttw_lang') || 'zh';
     setLanguage(savedLang);
+    loadDynamicNews();
 });
