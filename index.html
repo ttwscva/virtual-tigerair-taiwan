@@ -334,7 +334,6 @@
             <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬台灣虎航" class="tiger-logo-img">
         </a>
         <nav>
-            <!-- 語言切換選單 -->
             <div class="lang-picker-wrap">
                 <span>🌐</span>
                 <select id="langSelect" class="lang-select" onchange="setLanguage(this.value)">
@@ -344,14 +343,12 @@
                 </select>
             </div>
 
-            <!-- ZULU 即時時鐘 -->
             <div class="zulu-badge">
                 <span class="zulu-dot"></span>
                 <span class="zulu-label">ZULU</span>
                 <span id="zulu-clock">00:00:00Z</span>
             </div>
 
-            <!-- 依指定順序排列 -->
             <a href="routes.html">航線網絡</a>
             <a href="timetable.html">時刻表</a>
             <a href="fleet.html">機隊資料</a>
@@ -361,17 +358,13 @@
         </nav>
     </header>
 
-    <!-- 主視覺 Banner (影片背景) -->
     <section class="hero-video-container">
-        <!-- 背景影片 (自動播放、靜音、循環) -->
         <video autoplay muted loop playsinline preload="auto" class="hero-video-bg">
             <source src="assets/promo-video.mp4" type="video/mp4">
             您的瀏覽器不支援 HTML5 影片標籤。
         </video>
-        <!-- 半透明遮罩層 -->
         <div class="hero-video-overlay"></div>
 
-        <!-- 內容文字與按鈕 -->
         <div class="hero-video-content">
             <h1>熱情、專注、流暢 <span>想飛就飛！</span></h1>
             <p>專為飛行模擬同好打造的擬真低成本航空體驗。桃園/高雄/台中/台南直飛日、韓、東南亞，邀請您加入 SMARTCAT 行列！</p>
@@ -381,7 +374,6 @@
 
     <div class="container">
 
-        <!-- 最新消息公告專區 -->
         <section class="news-section" id="news">
             <h2 class="section-title">最新消息</h2>
             <div class="news-card-wrapper">
@@ -428,7 +420,6 @@
             </div>
         </section>
 
-        <!-- 核心特色區 -->
         <h2 class="section-title" id="core-features">探索 vTTW 核心特色</h2>
         <div class="cards-grid">
             <div class="card">
@@ -456,47 +447,38 @@
             </div>
         </div>
 
-        <!-- 合作夥伴專區 -->
         <section class="partners-section" id="partners">
             <h2 class="section-title">合作夥伴</h2>
             <div class="partners-grid">
                 
-                <!-- 1. VATSIM -->
                 <a href="https://vatsim.net/" target="_blank" class="partner-card">
                     <img src="assets/VATSIM.png" alt="VATSIM" class="partner-logo blend-white">
                 </a>
 
-                <!-- 2. vAMSYS -->
                 <a href="https://vamsys.co.uk/" target="_blank" class="partner-card">
                     <img src="assets/vamsys.png" alt="vAMSYS" class="partner-logo blend-white">
                 </a>
 
-                <!-- 3. CatSim -->
                 <a href="https://catsimtw.simplybook.asia/v2/" target="_blank" class="partner-card">
                     <img src="assets/CatSim.png" alt="CatSim Aviation Taipei" class="partner-logo blend-white">
                 </a>
 
-                <!-- 4. 飛虎 -->
                 <a href="https://flyingtiger.simplybook.asia/v2/" target="_blank" class="partner-card">
                     <img src="assets/FTAC.png" alt="飛虎戰術訓練中心" class="partner-logo" style="height: 85px;">
                 </a>
 
-                <!-- 5. MFIS -->
                 <a href="https://mukai870605.wixsite.com/mfis" target="_blank" class="partner-card">
                     <img src="assets/mfis.png" alt="MFIS Production" class="partner-logo">
                 </a>
 
-                <!-- 6. FlySim 模擬飛行論壇 -->
                 <div class="partner-card">
                     <img src="assets/flysim.png" alt="FlySim 模擬飛行論壇" class="partner-logo blend-white" style="height: 75px;">
                 </div>
 
-                <!-- 7. 阿宏洗米 -->
                 <a href="https://www.flysimstudio.com/" target="_blank" class="partner-card">
                     <img src="assets/flysim777.png" alt="阿宏洗米" class="partner-logo blend-white" style="height: 115px;">
                 </a>
 
-                <!-- 8. fsformosa -->
                 <a href="https://fsformosa.tw/" target="_blank" class="partner-card">
                     <img src="assets/fsf.png" alt="fsformosa" class="partner-logo blend-white" style="height: 75px;">
                 </a>
@@ -506,13 +488,12 @@
 
     </div>
 
-    <!-- 頁尾 -->
     <footer class="tiger-footer">
         <div class="tiger-footer-top">
             <div class="footer-col">
                 <h4>關於虛擬台虎</h4>
                 <ul>
-                    <li><a href="#news">最新消息</a></li>
+                    <li><a href="index.html#news">最新消息</a></li>
                     <li><a href="about.html">關於我們</a></li>
                     <li><a href="fleet.html">機隊資料</a></li>
                     <li><a href="team.html">組織成員</a></li>
@@ -580,7 +561,6 @@
         </div>
     </footer>
 
-    <!-- 載入基本腳本 -->
     <script src="assets/site.js"></script>
     <script>
         function updateZuluClock() {
