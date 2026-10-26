@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>關於我們 | Virtual Tigerair Taiwan 虛擬台灣虎航</title>
     
+    <!-- 網站 Favicon 圖示 -->
     <link rel="icon" type="image/png" href="assets/vTTW_icon_128x128.png?v=3">
     <link rel="icon" type="image/png" href="assets/favicon.png?v=3">
     <link rel="apple-touch-icon" href="assets/vTTW_icon_128x128.png?v=3">
@@ -15,8 +16,9 @@
             background-color: #f8fafc;
         }
 
+        /* 頁面標題 Banner 樣式 */
         .page-header {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
+            background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('assets/banner1.png') center/cover;
             color: #ffffff;
             padding: 50px 20px;
             text-align: center;
@@ -40,6 +42,7 @@
             margin: 0 auto;
         }
 
+        /* 內容區塊卡片樣式 */
         .content-section {
             background: #ffffff;
             border-radius: 14px;
@@ -70,6 +73,7 @@
             margin-bottom: 0;
         }
 
+        /* 核心理念列點或強調區塊 */
         .philosophy-box {
             background: #fff4ea;
             border-left: 4px solid var(--tiger-orange);
@@ -84,6 +88,7 @@
             margin: 0;
         }
 
+        /* 免責聲明提醒框 */
         .disclaimer-box {
             background: #fef08a;
             border: 1px solid rgba(234, 179, 8, 0.4);
@@ -95,6 +100,7 @@
             margin-top: 20px;
         }
 
+        /* 系統支援清單卡片 */
         .support-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -130,6 +136,7 @@
             line-height: 1.5;
         }
 
+        /* ZULU 時鐘與導覽列樣式 */
         .zulu-badge {
             display: inline-flex;
             align-items: center;
@@ -182,11 +189,13 @@
 </head>
 <body>
 
+    <!-- 頂部導覽列 -->
     <header>
         <a href="index.html" class="tiger-logo-link">
             <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬台灣虎航" class="tiger-logo-img">
         </a>
         <nav>
+            <!-- ZULU 即時時鐘 -->
             <div class="zulu-badge">
                 <span class="zulu-dot"></span>
                 <span class="zulu-label">ZULU</span>
@@ -202,13 +211,16 @@
         </nav>
     </header>
 
+    <!-- 頁面標題 Header -->
     <section class="page-header">
         <h1>關於 <span>Virtual Tigerair Taiwan</span></h1>
         <p>專為模擬飛行同好打造的擬真低成本航空體驗，航向無限可能。</p>
     </section>
 
+    <!-- 主要內容容器 -->
     <div class="container">
 
+        <!-- 第一區：社群簡介與免責聲明 -->
         <section class="content-section">
             <h2>🐯 關於 vTTW 虛擬台灣虎航</h2>
             <p><strong>Virtual Tigerair Taiwan（虛擬台灣虎航，簡稱 vTTW）</strong> 是一個專為熱愛模擬飛行的同好們所創立的非營利虛擬航空社群（Virtual Airline）。我們致力於在各大主流飛行模擬平台（如 Microsoft Flight Simulator、X-Plane 及 Prepar3D）上，提供最擬真、專業且充滿熱情的低成本航空（LCC）營運體驗。</p>
@@ -218,6 +230,7 @@
             </div>
         </section>
 
+        <!-- 第二區：核心理念 -->
         <section class="content-section">
             <h2>💡 我們的核心理念</h2>
             <p><strong>飛行可以很認真、也可以很有趣；因為熱愛飛行，所以我們聚在一起。</strong></p>
@@ -233,12 +246,14 @@
             </div>
         </section>
 
+        <!-- 第三區：航線網絡與多元機隊 -->
         <section class="content-section">
             <h2>🌐 航線網絡與多元機隊</h2>
             <p><strong>樞紐與航網：</strong>以台灣各大國際機場為主要樞紐基地，在完美還原真實 LCC 密集班表的基礎上，打破現實框架，持續開闢與解鎖現實中不存在於真實虎航的特色航線與遠程航點，讓飛行員享有無限的探索可能。</p>
             <p><strong>機隊陣容：</strong>除了主力營運高效率的 Airbus A320ceo / A320neo（包含官方聯名與獨家虎斑彩繪塗裝）之外，社群亦逐步規劃並引進現實虎航未營運的獨特機型與廣體客機，帶來突破常規、更具挑戰性的長短程飛行樂趣。</p>
         </section>
 
+        <!-- 第四區：專業技術與系統支援 -->
         <section class="content-section">
             <h2>🛠️ 專業技術與系統支援</h2>
             <p>為了提供最佳的模擬飛行與記錄環境，vTTW 深度整合了業界頂級的虛擬航空工具：</p>
@@ -261,6 +276,7 @@
 
     </div>
 
+    <!-- 頁尾 -->
     <footer class="tiger-footer">
         <div class="tiger-footer-top">
             <div class="footer-col">
@@ -334,6 +350,7 @@
         </div>
     </footer>
 
+    <!-- 載入基本腳本 -->
     <script src="assets/site.js"></script>
     <script>
         function updateZuluClock() {
