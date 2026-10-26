@@ -1,0 +1,24 @@
+[
+  {
+    "id": "tag_notice",
+    "color": "red",
+    "zh": "重要公告",
+    "en": "Notice",
+    "ja": "重要告知"
+  },
+  {
+    "id": "tag_recruit",
+    "color": "yellow",
+    "zh": "招募消息",
+    "en": "Recruitment",
+    "ja": "採用情報"
+  },
+  {
+    "id": "tag_flightops",
+    "color": "red",
+    "zh": "航務資訊",
+    "en": "Flight Ops",
+    "ja": "運航情報"
+  }
+]
+

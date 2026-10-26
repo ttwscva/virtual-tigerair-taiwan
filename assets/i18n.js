@@ -215,7 +215,9 @@ function renderDynamicNews(lang) {
         const badgeText = (item.badge && (item.badge[currentLang] || item.badge['zh'])) || '公告';
         const titleText = (item.title && (item.title[currentLang] || item.title['zh'])) || '';
         const contentText = (item.content && (item.content[currentLang] || item.content['zh'])) || '';
-        const badgeClass = item.badge_type === 'alert' ? 'badge-alert' : 'badge-primary';
+        // 標籤顏色：red → 紅色、yellow → 黃色（相容舊格式 primary / alert）
+        const badgeClassMap = { red: 'badge-red', yellow: 'badge-alert', alert: 'badge-alert', primary: 'badge-primary' };
+        const badgeClass = badgeClassMap[item.badge_type] || 'badge-red';
         
         const hasLink = item.link && item.link.trim() !== '';
         const titleHtml = hasLink

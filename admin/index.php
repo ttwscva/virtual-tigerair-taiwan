@@ -6,9 +6,11 @@
 
 session_start();
 
-$dataPath = __DIR__ . '/../data';
-$newsFile = $dataPath . '/news.json';
-$configFile = $dataPath . '/config.json';
+require_once __DIR__ . '/../common.php';
+
+$dataPath = VTTW_DATA_PATH;
+$newsFile = VTTW_NEWS_FILE;
+$configFile = VTTW_CONFIG_FILE;
 
 // 確保 data 目錄存在
 if (!is_dir($dataPath)) {
@@ -95,12 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $newItem = [
                 'id' => 'news_' . round(microtime(true) * 1000),
                 'date' => trim($_POST['date'] ?? date('Y-m-d')),
-                'badge_type' => $_POST['badge_type'] ?? 'primary',
-                'badge' => [
-                    'zh' => trim($_POST['badge_zh'] ?? '重要公告'),
-                    'en' => trim($_POST['badge_en'] ?? 'Notice'),
-                    'ja' => trim($_POST['badge_ja'] ?? '重要告知')
-                ],
+                'tag_id' => trim($_POST['tag_id'] ?? ''),
                 'title' => [
                     'zh' => trim($_POST['title_zh'] ?? ''),
                     'en' => trim($_POST['title_en'] ?? ''),
@@ -127,12 +124,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             foreach ($newsList as &$item) {
                 if ($item['id'] === $id) {
                     $item['date'] = trim($_POST['date'] ?? $item['date']);
-                    $item['badge_type'] = $_POST['badge_type'] ?? $item['badge_type'];
-                    $item['badge'] = [
-                        'zh' => trim($_POST['badge_zh'] ?? ''),
-                        'en' => trim($_POST['badge_en'] ?? ''),
-                        'ja' => trim($_POST['badge_ja'] ?? '')
-                    ];
+                    $item['tag_id'] = trim($_POST['tag_id'] ?? '');
+                    // 改用標籤管理後，移除舊格式的 badge 欄位
+                    unset($item['badge'], $item['badge_type']);
                     $item['title'] = [
                         'zh' => trim($_POST['title_zh'] ?? ''),
                         'en' => trim($_POST['title_en'] ?? ''),
@@ -198,6 +192,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 $isLoggedIn = !empty($_SESSION['vttw_admin']);
 $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
+$tagList = $isLoggedIn ? vttwGetTags() : [];
+$tagMap = $isLoggedIn ? vttwGetTagMap() : [];
 ?>
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -207,439 +203,7 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
     <title>最新消息後台管理 | Virtual Tigerair Taiwan</title>
     <link rel="icon" type="image/png" href="../assets/favicon.png?v=3">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --tiger-orange: #f37021;
-            --tiger-yellow: #ffc20e;
-            --tiger-black: #1a1a1a;
-            --tiger-bg: #f8fafc;
-            --tiger-card: #ffffff;
-            --tiger-border: #e2e8f0;
-            --tiger-text: #1e293b;
-            --tiger-muted: #64748b;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: var(--tiger-bg);
-            color: var(--tiger-text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* 導航列 */
-        .admin-nav {
-            background-color: var(--tiger-black);
-            color: #ffffff;
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 4px solid var(--tiger-yellow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .brand-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: #ffffff;
-        }
-
-        .brand-logo {
-            height: 38px;
-            width: auto;
-        }
-
-        .brand-title {
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        .brand-badge {
-            background: var(--tiger-orange);
-            color: #fff;
-            font-size: 0.72rem;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 700;
-            margin-left: 6px;
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.88rem;
-            cursor: pointer;
-            border: none;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .btn-primary {
-            background: var(--tiger-orange);
-            color: #ffffff;
-        }
-        .btn-primary:hover {
-            background: #e05e10;
-        }
-
-        .btn-yellow {
-            background: var(--tiger-yellow);
-            color: var(--tiger-black);
-        }
-        .btn-yellow:hover {
-            background: #e6ac05;
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #e2e8f0;
-            border: 1px solid #475569;
-        }
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
-            color: #ffffff;
-        }
-
-        .btn-danger {
-            background: #ef4444;
-            color: #ffffff;
-        }
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
-        .btn-sm {
-            padding: 4px 10px;
-            font-size: 0.8rem;
-        }
-
-        /* 內容容器 */
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            margin: 30px auto;
-            padding: 0 20px;
-            flex-grow: 1;
-        }
-
-        /* 訊息提示 */
-        .alert {
-            padding: 12px 18px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 0.92rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .alert-success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-        .alert-danger { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
-        .alert-info { background: #e0f2fe; color: #075985; border: 1px solid #bae6fd; }
-
-        /* 登入卡片 */
-        .login-wrap {
-            max-width: 420px;
-            margin: 80px auto;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border-top: 5px solid var(--tiger-yellow);
-            padding: 35px 30px;
-            text-align: center;
-        }
-
-        .login-wrap img {
-            height: 48px;
-            margin-bottom: 20px;
-        }
-
-        .login-wrap h2 {
-            font-size: 1.35rem;
-            margin-bottom: 8px;
-            font-weight: 800;
-        }
-
-        .login-wrap p {
-            font-size: 0.88rem;
-            color: var(--tiger-muted);
-            margin-bottom: 25px;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #334155;
-            margin-bottom: 6px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1.5px solid var(--tiger-border);
-            border-radius: 6px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            border-color: var(--tiger-orange);
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 85px;
-        }
-
-        /* 公告列表區塊 */
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            background: #ffffff;
-            padding: 18px 24px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            border-left: 5px solid var(--tiger-orange);
-        }
-
-        .page-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-        }
-
-        .news-table-wrap {
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-            overflow: hidden;
-            border: 1px solid var(--tiger-border);
-        }
-
-        table.news-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        table.news-table th {
-            background: #f1f5f9;
-            padding: 14px 16px;
-            font-size: 0.82rem;
-            color: #475569;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            border-bottom: 1px solid var(--tiger-border);
-        }
-
-        table.news-table td {
-            padding: 16px;
-            border-bottom: 1px solid var(--tiger-border);
-            font-size: 0.9rem;
-            vertical-align: middle;
-        }
-
-        table.news-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        table.news-table tr:hover {
-            background-color: #fafbfc;
-        }
-
-        .badge-tag {
-            font-size: 0.72rem;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 4px;
-            display: inline-block;
-        }
-        .badge-tag.primary {
-            background: #fff4ea;
-            color: var(--tiger-orange);
-            border: 1px solid rgba(243, 112, 33, 0.25);
-        }
-        .badge-tag.alert {
-            background: #fef08a;
-            color: #713f12;
-            border: 1px solid rgba(234, 179, 8, 0.4);
-        }
-
-        .lang-previews {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .lang-item {
-            font-size: 0.82rem;
-            color: #475569;
-        }
-
-        .lang-item strong {
-            display: inline-block;
-            width: 28px;
-            color: #0f172a;
-        }
-
-        .action-btns {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        /* Modal 彈跳視窗 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.55);
-            backdrop-filter: blur(3px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #ffffff;
-            width: 100%;
-            max-width: 780px;
-            border-radius: 12px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            max-height: 90vh;
-        }
-
-        .modal-header {
-            background: var(--tiger-black);
-            color: #ffffff;
-            padding: 16px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--tiger-yellow);
-        }
-
-        .modal-header h3 {
-            font-size: 1.15rem;
-            font-weight: 800;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: #ffffff;
-            font-size: 1.5rem;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .modal-body {
-            padding: 24px;
-            overflow-y: auto;
-        }
-
-        .modal-footer {
-            padding: 14px 24px;
-            background: #f8fafc;
-            border-top: 1px solid var(--tiger-border);
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-        }
-
-        /* 語言分頁標籤 (Tabs) */
-        .tabs {
-            display: flex;
-            border-bottom: 2px solid var(--tiger-border);
-            margin-bottom: 18px;
-            gap: 8px;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 9px 18px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--tiger-muted);
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -2px;
-            transition: all 0.2s;
-        }
-
-        .tab-btn.active {
-            color: var(--tiger-orange);
-            border-bottom-color: var(--tiger-orange);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            .page-header {
-                flex-direction: column;
-                gap: 12px;
-                align-items: flex-start;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
@@ -653,6 +217,8 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
         <div class="nav-actions">
             <a href="../index.html" target="_blank" class="btn btn-outline btn-sm">🌐 查看官網首頁</a>
             <?php if ($isLoggedIn): ?>
+                <a href="index.php" class="btn btn-outline btn-sm">📰 公告管理</a>
+                <a href="tags.php" class="btn btn-outline btn-sm">🏷️ 標籤管理</a>
                 <button type="button" class="btn btn-outline btn-sm" onclick="openPwdModal()">🔑 改密碼</button>
                 <a href="index.php?action=logout" class="btn btn-danger btn-sm">登出</a>
             <?php endif; ?>
@@ -704,7 +270,7 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
                         <tr>
                             <th style="width: 70px;">排序</th>
                             <th style="width: 110px;">發布日期</th>
-                            <th style="width: 90px;">徽章樣式</th>
+                            <th style="width: 110px;">公告標籤</th>
                             <th>三語系標題預覽</th>
                             <th style="width: 120px;">操作</th>
                         </tr>
@@ -739,9 +305,13 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
                                         <?= htmlspecialchars($item['date']) ?>
                                     </td>
                                     <td>
-                                        <span class="badge-tag <?= htmlspecialchars($item['badge_type'] ?? 'primary') ?>">
-                                            <?= htmlspecialchars($item['badge']['zh'] ?? '重要公告') ?>
+                                        <?php $resolved = vttwResolveNewsTag($item, $tagMap); ?>
+                                        <span class="badge-tag <?= htmlspecialchars($resolved['badge_type']) ?>">
+                                            <?= htmlspecialchars($resolved['badge']['zh'] ?? '') ?>
                                         </span>
+                                        <?php if (empty($item['tag_id']) || !isset($tagMap[$item['tag_id']])): ?>
+                                            <div style="margin-top: 4px; font-size: 0.72rem; color: #dc2626;">⚠️ 未指定標籤</div>
+                                        <?php endif; ?>
                                     </td>
                                     <td>
                                         <div class="lang-previews">
@@ -793,11 +363,21 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
                             <input type="date" id="newsDate" name="date" class="form-control" required value="<?= date('Y-m-d') ?>">
                         </div>
                         <div class="form-group">
-                            <label for="badgeType">標籤樣式 (Badge Style)</label>
-                            <select id="badgeType" name="badge_type" class="form-control">
-                                <option value="primary">橙色醒目 (重要公告 / 航務資訊)</option>
-                                <option value="alert">黃色提示 (招募消息 / 提醒)</option>
+                            <label for="tagId">公告標籤</label>
+                            <select id="tagId" name="tag_id" class="form-control" required>
+                                <?php if (empty($tagList)): ?>
+                                    <option value="">（尚無標籤，請先至「標籤管理」新增）</option>
+                                <?php else: ?>
+                                    <?php foreach ($tagList as $tag): ?>
+                                        <option value="<?= htmlspecialchars($tag['id']) ?>">
+                                            <?= ($tag['color'] ?? '') === 'yellow' ? '🟡' : '🔴' ?> <?= htmlspecialchars(vttwTagLabel($tag)) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </select>
+                            <div style="margin-top: 4px; font-size: 0.75rem;">
+                                <a href="tags.php" style="color: #2563eb;">🏷️ 管理標籤清單</a>
+                            </div>
                         </div>
                     </div>
 
@@ -819,10 +399,6 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
                     <!-- 繁體中文 -->
                     <div class="tab-content active" id="tab-zh">
                         <div class="form-group">
-                            <label for="badge_zh">標籤文字 (繁中)</label>
-                            <input type="text" id="badge_zh" name="badge_zh" class="form-control" placeholder="例如：重要公告、招募消息" required>
-                        </div>
-                        <div class="form-group">
                             <label for="title_zh">公告標題 (繁中)</label>
                             <input type="text" id="title_zh" name="title_zh" class="form-control" placeholder="請輸入中文標題" required>
                         </div>
@@ -835,10 +411,6 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
                     <!-- English -->
                     <div class="tab-content" id="tab-en">
                         <div class="form-group">
-                            <label for="badge_en">Badge Text (English)</label>
-                            <input type="text" id="badge_en" name="badge_en" class="form-control" placeholder="e.g. Notice, Recruitment" required>
-                        </div>
-                        <div class="form-group">
                             <label for="title_en">Title (English)</label>
                             <input type="text" id="title_en" name="title_en" class="form-control" placeholder="Enter English Title" required>
                         </div>
@@ -850,10 +422,6 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
 
                     <!-- 日本語 -->
                     <div class="tab-content" id="tab-ja">
-                        <div class="form-group">
-                            <label for="badge_ja">バッジテキスト (日本語)</label>
-                            <input type="text" id="badge_ja" name="badge_ja" class="form-control" placeholder="例：重要告知、採用情報" required>
-                        </div>
                         <div class="form-group">
                             <label for="title_ja">タイトル (日本語)</label>
                             <input type="text" id="title_ja" name="title_ja" class="form-control" placeholder="日本語タイトルを入力してください" required>
@@ -911,15 +479,12 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
             if (document.getElementById('formAction').value === 'create') {
                 createDraft = {
                     date: document.getElementById('newsDate').value,
-                    badge_type: document.getElementById('badgeType').value,
+                    tag_id: document.getElementById('tagId').value,
                     link: document.getElementById('newsLink').value,
-                    badge_zh: document.getElementById('badge_zh').value,
                     title_zh: document.getElementById('title_zh').value,
                     content_zh: document.getElementById('content_zh').value,
-                    badge_en: document.getElementById('badge_en').value,
                     title_en: document.getElementById('title_en').value,
                     content_en: document.getElementById('content_en').value,
-                    badge_ja: document.getElementById('badge_ja').value,
                     title_ja: document.getElementById('title_ja').value,
                     content_ja: document.getElementById('content_ja').value
                 };
@@ -955,26 +520,19 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
             // 若已有暫存草稿則還原草稿，不清空使用者先前的輸入
             if (createDraft) {
                 document.getElementById('newsDate').value = createDraft.date || new Date().toISOString().split('T')[0];
-                document.getElementById('badgeType').value = createDraft.badge_type || 'primary';
+                setTagSelect(createDraft.tag_id);
                 document.getElementById('newsLink').value = createDraft.link || '';
 
-                document.getElementById('badge_zh').value = createDraft.badge_zh || '';
                 document.getElementById('title_zh').value = createDraft.title_zh || '';
                 document.getElementById('content_zh').value = createDraft.content_zh || '';
 
-                document.getElementById('badge_en').value = createDraft.badge_en || '';
                 document.getElementById('title_en').value = createDraft.title_en || '';
                 document.getElementById('content_en').value = createDraft.content_en || '';
 
-                document.getElementById('badge_ja').value = createDraft.badge_ja || '';
                 document.getElementById('title_ja').value = createDraft.title_ja || '';
                 document.getElementById('content_ja').value = createDraft.content_ja || '';
             } else {
-                document.getElementById('newsForm').reset();
-                document.getElementById('newsDate').value = new Date().toISOString().split('T')[0];
-                document.getElementById('badge_zh').value = '重要公告';
-                document.getElementById('badge_en').value = 'Notice';
-                document.getElementById('badge_ja').value = '重要告知';
+                resetCreateForm();
             }
 
             switchTab('zh');
@@ -991,21 +549,18 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
             document.getElementById('clearDraftBtn').style.display = 'none';
             
             document.getElementById('newsDate').value = item.date || '';
-            document.getElementById('badgeType').value = item.badge_type || 'primary';
+            setTagSelect(item.tag_id);
             document.getElementById('newsLink').value = item.link || '';
 
             // 繁中
-            document.getElementById('badge_zh').value = (item.badge && item.badge.zh) || '';
             document.getElementById('title_zh').value = (item.title && item.title.zh) || '';
             document.getElementById('content_zh').value = (item.content && item.content.zh) || '';
 
             // English
-            document.getElementById('badge_en').value = (item.badge && item.badge.en) || '';
             document.getElementById('title_en').value = (item.title && item.title.en) || '';
             document.getElementById('content_en').value = (item.content && item.content.en) || '';
 
             // 日本語
-            document.getElementById('badge_ja').value = (item.badge && item.badge.ja) || '';
             document.getElementById('title_ja').value = (item.title && item.title.ja) || '';
             document.getElementById('content_ja').value = (item.content && item.content.ja) || '';
 
@@ -1019,15 +574,26 @@ $newsData = $isLoggedIn ? getNewsData($newsFile) : [];
             document.getElementById('newsModal').classList.remove('active');
         }
 
+        // 設定公告標籤下拉選單；若找不到對應標籤則選第一個
+        function setTagSelect(tagId) {
+            const select = document.getElementById('tagId');
+            const exists = Array.from(select.options).some(o => o.value === tagId);
+            select.value = exists ? tagId : (select.options.length ? select.options[0].value : '');
+        }
+
+        // 重設為空白的新增表單
+        function resetCreateForm() {
+            document.getElementById('newsForm').reset();
+            document.getElementById('formAction').value = 'create';
+            document.getElementById('newsDate').value = new Date().toISOString().split('T')[0];
+            setTagSelect('');
+        }
+
         // 清空重填功能
         function clearCreateDraft() {
             if (confirm('確定要清空目前填寫的草稿內容重新開始嗎？')) {
                 createDraft = null;
-                document.getElementById('newsForm').reset();
-                document.getElementById('newsDate').value = new Date().toISOString().split('T')[0];
-                document.getElementById('badge_zh').value = '重要公告';
-                document.getElementById('badge_en').value = 'Notice';
-                document.getElementById('badge_ja').value = '重要告知';
+                resetCreateForm();
                 switchTab('zh');
             }
         }

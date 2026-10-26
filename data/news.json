@@ -2,12 +2,7 @@
   {
     "id": "news_1729840000001",
     "date": "2026-10-25",
-    "badge_type": "primary",
-    "badge": {
-      "zh": "重要公告",
-      "en": "Notice",
-      "ja": "重要告知"
-    },
+    "tag_id": "tag_notice",
     "title": {
       "zh": "Virtual Tigerair Taiwan 官方網站全新整備上線",
       "en": "Virtual Tigerair Taiwan Official Website Newly Overhauled and Online",
@@ -23,12 +18,7 @@
   {
     "id": "news_1729840000002",
     "date": "2026-10-20",
-    "badge_type": "alert",
-    "badge": {
-      "zh": "招募消息",
-      "en": "Recruitment",
-      "ja": "採用情報"
-    },
+    "tag_id": "tag_recruit",
     "title": {
       "zh": "2026 SMARTCAT 飛行組員熱烈招募中",
       "en": "2026 SMARTCAT Pilot Recruitment Now Open",
@@ -44,12 +34,7 @@
   {
     "id": "news_1729840000003",
     "date": "2026-10-15",
-    "badge_type": "primary",
-    "badge": {
-      "zh": "航務資訊",
-      "en": "Flight Ops",
-      "ja": "運航情報"
-    },
+    "tag_id": "tag_flightops",
     "title": {
       "zh": "vAMSYS Pegasus ACARS 系統對接就緒",
       "en": "vAMSYS Pegasus ACARS System Integration Ready",
@@ -63,4 +48,3 @@
     "link": ""
   }
 ]
-

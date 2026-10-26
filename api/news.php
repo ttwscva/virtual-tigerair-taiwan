@@ -1,35 +1,25 @@
 <?php
 /**
  * Virtual Tigerair Taiwan - 最新消息 API
- * 讀取 data/news.json 並輸出 JSON 給前端渲染
+ * 讀取 data/news.json，並依 data/tags.json 解析公告標籤後輸出 JSON 給前端渲染
  */
+
+require_once __DIR__ . '/../common.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-cache, no-store, must-revalidate');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
 
-$dataFile = __DIR__ . '/../data/news.json';
+$newsData = vttwReadJson(VTTW_NEWS_FILE);
+$tagMap = vttwGetTagMap();
 
-if (!file_exists($dataFile)) {
-    echo json_encode([
-        'status' => 'success',
-        'count' => 0,
-        'data' => []
-    ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-    exit;
-}
-
-$jsonContent = file_get_contents($dataFile);
-$newsData = json_decode($jsonContent, true);
-
-if (!is_array($newsData)) {
-    $newsData = [];
-}
+$output = array_map(function ($item) use ($tagMap) {
+    return vttwResolveNewsTag($item, $tagMap);
+}, $newsData);
 
 echo json_encode([
     'status' => 'success',
-    'count' => count($newsData),
-    'data' => $newsData
+    'count' => count($output),
+    'data' => array_values($output)
 ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-
