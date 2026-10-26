@@ -258,14 +258,15 @@
             margin: 0;
         }
 
-        /* 合作夥伴專屬樣式 */
+        /* 合作夥伴專屬樣式（固定大小，確保每張卡片尺寸完全一致） */
         .partners-section {
             margin: 70px 0 60px;
         }
 
         .partners-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 20px;
             margin-top: 25px;
         }
@@ -282,7 +283,9 @@
             justify-content: center;
             transition: all 0.25s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            min-height: 110px;
+            width: 220px;
+            height: 110px;
+            flex-shrink: 0;
         }
 
         .partner-card:hover {
@@ -316,6 +319,10 @@
             }
             .hero-video-container {
                 height: 320px;
+            }
+            .partner-card {
+                width: 160px;
+                height: 95px;
             }
         }
     </style>
@@ -449,7 +456,7 @@
             </div>
         </div>
 
-        <!-- 合作夥伴專區 -->
+        <!-- 合作夥伴專區（尺寸已統一調整為固定大小與置中） -->
         <section class="partners-section" id="partners">
             <h2 class="section-title">合作夥伴</h2>
             <div class="partners-grid">
@@ -471,7 +478,7 @@
 
                 <!-- 4. 飛虎 -->
                 <a href="https://flyingtiger.simplybook.asia/v2/" target="_blank" class="partner-card">
-                    <img src="assets/FTAC.png" alt="飛虎戰術訓練中心" class="partner-logo" style="height: 85px;">
+                    <img src="assets/FTAC.png" alt="飛虎戰術訓練中心" class="partner-logo" style="height: 75px;">
                 </a>
 
                 <!-- 5. MFIS -->
