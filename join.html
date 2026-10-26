@@ -3,56 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>加入我們 | Virtual Tigerair Taiwan 虛擬台灣虎航</title>
+    <title>招募加入我們 | Virtual Tigerair Taiwan 虛擬臺灣虎航</title>
     
-    <link rel="icon" type="image/png" href="assets/vTTW_icon_128x128.png?v=3">
-    <link rel="icon" type="image/png" href="assets/favicon.png?v=3">
-    <link rel="apple-touch-icon" href="assets/vTTW_icon_128x128.png?v=3">
+    <!-- 網站 Favicon 圖示 -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
 
     <link rel="stylesheet" href="assets/styles.css">
     <style>
-        body { background-color: #f8fafc; }
-        .page-header {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            color: #ffffff; padding: 50px 20px; text-align: center; margin-bottom: 40px;
-        }
-        .page-header h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; }
-        .page-header h1 span { color: var(--tiger-yellow); }
-        .page-header p { font-size: 1rem; color: #cbd5e1; max-width: 700px; margin: 0 auto; }
-        
-        .content-section {
-            background: #ffffff; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.04);
-            border-top: 5px solid var(--tiger-yellow); padding: 35px 40px; margin-bottom: 35px;
-        }
-        .content-section h2 { font-size: 1.5rem; font-weight: 800; color: var(--tiger-black); margin-bottom: 20px; }
-        .content-section p { font-size: 1rem; color: #4a5568; line-height: 1.8; margin-bottom: 18px; }
-
-        .cta-box {
-            text-align: center; background: #fff4ea; border: 2px dashed var(--tiger-orange);
-            border-radius: 12px; padding: 30px; margin-top: 25px;
-        }
-        .cta-btn {
-            display: inline-block; background-color: var(--tiger-orange); color: #ffffff; font-weight: 800;
-            font-size: 1.05rem; padding: 12px 28px; border-radius: 30px; text-decoration: none;
-            box-shadow: 0 4px 15px rgba(243, 112, 33, 0.4); transition: all 0.2s ease; margin-top: 15px;
-        }
-        .cta-btn:hover { background-color: #e05e18; transform: translateY(-2px); }
-
         .zulu-badge {
-            display: inline-flex; align-items: center; gap: 8px; background: #f8fafc;
-            border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 12px; font-size: 0.85rem; color: #1e293b; font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            color: #1e293b;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
         }
-        .zulu-dot { width: 7px; height: 7px; background-color: #10b981; border-radius: 50%; display: inline-block; animation: zuluPulse 2s infinite; }
-        .zulu-label { font-size: 0.72rem; font-weight: 800; color: #64748b; }
-        #zulu-clock { font-family: monospace; font-size: 0.9rem; color: #0f172a; font-weight: 800; }
-        @keyframes zuluPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.9); } }
+
+        .zulu-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+            animation: zuluPulse 2s infinite;
+        }
+
+        .zulu-label {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #64748b;
+            letter-spacing: 1px;
+        }
+
+        #zulu-clock {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #0f172a;
+            font-weight: 800;
+        }
+
+        @keyframes zuluPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.9); }
+        }
+
+        .join-container {
+            max-width: 780px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+        }
+
+        .join-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border-top: 6px solid var(--tiger-yellow);
+            padding: 40px 35px;
+        }
+
+        .join-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .join-header h1 {
+            font-size: 2rem;
+            color: var(--tiger-black);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .join-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 22px;
+        }
+
+        .form-label {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #2d3139;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .form-label .req {
+            color: #e53e3e;
+        }
+
+        .form-input, .form-textarea {
+            background: #fbfaf8;
+            border: 1.5px solid #e2ddd5;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            color: #333;
+            outline: none;
+            transition: all 0.25s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            background: #ffffff;
+            border-color: var(--tiger-yellow);
+            box-shadow: 0 0 0 3px rgba(255, 194, 14, 0.25);
+        }
+
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: #a0a6b2;
+            font-size: 0.9rem;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 140px;
+            line-height: 1.6;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--tiger-yellow);
+            color: #111111;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 25px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(255, 194, 14, 0.35);
+            transition: all 0.25s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #e5ae0c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 194, 14, 0.45);
+        }
+
+        .btn-submit:disabled {
+            background-color: #d1d5db;
+            color: #6b7280;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        #result-box {
+            display: none;
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        #result-box.success {
+            display: block !important;
+            background: #def7ec !important;
+            color: #03543f !important;
+            border: 2px solid #31c48d !important;
+        }
+
+        #result-box.error {
+            display: block !important;
+            background: #fde8e8 !important;
+            color: #9b1c1c !important;
+            border: 2px solid #f8b4b4 !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 650px) {
+            .join-card {
+                padding: 30px 20px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <header>
         <a href="index.html" class="tiger-logo-link">
-            <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan" class="tiger-logo-img">
+            <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬臺灣虎航" class="tiger-logo-img">
         </a>
         <nav>
             <div class="zulu-badge">
@@ -69,23 +225,45 @@
         </nav>
     </header>
 
-    <section class="page-header">
-        <h1>加入 <span>2026 SMARTCAT 飛行行列</span></h1>
-        <p>不限模擬飛行平台與連線網絡，歡迎熱愛 LCC 營運與空中交流的你一同加入！</p>
-    </section>
-
-    <div class="container">
-        <section class="content-section">
-            <h2>📝 飛行員招募與申請須知</h2>
-            <p>無論您使用的是 Microsoft Flight Simulator、X-Plane 還是 Prepar3D，只要您熱愛飛行、注重基本飛行規範，vTTW 都誠摯邀請您加入我們！</p>
-            <p>我們的申請流程已全面改版為直通審核信箱，讓您快速完成報到與系統開通。</p>
-            
-            <div class="cta-box">
-                <h3 style="color: var(--tiger-black); font-weight: 800; margin-bottom: 10px;">準備好展開您的藍天之旅了嗎？</h3>
-                <p style="margin-bottom: 0;">請點擊下方按鈕或透過社群信箱與我們聯繫投遞申請：</p>
-                <a href="mailto:contact@vttw.example.com" class="cta-btn">立即投遞飛行員申請信箱</a>
+    <div class="join-container">
+        <div class="join-card">
+            <div class="join-header">
+                <h1>招募加入我們</h1>
+                <p>歡迎熱愛飛行模擬的朋友加入 SMARTCAT 行列！填寫下方表單將直接遞交申請至審核小組信箱。</p>
             </div>
-        </section>
+
+            <div>
+                <div class="form-group">
+                    <label class="form-label">姓名 <span class="req">*</span></label>
+                    <input type="text" id="app_name" class="form-input" placeholder="請輸入您的姓名或暱稱" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">電子郵件 <span class="req">*</span></label>
+                    <input type="email" id="app_email" class="form-input" placeholder="your.email@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">主旨 / 主要飛行平台 <span class="req">*</span></label>
+                    <input type="text" id="app_subject" class="form-input" placeholder="例如：申請加入飛行員 (主要使用 MSFS / X-Plane / P3D)" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">訊息內容 / 飛行經驗簡述 <span class="req">*</span></label>
+                    <textarea id="app_message" class="form-textarea" placeholder="請簡述您的飛行模擬經驗、喜愛的機型，或是對加入虛擬台灣虎航的想法與建議..." required></textarea>
+                </div>
+
+                <button type="button" id="submitBtn" class="btn-submit" onclick="handleSendForm()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    <span id="btnText">發送申請訊息</span>
+                </button>
+
+                <div id="result-box"></div>
+            </div>
+        </div>
     </div>
 
     <footer class="tiger-footer">
@@ -100,6 +278,7 @@
                     <li><a href="join.html">招募加入我們</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
                 <h4>航務專區</h4>
                 <ul>
@@ -107,6 +286,7 @@
                     <li><a href="timetable.html">航班時刻表</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
                 <h4>飛行員指南</h4>
                 <ul>
@@ -114,6 +294,7 @@
                     <li>常見問題</li>
                 </ul>
             </div>
+
             <div class="footer-col">
                 <h4>關注我們</h4>
                 <ul>
@@ -121,6 +302,7 @@
                     <li><a href="https://youtube.com" target="_blank" class="social-link">▶️ Youtube 頻道</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
                 <h4>飛行模擬支援工具</h4>
                 <div class="app-btn-box">
@@ -141,6 +323,7 @@
                 </div>
             </div>
         </div>
+
         <div class="tiger-footer-bottom">
             <div class="footer-bottom-inner">
                 <div class="footer-brand-logo">
@@ -148,20 +331,91 @@
                 </div>
                 <div class="footer-legal">
                     <div>Copyright &copy; 2026 Virtual Tigerair Taiwan. All rights reserved.</div>
+                    <div style="margin-top: 4px; color: #777; font-size: 0.75rem;">
+                        <strong>⚠️ 虛擬航空社群免責聲明 (Disclaimer)：</strong>本網站與社群為非營利之飛行模擬愛好者團體（Virtual Airline），專供飛行模擬愛好者交流使用。支援微軟模擬飛行 (MSFS)、X-Plane 及 Prepar3D 等主流平台，且不限制連線網絡。本團體與真實世界的「台灣虎航股份有限公司 (Tigerair Taiwan)」無任何商業、法律或實質隸屬關係。所有商標與識別權利歸原版權所有者所有。
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="assets/site.js"></script>
     <script>
+        function handleSendForm() {
+            const name = document.getElementById('app_name').value.trim();
+            const email = document.getElementById('app_email').value.trim();
+            const subject = document.getElementById('app_subject').value.trim();
+            const message = document.getElementById('app_message').value.trim();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const resultBox = document.getElementById('result-box');
+
+            if (!name || !email || !subject || !message) {
+                alert('請完整填寫所有標註 * 的必填欄位！');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            btnText.textContent = '傳送中，請稍候...';
+            resultBox.className = '';
+            resultBox.style.display = 'none';
+
+            const payload = {
+                access_key: '3c745982-96e8-4067-9c44-25c00cd45e7e',
+                from_name: '虛擬臺灣虎航官網申請系統',
+                subject: `【新飛行員加入申請】${subject} - ${name}`,
+                name: name,
+                email: email,
+                platform_and_subject: subject,
+                message: message
+            };
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(async (response) => {
+                const res = await response.json();
+                if (response.status === 200 || res.success) {
+                    resultBox.className = 'success';
+                    resultBox.innerHTML = '<strong style="font-size: 1.15rem;">🎉 發送成功！敬請等候審核通知。</strong><br><span style="font-size: 0.9rem; opacity: 0.9;">審核小組已收到您的資料，將盡速透過電子信箱與您聯繫！</span>';
+                    
+                    document.getElementById('app_name').value = '';
+                    document.getElementById('app_email').value = '';
+                    document.getElementById('app_subject').value = '';
+                    document.getElementById('app_message').value = '';
+
+                    alert('發送成功！敬請等候審核通知。');
+                } else {
+                    resultBox.className = 'error';
+                    resultBox.innerHTML = res.message || '傳送失敗，請稍候再試。';
+                    alert('傳送失敗：' + (res.message || '請確認後再試'));
+                }
+            })
+            .catch(() => {
+                resultBox.className = 'error';
+                resultBox.innerHTML = '連線異常，請確認網路連線或稍後再試。';
+                alert('連線異常，請確認網路連線。');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                btnText.textContent = '發送申請訊息';
+            });
+        }
+
         function updateZuluClock() {
             const now = new Date();
             const h = String(now.getUTCHours()).padStart(2, '0');
             const m = String(now.getUTCMinutes()).padStart(2, '0');
             const s = String(now.getUTCSeconds()).padStart(2, '0');
             const clockEl = document.getElementById('zulu-clock');
-            if (clockEl) clockEl.textContent = `${h}:${m}:${s}Z`;
+            if (clockEl) {
+                clockEl.textContent = `${h}:${m}:${s}Z`;
+            }
         }
         setInterval(updateZuluClock, 1000);
         updateZuluClock();
