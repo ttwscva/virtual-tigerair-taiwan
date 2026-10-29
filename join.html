@@ -55,6 +55,65 @@
             50% { opacity: 0.4; transform: scale(0.9); }
         }
 
+        /* 導覽列按鈕樣式 */
+        .nav-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 5px;
+        }
+
+        .nav-btn-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            line-height: 1.2;
+        }
+
+        .nav-btn-login {
+            background-color: #ffffff;
+            color: #1e293b !important;
+            border: 1.5px solid #cbd5e1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .nav-btn-login svg {
+            width: 17px;
+            height: 17px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .nav-btn-login:hover {
+            border-color: var(--tiger-black);
+            background-color: #f8fafc;
+            color: var(--tiger-black) !important;
+            transform: translateY(-1px);
+        }
+
+        .nav-btn-join {
+            background-color: var(--tiger-orange);
+            color: #ffffff !important;
+            border: 1.5px solid var(--tiger-orange);
+            box-shadow: 0 4px 12px rgba(243, 112, 33, 0.25);
+        }
+
+        .nav-btn-join:hover {
+            background-color: #e05e13;
+            border-color: #e05e13;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+        }
+
         .join-container {
             max-width: 780px;
             margin: 40px auto 80px;
@@ -241,7 +300,14 @@
             <a href="fleet.html">機隊資料</a>
             <a href="team.html">組織成員</a>
             <a href="about.html">關於我們</a>
-            <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
+            
+            <div class="nav-actions">
+                <a href="https://auth.vamsys.io/login/ttwscva" target="_blank" class="nav-btn-custom nav-btn-login">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                    組員登入
+                </a>
+                <a href="join.html" class="nav-btn-custom nav-btn-join">加入我們</a>
+            </div>
         </nav>
     </header>
 
@@ -270,9 +336,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">飛行經驗簡述 (至少60字以上) <span class="req">*</span></label>
+                    <label class="form-label">飛行經驗簡述 (至少60有效字數以上) <span class="req">*</span></label>
                     <textarea id="app_message" class="form-textarea" placeholder="請簡述您的飛行模擬經驗、喜愛的機型，或是對加入虛擬台灣虎航的想法與建議..." oninput="updateCharCount()" required></textarea>
-                    <div class="char-count" id="charCount">目前字數：0 字（至少需 60 字）</div>
+                    <div class="char-count" id="charCount">目前有效字數：0 字（至少需 60 字，不含空白與隱形字元）</div>
                 </div>
 
                 <div class="form-group">
@@ -372,11 +438,25 @@
     </footer>
 
     <script>
+        const INVISIBLE_AND_SPACE_REGEX = /[\s\u00A0\u1680\u180E\u2000-\u200F\u2028-\u202F\u205F-\u206F\u2800\u3000\u3164\uFEFF\uFFA0]/g;
+        const ZERO_WIDTH_AND_FAKE_SPACE_REGEX = /[\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\u2800\u3164\uFEFF\uFFA0]/g;
+
+        function getValidCharCount(str) {
+            if (!str) return 0;
+            const cleaned = str.replace(INVISIBLE_AND_SPACE_REGEX, '');
+            return Array.from(cleaned).length;
+        }
+
+        function cleanInvisibleChars(str) {
+            if (!str) return '';
+            return str.replace(ZERO_WIDTH_AND_FAKE_SPACE_REGEX, '').trim();
+        }
+
         function updateCharCount() {
             const message = document.getElementById('app_message').value;
-            const count = message.length;
+            const count = getValidCharCount(message);
             const countEl = document.getElementById('charCount');
-            countEl.textContent = `目前字數：${count} 字（至少需 60 字）`;
+            countEl.textContent = `目前有效字數：${count} 字（至少需 60 字，不含空白與隱形字元）`;
             if (count < 60) {
                 countEl.style.color = '#e53e3e';
             } else {
@@ -385,24 +465,26 @@
         }
 
         function handleSendForm() {
-            const name = document.getElementById('app_name').value.trim();
-            const email = document.getElementById('app_email').value.trim();
-            const platform = document.getElementById('app_platform').value.trim();
-            const message = document.getElementById('app_message').value.trim();
-            const vatsim = document.getElementById('app_vatsim').value.trim();
-            const ivao = document.getElementById('app_ivao').value.trim();
+            const name = cleanInvisibleChars(document.getElementById('app_name').value);
+            const email = cleanInvisibleChars(document.getElementById('app_email').value);
+            const platform = cleanInvisibleChars(document.getElementById('app_platform').value);
+            const rawMessage = document.getElementById('app_message').value;
+            const message = cleanInvisibleChars(rawMessage);
+            const validCount = getValidCharCount(rawMessage);
+            const vatsim = cleanInvisibleChars(document.getElementById('app_vatsim').value);
+            const ivao = cleanInvisibleChars(document.getElementById('app_ivao').value);
             
             const submitBtn = document.getElementById('submitBtn');
             const btnText = document.getElementById('btnText');
             const resultBox = document.getElementById('result-box');
 
             if (!name || !email || !platform || !message) {
-                alert('請完整填寫所有標註 * 的必填欄位！');
+                alert('請完整填寫所有標註 * 的必填欄位（不可僅填寫空白或隱形字元）！');
                 return;
             }
 
-            if (message.length < 60) {
-                alert('飛行經驗簡述內容不足 60 字，請補充您的飛行經驗！');
+            if (validCount < 60) {
+                alert(`飛行經驗簡述有效字數不足 60 字（目前僅 ${validCount} 個有效字，空白與隱形字元不計入），請補充您的飛行經驗！`);
                 document.getElementById('app_message').focus();
                 return;
             }
