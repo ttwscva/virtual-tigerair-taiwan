@@ -214,6 +214,23 @@
             margin-top: 5px;
         }
 
+        .math-captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            padding: 14px 18px;
+            border-radius: 10px;
+            border: 1.5px solid #e2e8f0;
+            margin-bottom: 22px;
+        }
+
+        .math-captcha-box span {
+            font-weight: 700;
+            color: #334155;
+            white-space: nowrap;
+        }
+
         .btn-submit {
             width: 100%;
             background-color: var(--tiger-yellow);
@@ -287,7 +304,7 @@
 
     <header>
         <a href="index.html" class="tiger-logo-link">
-            <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬台灣虎航" class="tiger-logo-img">
+            <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan" class="tiger-logo-img">
         </a>
         <nav>
             <div class="zulu-badge">
@@ -349,6 +366,15 @@
                 <div class="form-group">
                     <label class="form-label">IVAO ID <span class="optional">(若有請填寫)</span></label>
                     <input type="text" id="app_ivao" class="form-input" placeholder="例如：123456">
+                </div>
+
+                <!-- 簡易反惡意防刷驗證 (Math Captcha) -->
+                <div class="form-group">
+                    <label class="form-label">防洗版安全驗證 <span class="req">*</span></label>
+                    <div class="math-captcha-box">
+                        <span id="mathQuestion">計算中...</span>
+                        <input type="number" id="mathAnswer" class="form-input" placeholder="請輸入答案" style="margin-bottom:0;" required>
+                    </div>
                 </div>
 
                 <button type="button" id="submitBtn" class="btn-submit" onclick="handleSendForm()">
@@ -438,15 +464,18 @@
     </footer>
 
     <script>
-        const INVISIBLE_AND_SPACE_REGEX = /[\s\u00A0\u1680\u180E\u2000-\u200F\u2028-\u202F\u205F-\u206F\u2800\u3000\u3164\uFEFF\uFFA0]/g;
-        const ZERO_WIDTH_AND_FAKE_SPACE_REGEX = /[\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\u2800\u3164\uFEFF\uFFA0]/g;
+        // 擴充隱形字元與干擾碼正則：含 U+034F (CGJ)、U+FE0F (VS16)、U+115f (Hangul Filler)、U+2800 (盲文空白) 等
+        const INVISIBLE_AND_SPACE_REGEX = /[\s\u034F\u00A0\u115F\u1680\u180E\u2000-\u200F\u2028-\u202F\u205F-\u206F\u2800\u3000\u3164\uFE00-\uFE0F\uFEFF\uFFA0]/g;
+        const ZERO_WIDTH_AND_FAKE_SPACE_REGEX = /[\u034F\u115F\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\u2800\u3164\uFE00-\uFE0F\uFEFF\uFFA0]/g;
 
+        // 計算排除所有空白與擴充隱形字元後的「實質有效字數」
         function getValidCharCount(str) {
             if (!str) return 0;
             const cleaned = str.replace(INVISIBLE_AND_SPACE_REGEX, '');
             return Array.from(cleaned).length;
         }
 
+        // 清除輸入字串中的惡意隱形與干擾字元
         function cleanInvisibleChars(str) {
             if (!str) return '';
             return str.replace(ZERO_WIDTH_AND_FAKE_SPACE_REGEX, '').trim();
@@ -464,7 +493,37 @@
             }
         }
 
+        // 隨機數學驗證機制 (Anti-Spam Captcha)
+        let expectedMathAnswer = 0;
+        function generateMathCaptcha() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            expectedMathAnswer = num1 + num2;
+            document.getElementById('mathQuestion').textContent = `請計算： ${num1} + ${num2} = `;
+        }
+
+        // 簡易冷卻時間管理 (Rate Limiting / Cooldown)
+        let lastSubmitTime = 0;
+        const COOLDOWN_SECONDS = 60;
+
         function handleSendForm() {
+            const now = Date.now();
+            const elapsed = (now - lastSubmitTime) / 1000;
+            if (elapsed < COOLDOWN_SECONDS) {
+                const remaining = Math.ceil(COOLDOWN_SECONDS - elapsed);
+                alert(`請勿頻繁發送郵件！為防止惡意洗版，請於 ${remaining} 秒後再試。`);
+                return;
+            }
+
+            const userMathInput = parseInt(document.getElementById('mathAnswer').value, 10);
+            if (isNaN(userMathInput) || userMathInput !== expectedMathAnswer) {
+                alert('安全驗證計算錯誤，請重新計算並填寫正確答案！');
+                generateMathCaptcha();
+                document.getElementById('mathAnswer').value = '';
+                document.getElementById('mathAnswer').focus();
+                return;
+            }
+
             const name = cleanInvisibleChars(document.getElementById('app_name').value);
             const email = cleanInvisibleChars(document.getElementById('app_email').value);
             const platform = cleanInvisibleChars(document.getElementById('app_platform').value);
@@ -517,6 +576,7 @@
             .then(async (response) => {
                 const res = await response.json();
                 if (response.status === 200 || res.success) {
+                    lastSubmitTime = Date.now(); // 記錄成功發送時間以啟動冷卻
                     resultBox.className = 'success';
                     resultBox.innerHTML = '<strong style="font-size: 1.15rem;">🎉 發送成功！敬請等候審核通知。</strong><br><span style="font-size: 0.9rem; opacity: 0.9;">審核小組已收到您的資料，將盡速透過電子信箱與您聯繫！</span>';
                     
@@ -526,7 +586,9 @@
                     document.getElementById('app_message').value = '';
                     document.getElementById('app_vatsim').value = '';
                     document.getElementById('app_ivao').value = '';
+                    document.getElementById('mathAnswer').value = '';
                     updateCharCount();
+                    generateMathCaptcha();
 
                     alert('發送成功！敬請等候審核通知。');
                 } else {
@@ -558,6 +620,11 @@
         }
         setInterval(updateZuluClock, 1000);
         updateZuluClock();
+
+        // 頁面載入時初始化驗證碼
+        window.addEventListener('DOMContentLoaded', () => {
+            generateMathCaptcha();
+        });
     </script>
 </body>
 </html>
