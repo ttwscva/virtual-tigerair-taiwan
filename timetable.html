@@ -1188,27 +1188,42 @@
 
         function applyFilters() {
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
-            let filtered = TIMETABLE_DATA;
+            let filtered = [];
 
-            if (activeHub !== 'ALL') {
-                filtered = filtered.filter(item => item.hub === activeHub);
-            }
+            TIMETABLE_DATA.forEach(item => {
+                if (activeHub !== 'ALL' && item.hub !== activeHub) return;
+                if (activeDir !== 'ALL' && item.dir !== activeDir) return;
 
-            if (activeDir !== 'ALL') {
-                filtered = filtered.filter(item => item.dir === activeDir);
-            }
+                if (!query) {
+                    // 如果沒有搜尋關鍵字，直接保留整組航線與所有航班
+                    filtered.push(item);
+                } else {
+                    // 檢查航段的基本資訊是否命中（如城市、代碼、國家）
+                    const matchRoute = item.from.toLowerCase().includes(query) ||
+                                       item.to.toLowerCase().includes(query) ||
+                                       item.fromCode.toLowerCase().includes(query) ||
+                                       item.toCode.toLowerCase().includes(query) ||
+                                       item.country.toLowerCase().includes(query);
 
-            if (query) {
-                filtered = filtered.filter(item => {
-                    const matchCity = item.from.toLowerCase().includes(query) ||
-                                      item.to.toLowerCase().includes(query) ||
-                                      item.fromCode.toLowerCase().includes(query) ||
-                                      item.toCode.toLowerCase().includes(query) ||
-                                      item.country.toLowerCase().includes(query);
-                    const matchFlight = item.flights.some(f => f.fn.toLowerCase().includes(query) || f.period.toLowerCase().includes(query));
-                    return matchCity || matchFlight;
-                });
-            }
+                    if (matchRoute) {
+                        // 如果航段命中，保留全部航班
+                        filtered.push(item);
+                    } else {
+                        // 否則，只篩選出 flights 陣列中符合關鍵字（如班號或適用日期）的航班
+                        const matchedFlights = item.flights.filter(f => 
+                            f.fn.toLowerCase().includes(query) || f.period.toLowerCase().includes(query)
+                        );
+
+                        if (matchedFlights.length > 0) {
+                            // 複製一份物件並只放進符合條件的航班
+                            filtered.push({
+                                ...item,
+                                flights: matchedFlights
+                            });
+                        }
+                    }
+                }
+            });
 
             renderTimetable(filtered);
         }
