@@ -3,304 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>組織成員與管理團隊 | Virtual Tigerair Taiwan 虛擬台灣虎航</title>
-    
-    <!-- 網站 Favicon 圖示 -->
+    <title>組織成員與管理團隊 | Virtual Tigerair Taiwan</title>
     <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="apple-touch-icon" href="assets/favicon.png">
-
     <link rel="stylesheet" href="assets/styles.css">
     <style>
-        .zulu-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-size: 0.85rem;
-            color: #1e293b;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
-        }
-
-        .zulu-dot {
-            width: 7px;
-            height: 7px;
-            background-color: #10b981;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-            animation: zuluPulse 2s infinite;
-        }
-
-        .zulu-label {
-            font-size: 0.72rem;
-            font-weight: 800;
-            color: #64748b;
-            letter-spacing: 1px;
-        }
-
-        #zulu-clock {
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: #0f172a;
-            font-weight: 800;
-        }
-
-        @keyframes zuluPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.9); }
-        }
-
-        .team-container {
-            max-width: 1200px;
-            margin: 40px auto 80px;
-            padding: 0 20px;
-        }
-
-        .team-section {
-            margin-bottom: 50px;
-        }
-
-        .team-section h2 {
-            font-size: 1.45rem;
-            color: var(--tiger-black);
-            font-weight: 800;
-            border-bottom: 2px solid var(--tiger-yellow);
-            padding-bottom: 8px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .member-card {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--tiger-yellow);
-            padding: 24px;
-            text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .member-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 24px rgba(255, 194, 14, 0.18);
-        }
-
-        .member-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: #f1f3f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 2.2rem;
-            border: 2px solid var(--tiger-yellow);
-        }
-
-        .member-role {
-            display: inline-block;
-            background: #fff4ea;
-            color: var(--tiger-orange);
-            font-size: 0.78rem;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 20px;
-            margin-bottom: 10px;
-        }
-
-        .member-name {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--tiger-black);
-            margin-bottom: 4px;
-        }
-
-        .member-callsign {
-            font-family: monospace;
-            font-size: 0.85rem;
-            color: #6c757d;
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .member-desc {
-            font-size: 0.82rem;
-            color: #555;
-            line-height: 1.5;
-            margin-top: 8px;
-            border-top: 1px dashed #eee;
-            padding-top: 8px;
-            text-align: left;
-        }
+        .zulu-badge { display: inline-flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 12px; font-size: 0.85rem; color: #1e293b; font-weight: 700; }
+        .zulu-dot { width: 7px; height: 7px; background-color: #10b981; border-radius: 50%; display: inline-block; }
+        .nav-actions { display: inline-flex; align-items: center; gap: 10px; margin-left: 5px; }
+        .nav-btn-custom { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 9px 18px; border-radius: 8px; font-size: 0.92rem; font-weight: 700; text-decoration: none; }
+        .nav-btn-login { background-color: #ffffff; color: #1e293b !important; border: 1.5px solid #cbd5e1; }
+        .nav-btn-login svg { width: 17px; height: 17px; stroke: currentColor; stroke-width: 2; fill: none; }
+        .nav-btn-join { background-color: var(--tiger-orange); color: #ffffff !important; border: 1.5px solid var(--tiger-orange); }
+        .team-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
     </style>
 </head>
 <body>
-
     <header>
-        <a href="index.html" class="tiger-logo-link">
-            <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬台灣虎航" class="tiger-logo-img">
-        </a>
+        <a href="index.html" class="tiger-logo-link"><img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan" class="tiger-logo-img"></a>
         <nav>
-            <div class="zulu-badge">
-                <span class="zulu-dot"></span>
-                <span class="zulu-label">ZULU</span>
-                <span id="zulu-clock">00:00:00Z</span>
-            </div>
+            <div class="zulu-badge"><span class="zulu-dot"></span><span style="font-size:0.72rem;font-weight:800;color:#64748b;">ZULU</span><span id="zulu-clock">00:00:00Z</span></div>
             <a href="routes.html">航線網絡</a>
             <a href="timetable.html">時刻表</a>
             <a href="fleet.html">機隊資料</a>
             <a href="team.html" style="color: var(--tiger-orange);">組織成員</a>
             <a href="about.html">關於我們</a>
-            <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
+            <div class="nav-actions">
+                <a href="https://auth.vamsys.io/login/ttwscva" target="_blank" class="nav-btn-custom nav-btn-login"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>組員登入</a>
+                <a href="join.html" class="nav-btn-custom nav-btn-join">加入我們</a>
+            </div>
         </nav>
     </header>
-
     <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('assets/banner4.png') center/cover; color: white; text-align: center; padding: 45px 20px;">
-        <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">組織成員與管理團隊 <span style="color: var(--tiger-yellow);">Staff &amp; Operations</span></h1>
-        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">致力於打造真實、專注且充滿熱情的虛擬飛行社群環境。</p>
+        <h1>組織成員與管理團隊 <span style="color: var(--tiger-yellow);">Staff &amp; Operations</span></h1>
     </section>
-
-    <div class="team-container">
-        <!-- 第一項：核心管理團隊 -->
-        <div class="team-section">
-            <h2>👔 核心管理團隊 (Executive Leadership)</h2>
-            <div class="team-grid">
-                <div class="member-card">
-                    <div class="member-avatar">👨‍✈️</div>
-                    <span class="member-role">執行長 | Chairman</span>
-                    <h3 class="member-name">ShangLing Tang</h3>
-                    <div class="member-callsign">代號：TTW0001<br>VATSIM ID：1217289</div>
-                    <div class="member-desc">綜理虛擬台灣虎航整體營運規劃、對外官方合作、航線擴展策略與社群發展重大決策。</div>
-                </div>
-
-                <div class="member-card">
-                    <div class="member-avatar">🛫</div>
-                    <span class="member-role">營運長 | Chief Operating Officer</span>
-                    <h3 class="member-name">Louis Lin</h3>
-                    <div class="member-callsign">代號：TTW0002<br>VATSIM ID：1304270</div>
-                    <div class="member-desc">督導日常航班營運、航務標準制定、各項系統協調作業，並負責新進飛行員的招募選拔、培訓計畫與飛行考核規劃。</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 第二項：各部門營運與技術小組 -->
-        <div class="team-section">
-            <h2>🛠️ 各部門營運與技術小組 (Departments &amp; Technical Teams)</h2>
-            <div class="team-grid">
-                <div class="member-card">
-                    <div class="member-avatar">🌐</div>
-                    <span class="member-role">公關與工程總監 | PR &amp; Engineering Director</span>
-                    <h3 class="member-name">Kobato Kasamori</h3>
-                    <div class="member-callsign">代號：TTW0003<br>VATSIM ID：1388463</div>
-                    <div class="member-desc">負責公共關係推廣、對外社群交流，以及工程管理部門之系統建置、維護與營運督導。</div>
-                </div>
-
-                <div class="member-card">
-                    <div class="member-avatar">📋</div>
-                    <span class="member-role">航務服務經理 | Manager of Flight Services</span>
-                    <h3 class="member-name">Justin Chen</h3>
-                    <div class="member-callsign">代號：TTW0004<br>VATSIM ID：1356473</div>
-                    <div class="member-desc">負責航務服務部門之管理、航班調派支援、時刻表維護更新與飛行員航務諮詢服務。</div>
-                </div>
-
-                <div class="member-card">
-                    <div class="member-avatar">💻</div>
-                    <span class="member-role">資訊工程師 | Information Technology</span>
-                    <h3 class="member-name">Gary Liang</h3>
-                    <div class="member-callsign">代號：TTW0005<br>VATSIM ID：無</div>
-                    <div class="member-desc">負責官方網站前端介面開發維護、系統架構優化、專案部署與各項數位技術支援。</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="tiger-footer">
-        <div class="tiger-footer-top">
-            <div class="footer-col">
-                <h4>關於虛擬台虎</h4>
-                <ul>
-                    <li><a href="index.html#news">最新消息</a></li>
-                    <li><a href="about.html">關於我們</a></li>
-                    <li><a href="fleet.html">機隊資料</a></li>
-                    <li><a href="team.html">組織成員</a></li>
-                    <li><a href="join.html">加入我們</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>航務專區</h4>
-                <ul>
-                    <li><a href="routes.html">航線網絡</a></li>
-                    <li><a href="timetable.html">航班時刻表</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>飛行員指南</h4>
-                <ul>
-                    <li>新手報到須知</li>
-                    <li>常見問題</li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>關注我們</h4>
-                <ul>
-                    <li><a href="https://www.facebook.com/share/g/1Hp3dYjPf8/" target="_blank" class="social-link">📘 Facebook 社團</a></li>
-                    <li><a href="https://youtube.com" target="_blank" class="social-link">▶️ Youtube 頻道</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>飛行模擬支援工具</h4>
-                <div class="app-btn-box">
-                    <a href="https://vamsys.io" target="_blank" class="app-btn">
-                        <span class="app-btn-icon">✈️</span>
-                        <div class="app-btn-text">
-                            <small>Download ACARS</small>
-                            <span>vAMSYS Pegasus</span>
-                        </div>
-                    </a>
-                    <a href="https://simbrief.com" target="_blank" class="app-btn">
-                        <span class="app-btn-icon">📋</span>
-                        <div class="app-btn-text">
-                            <small>Flight Dispatch</small>
-                            <span>SimBrief by Navigraph</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="tiger-footer-bottom">
-            <div class="footer-bottom-inner">
-                <div class="footer-brand-logo">
-                    <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan" class="footer-logo-img">
-                </div>
-                <div class="footer-legal">
-                    <div>Copyright &copy; 2026 Virtual Tigerair Taiwan. All rights reserved.</div>
-                    <div style="margin-top: 4px; color: #777; font-size: 0.75rem;">
-                        <strong>⚠️ 虛擬航空社群免責聲明 (Disclaimer)：</strong>本網站與社群為非營利之飛行模擬愛好者團體（Virtual Airline），專供飛行模擬愛好者交流使用。支援微軟模擬飛行 (MSFS)、X-Plane 及 Prepar3D 等主流平台，且不限制連線網絡。本團體與真實世界的「台灣虎航股份有限公司 (Tigerair Taiwan)」無任何商業、法律或實質隸屬關係。所有商標與識別權利歸原版權所有者所有。
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
+    <div class="team-container"><p style="text-align:center;">核心管理團隊：ShangLing Tang (TTW0001)、Louis Lin (TTW0002)。</p></div>
     <script>
         function updateZuluClock() {
             const now = new Date();
@@ -308,9 +44,7 @@
             const m = String(now.getUTCMinutes()).padStart(2, '0');
             const s = String(now.getUTCSeconds()).padStart(2, '0');
             const clockEl = document.getElementById('zulu-clock');
-            if (clockEl) {
-                clockEl.textContent = `${h}:${m}:${s}Z`;
-            }
+            if (clockEl) clockEl.textContent = `${h}:${m}:${s}Z`;
         }
         setInterval(updateZuluClock, 1000);
         updateZuluClock();
