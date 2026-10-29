@@ -60,6 +60,70 @@
             50% { opacity: 0.4; transform: scale(0.9); }
         }
 
+        /* 導覽列按鈕樣式 */
+        .nav-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 5px;
+        }
+
+        .nav-btn-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            line-height: 1.2;
+        }
+
+        /* 組員登入 (次要按鈕：含頭像圖標) */
+        .nav-btn-login {
+            background-color: #ffffff;
+            color: #1e293b !important;
+            border: 1.5px solid #cbd5e1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .nav-btn-login svg {
+            width: 17px;
+            height: 17px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-btn-login:hover {
+            border-color: var(--tiger-black);
+            background-color: #f8fafc;
+            color: var(--tiger-black) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* 加入我們 (主要按鈕：虎航橘填滿) */
+        .nav-btn-join {
+            background-color: var(--tiger-orange);
+            color: #ffffff !important;
+            border: 1.5px solid var(--tiger-orange);
+            box-shadow: 0 4px 12px rgba(243, 112, 33, 0.25);
+        }
+
+        .nav-btn-join:hover {
+            background-color: #e05e13;
+            border-color: #e05e13;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(243, 112, 33, 0.35);
+        }
+
         /* 語言切換選單樣式 */
         .lang-picker-wrap {
             display: inline-flex;
@@ -131,6 +195,16 @@
                 padding: 10px;
                 border-radius: 6px;
                 background: #f8fafc;
+            }
+            .nav-actions {
+                flex-direction: column;
+                width: 100%;
+                margin: 0;
+                gap: 10px;
+            }
+            .nav-btn-custom {
+                width: 100%;
+                text-align: center;
             }
             .zulu-badge {
                 justify-content: center;
@@ -415,7 +489,14 @@
             <a href="fleet.html">機隊資料</a>
             <a href="team.html">組織成員</a>
             <a href="about.html">關於我們</a>
-            <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
+            
+            <div class="nav-actions">
+                <a href="https://auth.vamsys.io/login/ttwscva" target="_blank" class="nav-btn-custom nav-btn-login">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                    組員登入
+                </a>
+                <a href="join.html" class="nav-btn-custom nav-btn-join">加入我們</a>
+            </div>
         </nav>
     </header>
 
