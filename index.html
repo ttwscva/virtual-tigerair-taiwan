@@ -60,6 +60,23 @@
             50% { opacity: 0.4; transform: scale(0.9); }
         }
 
+        /* 導覽列專屬按鈕樣式區分 */
+        .nav-btn-outline {
+            background-color: transparent;
+            color: var(--tiger-black) !important;
+            border: 1.5px solid #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn-outline:hover {
+            border-color: var(--tiger-orange);
+            color: var(--tiger-orange) !important;
+            background-color: #fff4ea;
+        }
+
         /* 語言切換選單樣式 */
         .lang-picker-wrap {
             display: inline-flex;
@@ -415,7 +432,7 @@
             <a href="fleet.html">機隊資料</a>
             <a href="team.html">組織成員</a>
             <a href="about.html">關於我們</a>
-            <a href="https://auth.vamsys.io/login/ttwscva" target="_blank" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">組員登入</a>
+            <a href="https://auth.vamsys.io/login/ttwscva" target="_blank" class="nav-btn-outline">組員登入</a>
             <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
         </nav>
     </header>
