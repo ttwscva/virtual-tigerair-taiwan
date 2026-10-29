@@ -68,32 +68,46 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border-top: 4px solid var(--tiger-yellow);
             display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .filter-row {
+            display: flex;
             flex-wrap: wrap;
             gap: 15px;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 25px;
         }
 
-        .hub-pills {
+        .hub-pills, .dir-pills {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            align-items: center;
         }
 
-        .hub-btn {
+        .filter-label {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #475569;
+            margin-right: 4px;
+        }
+
+        .hub-btn, .dir-btn {
             background: #f1f3f5;
             color: var(--tiger-black);
             border: 1px solid #ddd;
-            padding: 8px 18px;
+            padding: 8px 16px;
             border-radius: 20px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .hub-btn:hover {
+        .hub-btn:hover, .dir-btn:hover {
             background: #e9ecef;
         }
 
@@ -104,9 +118,17 @@
             box-shadow: 0 2px 6px rgba(255,194,14,0.4);
         }
 
+        .dir-btn.active {
+            background: var(--tiger-black);
+            border-color: var(--tiger-black);
+            color: var(--tiger-yellow);
+        }
+
         .search-box {
             position: relative;
             min-width: 280px;
+            flex-grow: 1;
+            max-width: 360px;
         }
 
         .search-input {
@@ -117,6 +139,7 @@
             font-size: 0.9rem;
             outline: none;
             transition: border-color 0.2s;
+            box-sizing: border-box;
         }
 
         .search-input:focus {
@@ -136,9 +159,13 @@
             background: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             border-left: 5px solid var(--tiger-yellow);
             overflow: hidden;
+        }
+
+        .route-schedule-card.inbound-card {
+            border-left-color: var(--tiger-orange);
         }
 
         .route-header {
@@ -148,6 +175,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .route-title {
@@ -156,7 +185,8 @@
             color: var(--tiger-black);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .route-tag {
@@ -168,24 +198,43 @@
             font-weight: bold;
         }
 
+        .dir-badge {
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .dir-badge.out {
+            background: #fef9c3;
+            color: #854d0e;
+            border: 1px solid #fde047;
+        }
+
+        .dir-badge.in {
+            background: #ffedd5;
+            color: #9a3412;
+            border: 1px solid #fed7aa;
+        }
+
         .schedule-table-wrap {
             overflow-x: auto;
         }
 
         .schedule-table {
             width: 100%;
-            min-width: 800px;
+            min-width: 850px;
             table-layout: fixed;
             border-collapse: collapse;
             font-size: 0.9rem;
             text-align: center;
         }
 
-        .schedule-table th:nth-child(1), .schedule-table td:nth-child(1) { width: 14%; }
-        .schedule-table th:nth-child(2), .schedule-table td:nth-child(2) { width: 12%; }
+        .schedule-table th:nth-child(1), .schedule-table td:nth-child(1) { width: 12%; }
+        .schedule-table th:nth-child(2), .schedule-table td:nth-child(2) { width: 11%; }
         .schedule-table th:nth-child(3), .schedule-table td:nth-child(3) { width: 12%; }
-        .schedule-table th:nth-child(4), .schedule-table td:nth-child(4) { width: 26%; }
-        .schedule-table th:nth-child(5), .schedule-table td:nth-child(5) { width: 36%; }
+        .schedule-table th:nth-child(4), .schedule-table td:nth-child(4) { width: 25%; }
+        .schedule-table th:nth-child(5), .schedule-table td:nth-child(5) { width: 40%; }
 
         .schedule-table th {
             background: #f8fafc;
@@ -200,7 +249,6 @@
             padding: 12px 14px;
             border-bottom: 1px solid #edf2f7;
             color: #334155;
-            white-space: nowrap;
             vertical-align: middle;
         }
 
@@ -215,17 +263,20 @@
             padding: 3px 10px;
             border-radius: 4px;
             display: inline-block;
+            font-family: monospace;
+            font-size: 0.95rem;
         }
 
         .time-cell {
             font-weight: 700;
             color: #111;
             font-size: 0.95rem;
+            font-family: monospace;
         }
 
         .days-pill {
             display: inline-flex;
-            gap: 6px;
+            gap: 5px;
             align-items: center;
             justify-content: center;
             width: 100%;
@@ -260,7 +311,10 @@
 
         .period-text {
             font-size: 0.82rem;
-            color: #64748b;
+            color: #475569;
+            line-height: 1.5;
+            text-align: left;
+            word-break: break-word;
         }
     </style>
 </head>
@@ -287,20 +341,32 @@
 
     <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('assets/banner2.png') center/cover; color: white; text-align: center; padding: 45px 20px;">
         <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">航班時刻表 <span style="color: var(--tiger-yellow);">Flight Timetable</span></h1>
-        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">即時同步台灣虎航最新夏季/冬季班表。專供虛擬航空飛行員連線派遣與 SimBrief 導航規劃。</p>
+        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">完整收錄台灣虎航 2026–2027 夏季與冬季雙向來回班表。專供虛擬航空飛行員連線派遣與 SimBrief 導航規劃。</p>
     </section>
 
     <div class="tt-container">
         <div class="filter-toolbar">
-            <div class="hub-pills">
-                <button class="hub-btn active" onclick="filterHub('ALL', this)">全部出發地</button>
-                <button class="hub-btn" onclick="filterHub('TPE', this)">台北桃園 (TPE)</button>
-                <button class="hub-btn" onclick="filterHub('KHH', this)">高雄 (KHH)</button>
-                <button class="hub-btn" onclick="filterHub('RMQ', this)">台中 (RMQ)</button>
-                <button class="hub-btn" onclick="filterHub('TNN', this)">台南 (TNN)</button>
+            <div class="filter-row">
+                <div class="hub-pills">
+                    <span class="filter-label">📍 台灣樞紐：</span>
+                    <button class="hub-btn active" onclick="filterHub('ALL', this)">全部樞紐</button>
+                    <button class="hub-btn" onclick="filterHub('TPE', this)">台北桃園 (TPE)</button>
+                    <button class="hub-btn" onclick="filterHub('KHH', this)">高雄 (KHH)</button>
+                    <button class="hub-btn" onclick="filterHub('RMQ', this)">台中 (RMQ)</button>
+                    <button class="hub-btn" onclick="filterHub('TNN', this)">台南 (TNN)</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="searchInput" class="search-input" placeholder="搜尋班號 (如 IT200)、機場代碼或城市..." oninput="filterSearch()">
+                </div>
             </div>
-            <div class="search-box">
-                <input type="text" id="searchInput" class="search-input" placeholder="搜尋班次 (如 IT200) 或目的地..." oninput="filterSearch()">
+            <div class="filter-row" style="border-top: 1px dashed #e2e8f0; padding-top: 12px;">
+                <div class="dir-pills">
+                    <span class="filter-label">✈️ 飛航方向：</span>
+                    <button class="dir-btn active" onclick="filterDir('ALL', this)">全部方向 (去回程)</button>
+                    <button class="dir-btn" onclick="filterDir('OUT', this)">台灣出發 (去程)</button>
+                    <button class="dir-btn" onclick="filterDir('IN', this)">外站回程 (返台)</button>
+                </div>
+                <div id="route-count-info" style="font-size: 0.85rem; color: #64748b; font-weight: 700;"></div>
             </div>
         </div>
 
@@ -382,135 +448,661 @@
 
     <script>
         const TIMETABLE_DATA = [
-            // 日本 - 桃園
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '東京 (成田)', toCode: 'NRT', country: '日本', flights: [
-                { fn: 'IT200', dep: '06:10', arr: '10:35', days: [1,1,1,1,1,1,1], period: '2026/10/25 - 2027/03/27' },
-                { fn: 'IT202', dep: '13:30', arr: '17:30', days: [1,1,1,1,1,1,1], period: '冬季班表日常營運' },
-                { fn: 'IT700', dep: '15:30', arr: '19:55', days: [1,1,0,1,1,0,1], period: '夏季/特定旺季增班' }
+            // ==================== 1. TPE ⇄ NRT 東京成田 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '東京成田', toCode: 'NRT', country: '日本', flights: [
+                { fn: 'IT200', dep: '06:10', arr: '10:35', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT200', dep: '06:35', arr: '11:00', days: [1,1,1,0,1,1,1], period: '2026/06/02-2026/06/24、2026/06/26-2026/07/20、2026/07/22-2026/10/12、2026/10/14-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT200', dep: '06:35', arr: '11:00', days: [0,0,0,1,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT200', dep: '06:35', arr: '10:35', days: [0,0,0,1,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT202', dep: '13:30', arr: '17:30', days: [0,1,0,1,0,1,1], period: '2026/10/26, 10/28, 10/30, 10/31, 11/02、2026/11/18-2026/11/30、2026/12/18-2026/12/30、2026/12/31-2027/03/27' },
+                { fn: 'IT202', dep: '13:30', arr: '17:30', days: [0,1,0,0,0,0,0], period: '2026/11/03-2026/11/17、2026/12/01-2026/12/17' },
+                { fn: 'IT202', dep: '13:30', arr: '17:30', days: [0,0,0,1,0,1,0], period: '2026/11/04, 11/06、2026/11/07-2026/11/17' },
+                { fn: 'IT202', dep: '14:25', arr: '18:35', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/06/25、2026/06/27-2026/07/12, 07/15, 07/18、2026/07/21-2026/07/30、2026/08/01-2026/10/01、2026/10/03-2026/10/13、2026/10/15-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT202', dep: '15:35', arr: '19:35', days: [1,0,1,0,1,0,0], period: '2026/10/25, 10/27, 10/29、2027/01/01-2027/03/27' },
+                { fn: 'IT202', dep: '15:35', arr: '19:35', days: [1,0,0,0,0,0,0], period: '2026/11/01-2026/12/31' },
+                { fn: 'IT202', dep: '15:35', arr: '19:35', days: [0,0,1,0,1,0,0], period: '2026/11/03, 11/05、2026/11/07-2026/11/17、2026/11/18-2026/11/30、2026/12/18-2026/12/31' },
+                { fn: 'IT700', dep: '15:30', arr: '19:55', days: [1,1,1,0,1,1,0], period: '2026/06/02-2026/07/04、2026/07/06-2026/07/25、2026/07/27-2026/10/24' },
+                { fn: 'IT700', dep: '15:30', arr: '19:55', days: [1,1,1,0,1,1,0], period: '2027/03/28-2027/10/30' }
             ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '東京 (羽田)', toCode: 'HND', country: '日本', flights: [
-                { fn: 'IT216', dep: '00:10', arr: '04:00', days: [1,1,1,1,1,1,1], period: '每日紅眼航班 (Night Shuttle)' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '大阪 (關西)', toCode: 'KIX', country: '日本', flights: [
-                { fn: 'IT210', dep: '06:55', arr: '10:25', days: [1,1,1,1,1,1,1], period: '2026/10/25 - 2027/03/27' },
-                { fn: 'IT212', dep: '14:40', arr: '17:55', days: [1,1,1,1,1,1,1], period: '午後主力航班' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '福岡', toCode: 'FUK', country: '日本', flights: [
-                { fn: 'IT240', dep: '06:45', arr: '10:00', days: [1,1,1,1,1,1,1], period: '每日早班執飛' },
-                { fn: 'IT720', dep: '13:40', arr: '16:55', days: [1,1,1,1,1,1,1], period: '午後常態航班' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '沖繩 (那霸)', toCode: 'OKA', country: '日本', flights: [
-                { fn: 'IT230', dep: '06:35', arr: '08:55', days: [1,1,1,1,1,1,1], period: '每日早出航班' },
-                { fn: 'IT232', dep: '18:20', arr: '20:40', days: [1,1,1,1,1,1,1], period: '每日晚班執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '札幌 (新千歲)', toCode: 'CTS', country: '日本', flights: [
-                { fn: 'IT234', dep: '06:20', arr: '10:55', days: [1,1,1,1,1,1,1], period: '北國主力航線' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '函館', toCode: 'HKD', country: '日本', flights: [
-                { fn: 'IT236', dep: '07:00', arr: '11:30', days: [1,0,1,0,1,0,1], period: '週二/四/六/日執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '仙台', toCode: 'SDJ', country: '日本', flights: [
-                { fn: 'IT254', dep: '14:35', arr: '18:45', days: [1,1,1,1,1,1,1], period: '東北門戶日常航班' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '花卷', toCode: 'HNA', country: '日本', flights: [
-                { fn: 'IT258', dep: '12:15', arr: '16:35', days: [0,0,1,0,0,1,0], period: '週三、週六定期包機' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '秋田', toCode: 'AXT', country: '日本', flights: [
-                { fn: 'IT256', dep: '08:30', arr: '12:40', days: [0,1,0,1,0,0,0], period: '週二、週四執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '高知', toCode: 'KCZ', country: '日本', flights: [
-                { fn: 'IT250', dep: '08:40', arr: '12:00', days: [0,0,1,0,0,1,0], period: '週三、週六執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '宮崎', toCode: 'KMI', country: '日本', flights: [
-                { fn: 'IT742', dep: '06:20', arr: '09:20', days: [1,0,1,0,0,1,0], period: '週一/三/六定期營運' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '佐賀', toCode: 'HSG', country: '日本', flights: [
-                { fn: 'IT246', dep: '07:10', arr: '10:25', days: [1,0,0,1,0,0,1], period: '週一/四/日執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '岡山', toCode: 'OKJ', country: '日本', flights: [
-                { fn: 'IT214', dep: '11:10', arr: '14:35', days: [1,1,1,1,1,1,1], period: '每日直飛' },
-                { fn: 'IT714', dep: '13:05', arr: '16:30', days: [1,1,1,1,1,1,1], period: '特定期間增班' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '新潟', toCode: 'KIJ', country: '日本', flights: [
-                { fn: 'IT228', dep: '13:55', arr: '18:00', days: [1,0,0,0,1,0,0], period: '週一、週五執飛' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '石垣島', toCode: 'ISG', country: '日本', flights: [
-                { fn: 'IT736', dep: '06:35', arr: '08:35', days: [0,1,0,0,0,1,0], period: '海島航線' }
+            { hub: 'TPE', dir: 'IN', from: '東京成田', fromCode: 'NRT', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT201', dep: '11:25', arr: '14:45', days: [1,1,1,0,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT201', dep: '11:50', arr: '14:40', days: [1,1,1,0,1,1,1], period: '2026/06/02-2026/06/24、2026/06/26-2026/07/20、2026/07/22-2026/10/12、2026/10/14-2026/10/24' },
+                { fn: 'IT201', dep: '11:50', arr: '14:40', days: [1,1,1,0,1,1,1], period: '2027/03/28-2027/10/30' },
+                { fn: 'IT201', dep: '13:00', arr: '16:25', days: [0,0,0,1,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT201', dep: '13:30', arr: '16:25', days: [0,0,0,1,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT203', dep: '18:25', arr: '21:50', days: [0,1,0,1,0,0,0], period: '2026/10/26, 10/28, 11/02、2026/11/18-2026/11/30、2026/12/18-2026/12/31、2027/01/01-2027/03/27' },
+                { fn: 'IT203', dep: '18:25', arr: '21:55', days: [0,0,0,0,0,1,0], period: '2026/10/30, 11/06、2026/11/07-2026/11/17、2026/11/18-2026/11/30、2026/12/18-2026/12/31、2027/01/01-2027/03/27' },
+                { fn: 'IT203', dep: '18:25', arr: '21:50', days: [0,1,0,0,0,0,0], period: '2026/11/03-2026/11/17、2026/12/01-2026/12/17' },
+                { fn: 'IT203', dep: '18:25', arr: '21:50', days: [0,0,0,1,0,0,0], period: '2026/11/04、2026/11/05-2026/11/17' },
+                { fn: 'IT203', dep: '18:30', arr: '21:50', days: [0,0,0,0,0,0,1], period: '2026/10/31、2026/11/01-2026/12/31、2027/01/01-2027/03/27' },
+                { fn: 'IT203', dep: '19:30', arr: '22:35', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/06/25、2026/06/27-2026/07/12, 07/18、2026/07/21-2026/07/30、2026/08/01-2026/10/01、2026/10/03-2026/10/13、2026/10/15-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT203', dep: '19:30', arr: '22:35', days: [0,0,0,1,0,0,0], period: '2026/07/15' },
+                { fn: 'IT203', dep: '20:25', arr: '23:25', days: [1,0,0,0,1,0,0], period: '2026/10/25, 10/29, 11/01、2026/11/18-2026/11/30、2026/12/18-2026/12/31、2027/01/01-2027/03/27' },
+                { fn: 'IT203', dep: '20:25', arr: '23:25', days: [0,0,1,0,0,0,0], period: '2026/10/27, 11/03、2026/11/04-2026/11/17、2026/11/18-2026/11/30、2026/12/18-2026/12/31、2027/01/01-2027/03/27' },
+                { fn: 'IT203', dep: '20:25', arr: '23:25', days: [1,0,0,0,0,0,0], period: '2026/11/03-2026/11/17、2026/12/01-2026/12/17' },
+                { fn: 'IT203', dep: '20:25', arr: '23:25', days: [0,0,0,0,1,0,0], period: '2026/11/05、2026/11/06-2026/11/17' },
+                { fn: 'IT701', dep: '20:45', arr: '23:25', days: [1,1,1,0,1,1,0], period: '2026/06/02-2026/07/04、2026/07/06-2026/07/25、2026/07/27-2026/10/24' },
+                { fn: 'IT701', dep: '20:45', arr: '23:25', days: [1,1,1,0,1,1,0], period: '2027/03/28-2027/10/30' }
             ]},
 
-            // 韓國 - 桃園
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '首爾 (仁川)', toCode: 'ICN', country: '韓國', flights: [
-                { fn: 'IT602', dep: '20:00', arr: '23:30', days: [1,1,1,1,1,1,1], period: '每日晚班執飛' }
+            // ==================== 2. KHH ⇄ NRT 東京成田 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '東京成田', toCode: 'NRT', country: '日本', flights: [
+                { fn: 'IT280', dep: '08:00', arr: '12:10', days: [1,1,1,0,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT280', dep: '08:05', arr: '12:40', days: [1,1,1,0,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT280', dep: '08:15', arr: '12:40', days: [0,0,0,1,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT280', dep: '08:15', arr: '12:10', days: [0,0,0,1,0,0,0], period: '2026/10/25-2027/03/27' }
             ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '釜山', toCode: 'PUS', country: '韓國', flights: [
-                { fn: 'IT606', dep: '16:50', arr: '20:05', days: [1,1,1,1,1,1,1], period: '每日直航' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '濟州', toCode: 'CJU', country: '韓國', flights: [
-                { fn: 'IT654', dep: '06:40', arr: '09:50', days: [1,1,1,1,1,1,1], period: '晨間度假航班' }
-            ]},
-
-            // 東南亞 - 桃園
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '普吉島', toCode: 'HKT', country: '泰國', flights: [
-                { fn: 'IT503', dep: '13:50', arr: '17:15', days: [0,1,0,0,0,1,0], period: '南洋度假航線' }
-            ]},
-            { hub: 'TPE', from: '台北 (桃園)', fromCode: 'TPE', to: '峴港', toCode: 'DAD', country: '越南', flights: [
-                { fn: 'IT551', dep: '16:50', arr: '18:25', days: [1,1,1,1,1,1,1], period: '中越熱門航班' }
+            { hub: 'KHH', dir: 'IN', from: '東京成田', fromCode: 'NRT', to: '高雄', toCode: 'KHH', country: '日本', flights: [
+                { fn: 'IT281', dep: '11:25', arr: '15:05', days: [0,0,0,1,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT281', dep: '11:50', arr: '15:00', days: [0,0,0,1,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT281', dep: '13:00', arr: '16:40', days: [1,1,1,0,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT281', dep: '13:30', arr: '16:40', days: [1,1,1,0,1,1,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT281', dep: '13:30', arr: '16:40', days: [1,1,1,0,1,1,1], period: '2027/03/28-2027/10/30' }
             ]},
 
-            // 高雄 (KHH)
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '東京 (成田)', toCode: 'NRT', country: '日本', flights: [
-                { fn: 'IT280', dep: '08:00', arr: '12:10', days: [1,1,1,1,1,1,1], period: '南台灣直飛主力' }
+            // ==================== 3. TPE ⇄ HND 東京羽田 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '東京羽田', toCode: 'HND', country: '日本', flights: [
+                { fn: 'IT216', dep: '00:10', arr: '04:25', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT216', dep: '00:10', arr: '04:00', days: [1,1,1,1,1,1,1], period: '2026/10/25-2026/11/03、2026/11/26-2027/03/08, 03/25, 03/26, 03/27' },
+                { fn: 'IT216', dep: '00:10', arr: '04:00', days: [1,1,1,0,1,1,1], period: '2026/11/04-2026/11/25' },
+                { fn: 'IT216', dep: '00:10', arr: '04:00', days: [0,0,0,1,0,0,0], period: '2026/11/04-2026/11/25, 2027/03/17, 03/24' },
+                { fn: 'IT216', dep: '00:10', arr: '04:00', days: [0,0,1,0,0,0,0], period: '2027/03/09-2027/03/23' },
+                { fn: 'IT216', dep: '00:10', arr: '04:00', days: [1,1,0,1,1,1,1], period: '2027/03/10, 03/11, 03/12, 03/13, 03/14, 03/15' },
+                { fn: 'IT216', dep: '00:10', arr: '04:00', days: [1,1,0,0,1,1,1], period: '2027/03/18, 03/19, 03/20, 03/21, 03/22' }
             ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '大阪 (關西)', toCode: 'KIX', country: '日本', flights: [
-                { fn: 'IT284', dep: '06:55', arr: '10:40', days: [1,1,1,1,1,1,1], period: '每日早班直飛' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '福岡', toCode: 'FUK', country: '日本', flights: [
-                { fn: 'IT270', dep: '14:25', arr: '17:55', days: [1,1,1,1,1,1,1], period: '午後直飛航班' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '沖繩 (那霸)', toCode: 'OKA', country: '日本', flights: [
-                { fn: 'IT288', dep: '09:45', arr: '12:30', days: [1,1,1,1,1,1,1], period: '早班度假航線' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '札幌 (新千歲)', toCode: 'CTS', country: '日本', flights: [
-                { fn: 'IT260', dep: '08:15', arr: '12:55', days: [0,1,0,1,0,1,0], period: '定期北國航線' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '仙台', toCode: 'SDJ', country: '日本', flights: [
-                { fn: 'IT772', dep: '13:25', arr: '17:55', days: [1,0,1,0,0,1,0], period: '東北新航點' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '首爾 (金浦)', toCode: 'GMP', country: '韓國', flights: [
-                { fn: 'IT662', dep: '15:55', arr: '19:45', days: [1,1,1,1,1,1,1], period: '首爾商務熱門' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '濟州', toCode: 'CJU', country: '韓國', flights: [
-                { fn: 'IT670', dep: '16:00', arr: '19:30', days: [1,1,1,1,1,1,1], period: '每日濟州直航' }
-            ]},
-            { hub: 'KHH', from: '高雄 (小港)', fromCode: 'KHH', to: '峴港', toCode: 'DAD', country: '越南', flights: [
-                { fn: 'IT585', dep: '17:20', arr: '19:00', days: [1,1,1,1,1,1,1], period: '南台灣峴港直航' }
+            { hub: 'TPE', dir: 'IN', from: '東京羽田', fromCode: 'HND', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT217', dep: '05:00', arr: '07:55', days: [1,1,1,1,1,1,1], period: '2026/10/25-2026/11/03、2026/11/26-2027/03/08, 03/25, 03/26, 03/27' },
+                { fn: 'IT217', dep: '05:00', arr: '07:55', days: [1,1,1,1,1,1,1], period: '2026/11/04-2026/11/25' },
+                { fn: 'IT217', dep: '05:00', arr: '07:55', days: [1,1,1,1,1,1,1], period: '2027/03/09, 03/10, 03/11, 03/12, 03/13, 03/14, 03/15, 03/16' },
+                { fn: 'IT217', dep: '05:00', arr: '07:55', days: [1,1,1,1,1,1,1], period: '2027/03/17, 03/18, 03/19, 03/20, 03/21, 03/22, 03/23, 03/24' },
+                { fn: 'IT217', dep: '05:25', arr: '08:00', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
             ]},
 
-            // 台中 (RMQ)
-            { hub: 'RMQ', from: '台中 (清泉崗)', fromCode: 'RMQ', to: '東京 (成田)', toCode: 'NRT', country: '日本', flights: [
-                { fn: 'IT778', dep: '16:45', arr: '20:25', days: [1,1,1,1,1,1,1], period: '中部直飛成田' }
+            // ==================== 4. TPE ⇄ FUK 福岡 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '福岡', toCode: 'FUK', country: '日本', flights: [
+                { fn: 'IT240', dep: '06:15', arr: '09:35', days: [0,0,0,0,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT240', dep: '06:45', arr: '10:05', days: [1,1,1,1,1,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT240', dep: '06:45', arr: '10:00', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT720', dep: '12:40', arr: '15:55', days: [0,0,0,0,1,0,0], period: '2027/01/28-2027/02/25' },
+                { fn: 'IT720', dep: '12:45', arr: '16:10', days: [0,0,1,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT720', dep: '13:25', arr: '16:55', days: [0,0,0,1,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT720', dep: '13:40', arr: '16:55', days: [0,1,1,1,0,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT720', dep: '14:15', arr: '17:50', days: [0,0,0,0,1,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT720', dep: '14:25', arr: '17:50', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT720', dep: '14:25', arr: '17:50', days: [1,0,0,0,1,0,0], period: '2027/03/28-2027/10/30' },
+                { fn: 'IT720', dep: '14:30', arr: '17:55', days: [0,1,0,0,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT720', dep: '17:00', arr: '20:00', days: [1,0,0,0,0,0,0], period: '2027/01/31-2027/02/28' }
             ]},
-            { hub: 'RMQ', from: '台中 (清泉崗)', fromCode: 'RMQ', to: '沖繩 (那霸)', toCode: 'OKA', country: '日本', flights: [
-                { fn: 'IT792', dep: '07:10', arr: '09:40', days: [1,1,1,1,1,1,1], period: '中部那霸直航' }
-            ]},
-            { hub: 'RMQ', from: '台中 (清泉崗)', fromCode: 'RMQ', to: '濟州', toCode: 'CJU', country: '韓國', flights: [
-                { fn: 'IT632', dep: '07:00', arr: '10:15', days: [1,1,0,1,1,0,1], period: '中部度假航線' }
+            { hub: 'TPE', dir: 'IN', from: '福岡', fromCode: 'FUK', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT241', dep: '10:25', arr: '11:55', days: [0,0,0,0,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT241', dep: '10:55', arr: '12:25', days: [1,1,1,1,1,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT241', dep: '10:55', arr: '12:40', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT721', dep: '17:10', arr: '18:40', days: [0,0,1,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT721', dep: '17:55', arr: '19:25', days: [0,0,0,1,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT721', dep: '17:55', arr: '19:40', days: [0,1,1,1,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT721', dep: '17:55', arr: '19:35', days: [0,0,0,0,0,1,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT721', dep: '17:55', arr: '19:40', days: [0,0,0,0,1,0,0], period: '2027/01/28-2027/02/25' },
+                { fn: 'IT721', dep: '18:55', arr: '20:25', days: [1,0,0,0,1,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT721', dep: '18:55', arr: '20:25', days: [1,0,0,0,1,0,0], period: '2027/03/28-2027/10/30' },
+                { fn: 'IT721', dep: '19:00', arr: '20:25', days: [0,1,0,0,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT721', dep: '21:00', arr: '22:45', days: [1,0,0,0,0,0,0], period: '2027/01/31-2027/02/28' }
             ]},
 
-            // 台南 (TNN)
-            { hub: 'TNN', from: '台南', fromCode: 'TNN', to: '沖繩 (那霸)', toCode: 'OKA', country: '日本', flights: [
-                { fn: 'IT796', dep: '15:20', arr: '17:50', days: [0,1,0,0,0,1,0], period: '定期/包機營運' }
+            // ==================== 5. KHH ⇄ FUK 福岡 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '福岡', toCode: 'FUK', country: '日本', flights: [
+                { fn: 'IT270', dep: '14:10', arr: '17:50', days: [0,0,0,0,1,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT270', dep: '14:25', arr: '17:55', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT270', dep: '14:25', arr: '17:55', days: [0,0,1,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT270', dep: '14:30', arr: '17:55', days: [0,1,1,1,0,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT270', dep: '15:25', arr: '18:55', days: [0,0,0,0,0,1,0], period: '2026/10/25-2027/03/27' }
             ]},
-            { hub: 'TNN', from: '台南', fromCode: 'TNN', to: '熊本', toCode: 'KMJ', country: '日本', flights: [
-                { fn: 'IT794', dep: '15:55', arr: '19:00', days: [1,0,0,1,0,0,0], period: '南部特色直飛' }
+            { hub: 'KHH', dir: 'IN', from: '福岡', fromCode: 'FUK', to: '高雄', toCode: 'KHH', country: '日本', flights: [
+                { fn: 'IT271', dep: '18:45', arr: '20:45', days: [0,0,1,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT271', dep: '18:55', arr: '20:35', days: [1,0,0,0,1,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT271', dep: '18:55', arr: '20:35', days: [1,0,0,0,1,0,0], period: '2027/03/28-2027/10/30' },
+                { fn: 'IT271', dep: '19:00', arr: '20:40', days: [0,1,1,1,0,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT271', dep: '19:55', arr: '21:55', days: [0,0,0,0,0,1,0], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 6. TPE ⇄ CTS 札幌(新千歲) ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '札幌(新千歲)', toCode: 'CTS', country: '日本', flights: [
+                { fn: 'IT234', dep: '06:15', arr: '10:55', days: [0,0,1,0,1,0,0], period: '2026/10/25-2026/11/02、2026/12/09-2027/03/27' },
+                { fn: 'IT234', dep: '06:15', arr: '10:55', days: [0,0,1,0,1,0,0], period: '2026/11/03-2026/12/08' },
+                { fn: 'IT234', dep: '06:20', arr: '11:05', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT234', dep: '06:20', arr: '10:55', days: [1,1,0,1,0,1,1], period: '2026/10/25-2026/11/02、2026/12/09-2027/03/27' },
+                { fn: 'IT234', dep: '06:20', arr: '10:55', days: [1,1,0,1,0,1,1], period: '2026/11/03-2026/12/08' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '札幌(新千歲)', fromCode: 'CTS', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT235', dep: '11:55', arr: '15:35', days: [1,1,1,1,1,1,1], period: '2026/10/25-2026/11/02、2026/12/09-2027/03/27' },
+                { fn: 'IT235', dep: '11:55', arr: '15:35', days: [1,1,1,1,1,1,1], period: '2026/11/03-2026/12/08' },
+                { fn: 'IT235', dep: '12:05', arr: '15:20', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
+            ]},
+
+            // ==================== 7. KHH ⇄ CTS 札幌(新千歲) ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '札幌(新千歲)', toCode: 'CTS', country: '日本', flights: [
+                { fn: 'IT260', dep: '06:55', arr: '12:05', days: [0,0,1,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT260', dep: '08:00', arr: '13:05', days: [0,0,0,0,1,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT260', dep: '08:00', arr: '12:55', days: [0,0,1,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT260', dep: '08:15', arr: '12:55', days: [0,0,0,0,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT260', dep: '08:45', arr: '13:40', days: [0,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '札幌(新千歲)', fromCode: 'CTS', to: '高雄', toCode: 'KHH', country: '日本', flights: [
+                { fn: 'IT261', dep: '12:55', arr: '16:30', days: [0,0,1,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT261', dep: '13:55', arr: '17:15', days: [0,0,0,0,1,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT261', dep: '13:55', arr: '18:05', days: [0,0,1,0,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT261', dep: '14:40', arr: '18:50', days: [0,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 8. TPE ⇄ KMI 宮崎 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '宮崎', toCode: 'KMI', country: '日本', flights: [
+                { fn: 'IT742', dep: '06:20', arr: '09:20', days: [0,1,0,0,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT742', dep: '06:20', arr: '09:20', days: [0,1,0,0,0,1,0], period: '2026/10/25-2026/11/30、2026/12/01-2027/01/31、2027/02/01-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '宮崎', fromCode: 'KMI', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT743', dep: '10:30', arr: '11:55', days: [0,1,0,0,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT743', dep: '10:30', arr: '12:00', days: [0,1,0,0,0,1,0], period: '2026/10/25-2026/11/30、2026/12/01-2027/01/31、2027/02/01-2027/03/27' }
+            ]},
+
+            // ==================== 9. TPE ⇄ ISG 石垣島 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '石垣島', toCode: 'ISG', country: '日本', flights: [
+                { fn: 'IT736', dep: '06:35', arr: '08:35', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27' },
+                { fn: 'IT736', dep: '06:35', arr: '08:35', days: [0,0,0,0,1,0,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27、2027/03/28-2027/10/30' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '石垣島', fromCode: 'ISG', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT737', dep: '09:25', arr: '09:35', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27' },
+                { fn: 'IT737', dep: '09:25', arr: '09:35', days: [0,0,0,0,1,0,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27、2027/03/28-2027/10/30' }
+            ]},
+
+            // ==================== 10. KHH ⇄ ISG 石垣島 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '石垣島', toCode: 'ISG', country: '日本', flights: [
+                { fn: 'IT762', dep: '08:15', arr: '10:10', days: [0,0,0,1,0,0,1], period: '2026/09/02-2026/10/24' },
+                { fn: 'IT762', dep: '08:30', arr: '10:10', days: [0,0,0,1,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT762', dep: '09:30', arr: '11:25', days: [0,0,0,0,0,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '石垣島', fromCode: 'ISG', to: '高雄', toCode: 'KHH', country: '日本', flights: [
+                { fn: 'IT763', dep: '11:00', arr: '11:10', days: [0,0,0,1,0,0,1], period: '2026/09/02-2026/10/24' },
+                { fn: 'IT763', dep: '11:00', arr: '11:10', days: [0,0,0,1,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT763', dep: '12:15', arr: '12:25', days: [0,0,0,0,0,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 11. TPE ⇄ KIX 大阪 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '大阪(關西)', toCode: 'KIX', country: '日本', flights: [
+                { fn: 'IT210', dep: '06:40', arr: '10:25', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT210', dep: '06:55', arr: '10:25', days: [0,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT210', dep: '07:00', arr: '10:25', days: [1,0,0,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT212', dep: '14:15', arr: '18:00', days: [0,1,0,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT212', dep: '14:40', arr: '17:55', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT212', dep: '15:15', arr: '19:00', days: [1,0,0,0,1,0,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT212', dep: '15:15', arr: '19:00', days: [1,0,0,0,1,0,0], period: '2027/03/28-2027/10/30' },
+                { fn: 'IT212', dep: '16:25', arr: '20:15', days: [0,0,1,1,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT212', dep: '16:25', arr: '20:15', days: [0,0,0,0,0,0,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT710', dep: '07:45', arr: '11:30', days: [0,0,1,0,1,0,1], period: '2026/06/02-2026/10/24' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '大阪(關西)', fromCode: 'KIX', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT211', dep: '11:15', arr: '13:10', days: [0,0,1,0,1,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT211', dep: '11:30', arr: '13:50', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT211', dep: '11:45', arr: '13:45', days: [1,1,0,1,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT213', dep: '18:55', arr: '21:15', days: [1,0,0,1,0,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT213', dep: '18:55', arr: '21:30', days: [0,1,0,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT213', dep: '18:55', arr: '21:20', days: [0,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT213', dep: '19:50', arr: '21:45', days: [0,0,0,0,1,0,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT213', dep: '19:50', arr: '21:45', days: [0,0,0,0,1,0,0], period: '2027/03/28-2027/10/30' },
+                { fn: 'IT213', dep: '19:55', arr: '22:30', days: [0,0,1,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT213', dep: '20:00', arr: '21:50', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT213', dep: '21:05', arr: '23:00', days: [0,1,1,1,0,1,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT213', dep: '21:05', arr: '23:00', days: [0,1,1,1,0,1,1], period: '2027/03/28-2027/10/30' },
+                { fn: 'IT711', dep: '12:20', arr: '14:15', days: [0,0,1,0,1,0,1], period: '2026/06/02-2026/10/24' }
+            ]},
+
+            // ==================== 12. KHH ⇄ KIX 大阪 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '大阪(關西)', toCode: 'KIX', country: '日本', flights: [
+                { fn: 'IT284', dep: '06:40', arr: '10:35', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT284', dep: '06:55', arr: '10:55', days: [0,0,1,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT284', dep: '06:55', arr: '10:40', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT284', dep: '06:55', arr: '10:55', days: [0,0,0,0,0,0,1], period: '2027/03/28-2027/10/30' },
+                { fn: 'IT284', dep: '07:00', arr: '10:55', days: [0,1,0,1,1,1,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT284', dep: '07:00', arr: '10:55', days: [0,1,0,1,1,1,0], period: '2027/03/28-2027/10/30' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '大阪(關西)', fromCode: 'KIX', to: '高雄', toCode: 'KHH', country: '日本', flights: [
+                { fn: 'IT285', dep: '11:15', arr: '13:40', days: [0,1,0,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT285', dep: '11:25', arr: '13:35', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT285', dep: '11:30', arr: '14:00', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT285', dep: '11:55', arr: '14:00', days: [0,0,0,1,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT285', dep: '12:00', arr: '14:00', days: [0,0,1,0,1,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
+            ]},
+
+            // ==================== 13. TPE ⇄ OKA 沖繩 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '沖繩(那霸)', toCode: 'OKA', country: '日本', flights: [
+                { fn: 'IT230', dep: '06:35', arr: '08:55', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT230', dep: '06:50', arr: '09:20', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT232', dep: '18:20', arr: '20:40', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT232', dep: '18:30', arr: '20:50', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT232', dep: '18:30', arr: '20:50', days: [1,1,1,1,1,1,1], period: '2027/03/28-2027/10/30' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '沖繩(那霸)', fromCode: 'OKA', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT231', dep: '09:45', arr: '10:20', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT231', dep: '10:10', arr: '10:40', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT233', dep: '18:40', arr: '19:15', days: [0,0,1,0,0,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT233', dep: '18:40', arr: '19:30', days: [0,0,1,0,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT233', dep: '21:30', arr: '22:05', days: [1,1,0,1,1,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT233', dep: '21:30', arr: '22:10', days: [0,0,0,0,0,1,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT233', dep: '21:40', arr: '22:10', days: [1,0,0,1,0,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
+            ]},
+
+            // ==================== 14. RMQ ⇄ OKA 沖繩 ====================
+            { hub: 'RMQ', dir: 'OUT', from: '台中', fromCode: 'RMQ', to: '沖繩(那霸)', toCode: 'OKA', country: '日本', flights: [
+                { fn: 'IT792', dep: '07:10', arr: '09:40', days: [1,1,1,0,1,1,1], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27、2027/03/28-2027/10/30' }
+            ]},
+            { hub: 'RMQ', dir: 'IN', from: '沖繩(那霸)', fromCode: 'OKA', to: '台中', toCode: 'RMQ', country: '日本', flights: [
+                { fn: 'IT793', dep: '19:00', arr: '19:30', days: [1,1,0,0,1,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT793', dep: '19:30', arr: '20:00', days: [0,0,1,0,0,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT793', dep: '21:05', arr: '21:35', days: [1,1,1,0,1,1,1], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 15. KHH ⇄ OKA 沖繩 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '沖繩(那霸)', toCode: 'OKA', country: '日本', flights: [
+                { fn: 'IT288', dep: '09:30', arr: '12:25', days: [0,1,0,1,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT288', dep: '09:45', arr: '12:30', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT288', dep: '10:10', arr: '13:00', days: [1,0,1,0,1,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT728', dep: '15:45', arr: '18:10', days: [1,1,0,0,1,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT728', dep: '16:15', arr: '18:40', days: [0,0,1,0,0,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT728', dep: '17:30', arr: '19:55', days: [1,1,1,0,1,1,1], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '沖繩(那霸)', fromCode: 'OKA', to: '高雄', toCode: 'KHH', country: '日本', flights: [
+                { fn: 'IT289', dep: '14:00', arr: '14:55', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27、2027/03/28-2027/10/30' },
+                { fn: 'IT289', dep: '21:30', arr: '22:25', days: [0,0,1,0,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT289', dep: '21:40', arr: '22:30', days: [0,1,0,0,1,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT729', dep: '10:30', arr: '11:20', days: [1,1,1,0,1,1,1], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27、2027/03/28-2027/10/30' }
+            ]},
+
+            // ==================== 16. TNN ⇄ OKA 沖繩 ====================
+            { hub: 'TNN', dir: 'OUT', from: '台南', fromCode: 'TNN', to: '沖繩(那霸)', toCode: 'OKA', country: '日本', flights: [
+                { fn: 'IT796', dep: '15:05', arr: '17:50', days: [1,0,1,0,1,0,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT796', dep: '15:20', arr: '17:50', days: [1,0,1,0,1,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'TNN', dir: 'IN', from: '沖繩(那霸)', fromCode: 'OKA', to: '台南', toCode: 'TNN', country: '日本', flights: [
+                { fn: 'IT797', dep: '13:25', arr: '14:05', days: [1,0,1,0,1,0,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT797', dep: '13:30', arr: '14:20', days: [1,0,1,0,1,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 17. TPE ⇄ HSG 佐賀 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '佐賀', toCode: 'HSG', country: '日本', flights: [
+                { fn: 'IT246', dep: '06:55', arr: '10:35', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT246', dep: '07:10', arr: '10:35', days: [0,0,1,0,1,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT246', dep: '07:10', arr: '10:25', days: [0,0,0,0,1,0,0], period: '2026/10/25-2026/11/30、2026/12/01-2027/01/31、2027/02/01-2027/03/27' },
+                { fn: 'IT246', dep: '07:50', arr: '11:05', days: [1,0,0,0,0,0,0], period: '2026/10/25-2026/11/30、2026/12/01-2027/01/31、2027/02/01-2027/03/27' },
+                { fn: 'IT246', dep: '08:10', arr: '11:15', days: [0,0,1,0,0,0,0], period: '2026/10/25-2026/11/30、2026/12/01-2027/01/31、2027/02/01-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '佐賀', fromCode: 'HSG', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT247', dep: '11:25', arr: '13:05', days: [0,0,0,0,1,0,0], period: '2026/10/25-2026/11/30、2026/12/01-2027/01/31、2027/02/01-2027/03/27' },
+                { fn: 'IT247', dep: '11:35', arr: '13:05', days: [1,0,1,0,1,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT247', dep: '12:00', arr: '13:20', days: [1,0,0,0,0,0,0], period: '2026/10/25-2026/11/30、2026/12/01-2027/01/31、2027/02/01-2027/03/27' },
+                { fn: 'IT247', dep: '12:15', arr: '13:45', days: [0,0,1,0,0,0,0], period: '2026/10/25-2026/11/30、2026/12/01-2027/01/31、2027/02/01-2027/03/27' }
+            ]},
+
+            // ==================== 18. TPE ⇄ HKD 函館 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '函館', toCode: 'HKD', country: '日本', flights: [
+                { fn: 'IT236', dep: '06:25', arr: '11:10', days: [0,0,0,0,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT236', dep: '06:45', arr: '11:10', days: [1,1,0,1,1,1,0], period: '2026/10/25-2027/03/20, 03/21, 03/22, 03/24, 03/25, 03/26' },
+                { fn: 'IT236', dep: '07:00', arr: '11:30', days: [1,1,0,1,1,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT236', dep: '07:00', arr: '11:30', days: [0,0,1,0,0,0,0], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '函館', fromCode: 'HKD', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT237', dep: '12:20', arr: '16:00', days: [1,1,0,1,1,1,0], period: '2026/10/25-2027/03/20, 03/21, 03/22, 03/24, 03/25, 03/26' },
+                { fn: 'IT237', dep: '12:20', arr: '16:00', days: [0,0,0,0,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT237', dep: '12:30', arr: '15:45', days: [1,1,0,1,1,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT237', dep: '12:40', arr: '16:20', days: [0,0,1,0,0,0,0], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 19. TPE ⇄ AXT 秋田 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '秋田', toCode: 'AXT', country: '日本', flights: [
+                { fn: 'IT256', dep: '07:55', arr: '12:20', days: [1,0,0,0,1,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT256', dep: '08:30', arr: '12:40', days: [1,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '秋田', fromCode: 'AXT', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT257', dep: '13:50', arr: '16:30', days: [1,0,0,0,1,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT257', dep: '14:10', arr: '17:25', days: [1,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 20. TPE ⇄ KCZ 高知 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '高知', toCode: 'KCZ', country: '日本', flights: [
+                { fn: 'IT250', dep: '08:20', arr: '12:00', days: [0,0,0,1,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT250', dep: '08:40', arr: '12:00', days: [0,0,0,1,0,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '高知', fromCode: 'KCZ', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT251', dep: '14:00', arr: '15:20', days: [0,0,0,1,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT251', dep: '14:00', arr: '15:50', days: [0,0,0,1,0,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 21. TPE ⇄ YGJ 米子 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '米子', toCode: 'YGJ', country: '日本', flights: [
+                { fn: 'IT724', dep: '08:35', arr: '12:00', days: [0,1,0,0,0,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT724', dep: '08:40', arr: '12:00', days: [0,1,0,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT724', dep: '13:30', arr: '16:50', days: [0,0,0,0,0,1,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '米子', fromCode: 'YGJ', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT725', dep: '13:00', arr: '15:05', days: [0,1,0,0,0,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT725', dep: '13:00', arr: '15:20', days: [0,1,0,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT725', dep: '17:50', arr: '19:45', days: [0,0,0,0,0,1,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT725', dep: '17:50', arr: '20:00', days: [0,0,0,0,0,1,0], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 22. KHH ⇄ KMJ 熊本 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '熊本', toCode: 'KMJ', country: '日本', flights: [
+                { fn: 'IT766', dep: '08:45', arr: '11:50', days: [0,0,1,0,0,1,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27、2027/03/28-2027/10/30' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '熊本', fromCode: 'KMJ', to: '高雄', toCode: 'KHH', country: '日本', flights: [
+                { fn: 'IT767', dep: '19:50', arr: '21:40', days: [0,0,1,0,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT767', dep: '19:50', arr: '21:45', days: [0,0,1,0,0,1,0], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 23. TNN ⇄ KMJ 熊本 ====================
+            { hub: 'TNN', dir: 'OUT', from: '台南', fromCode: 'TNN', to: '熊本', toCode: 'KMJ', country: '日本', flights: [
+                { fn: 'IT794', dep: '15:55', arr: '19:00', days: [0,0,1,0,0,1,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'TNN', dir: 'IN', from: '熊本', fromCode: 'KMJ', to: '台南', toCode: 'TNN', country: '日本', flights: [
+                { fn: 'IT795', dep: '12:40', arr: '14:25', days: [0,0,1,0,0,1,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 24. TPE ⇄ NGO 名古屋 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '名古屋', toCode: 'NGO', country: '日本', flights: [
+                { fn: 'IT206', dep: '08:45', arr: '12:25', days: [1,1,1,1,1,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT206', dep: '09:00', arr: '12:55', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT706', dep: '15:05', arr: '18:50', days: [1,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT706', dep: '16:35', arr: '20:30', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/18、2027/03/28-2027/10/30' },
+                { fn: 'IT706', dep: '17:20', arr: '21:15', days: [0,0,0,0,1,0,0], period: '2026/06/02-2026/10/22、2027/03/28-2027/10/30' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '名古屋', fromCode: 'NGO', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT207', dep: '13:15', arr: '15:50', days: [1,0,1,0,1,1,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT207', dep: '13:45', arr: '15:50', days: [1,0,1,0,1,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT209', dep: '21:15', arr: '23:50', days: [0,1,0,1,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT209', dep: '21:45', arr: '23:45', days: [0,1,0,1,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT707', dep: '19:40', arr: '22:15', days: [1,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT707', dep: '21:20', arr: '23:25', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/18、2027/03/28-2027/10/30' },
+                { fn: 'IT707', dep: '22:05', arr: '00:10(+1)', days: [0,0,0,0,1,0,0], period: '2026/06/02-2026/10/22、2027/03/28-2027/10/30' }
+            ]},
+
+            // ==================== 25. RMQ ⇄ NGO 名古屋 ====================
+            { hub: 'RMQ', dir: 'OUT', from: '台中', fromCode: 'RMQ', to: '名古屋', toCode: 'NGO', country: '日本', flights: [
+                { fn: 'IT778', dep: '16:45', arr: '20:25', days: [0,1,0,1,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT778', dep: '17:05', arr: '20:55', days: [0,1,0,1,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
+            ]},
+            { hub: 'RMQ', dir: 'IN', from: '名古屋', fromCode: 'NGO', to: '台中', toCode: 'RMQ', country: '日本', flights: [
+                { fn: 'IT779', dep: '13:15', arr: '15:25', days: [0,1,0,1,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT779', dep: '13:45', arr: '16:05', days: [0,1,0,1,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
+            ]},
+
+            // ==================== 26. KHH ⇄ NGO 名古屋 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '名古屋', toCode: 'NGO', country: '日本', flights: [
+                { fn: 'IT268', dep: '14:50', arr: '18:50', days: [1,0,1,0,1,1,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT268', dep: '15:00', arr: '19:15', days: [1,0,1,0,1,1,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT268', dep: '15:00', arr: '19:15', days: [1,0,1,0,1,1,0], period: '2027/03/28-2027/10/30' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '名古屋', fromCode: 'NGO', to: '高雄', toCode: 'KHH', country: '日本', flights: [
+                { fn: 'IT269', dep: '19:40', arr: '22:35', days: [1,0,1,0,1,1,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT269', dep: '20:05', arr: '22:30', days: [1,0,1,0,1,1,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT269', dep: '20:05', arr: '22:30', days: [1,0,1,0,1,1,0], period: '2027/03/28-2027/10/30' }
+            ]},
+
+            // ==================== 27. TPE ⇄ FKS 福島 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '福島', toCode: 'FKS', country: '日本', flights: [
+                { fn: 'IT752', dep: '10:30', arr: '14:30', days: [0,0,1,0,0,1,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '福島', fromCode: 'FKS', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT753', dep: '16:00', arr: '19:10', days: [0,0,1,0,0,1,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT753', dep: '16:00', arr: '19:10', days: [0,0,1,0,0,1,0], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 28. TPE ⇄ OKJ 岡山 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '岡山', toCode: 'OKJ', country: '日本', flights: [
+                { fn: 'IT214', dep: '11:10', arr: '14:35', days: [1,1,1,1,1,1,1], period: '2026/10/25-2026/12/02, 12/18, 12/19, 12/20, 12/21、2026/12/23-2027/03/27' },
+                { fn: 'IT214', dep: '11:10', arr: '14:35', days: [1,1,1,1,0,1,1], period: '2026/12/03-2026/12/17' },
+                { fn: 'IT214', dep: '11:10', arr: '14:35', days: [0,0,1,0,0,0,0], period: '2026/12/22' },
+                { fn: 'IT214', dep: '11:30', arr: '15:05', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT714', dep: '12:50', arr: '16:30', days: [0,0,0,0,1,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT714', dep: '13:05', arr: '16:30', days: [1,0,0,0,1,0,0], period: '2026/10/25-2026/12/12、2026/12/21-2027/01/06、2027/01/22-2027/03/27' },
+                { fn: 'IT714', dep: '13:05', arr: '16:30', days: [1,0,0,0,0,0,0], period: '2026/12/13, 12/20、2027/01/07-2027/01/21' },
+                { fn: 'IT714', dep: '13:05', arr: '16:30', days: [0,0,0,0,1,0,0], period: '2026/12/17' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '岡山', fromCode: 'OKJ', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT215', dep: '15:25', arr: '17:30', days: [1,1,1,1,1,1,1], period: '2026/10/25-2026/12/02, 12/18, 12/19, 12/20, 12/21、2026/12/23-2027/03/27' },
+                { fn: 'IT215', dep: '15:25', arr: '17:30', days: [1,1,1,1,0,1,1], period: '2026/12/03-2026/12/17' },
+                { fn: 'IT215', dep: '15:25', arr: '17:30', days: [0,0,1,0,0,0,0], period: '2026/12/22' },
+                { fn: 'IT215', dep: '15:55', arr: '17:40', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT715', dep: '17:55', arr: '20:00', days: [1,0,0,0,1,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT715', dep: '17:55', arr: '19:55', days: [1,0,0,0,0,0,0], period: '2026/10/25-2026/12/12, 12/13, 12/20、2026/12/21-2027/03/27' },
+                { fn: 'IT715', dep: '17:55', arr: '20:00', days: [0,0,0,0,1,0,0], period: '2026/10/25-2027/01/06、2027/01/22-2027/03/27' }
+            ]},
+
+            // ==================== 29. KHH ⇄ OKJ 岡山 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '岡山', toCode: 'OKJ', country: '日本', flights: [
+                { fn: 'IT262', dep: '12:40', arr: '16:30', days: [0,1,0,1,0,1,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '岡山', fromCode: 'OKJ', to: '高雄', toCode: 'KHH', country: '日本', flights: [
+                { fn: 'IT263', dep: '17:55', arr: '20:15', days: [0,0,1,0,0,0,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT263', dep: '17:55', arr: '20:20', days: [0,0,1,0,0,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 30. TPE ⇄ OIT 大分 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '大分', toCode: 'OIT', country: '日本', flights: [
+                { fn: 'IT750', dep: '12:00', arr: '15:00', days: [0,0,0,1,0,0,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT750', dep: '12:00', arr: '15:00', days: [0,0,0,1,0,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '大分', fromCode: 'OIT', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT751', dep: '16:30', arr: '17:55', days: [0,0,0,1,0,0,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT751', dep: '16:30', arr: '18:10', days: [0,0,0,1,0,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 31. TPE ⇄ KMQ 小松 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '小松', toCode: 'KMQ', country: '日本', flights: [
+                { fn: 'IT252', dep: '11:50', arr: '15:35', days: [1,0,0,0,0,1,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT252', dep: '12:00', arr: '15:35', days: [0,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT252', dep: '12:10', arr: '16:05', days: [1,0,0,0,1,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '小松', fromCode: 'KMQ', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT253', dep: '16:45', arr: '19:30', days: [1,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT253', dep: '16:45', arr: '19:20', days: [0,0,0,0,0,1,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT253', dep: '16:55', arr: '19:10', days: [1,0,0,0,1,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
+            ]},
+
+            // ==================== 32. KHH ⇄ KMQ 小松 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '小松', toCode: 'KMQ', country: '日本', flights: [
+                { fn: 'IT294', dep: '08:00', arr: '12:05', days: [0,0,0,0,1,0,0], period: '2026/09/03-2026/10/24' },
+                { fn: 'IT294', dep: '08:05', arr: '12:05', days: [0,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT294', dep: '08:15', arr: '12:15', days: [1,0,0,0,0,0,0], period: '2026/09/03-2026/10/24、2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '小松', fromCode: 'KMQ', to: '高雄', toCode: 'KHH', country: '日本', flights: [
+                { fn: 'IT295', dep: '12:55', arr: '15:25', days: [0,0,0,0,1,0,0], period: '2026/09/03-2026/10/24' },
+                { fn: 'IT295', dep: '12:55', arr: '15:50', days: [0,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT295', dep: '13:05', arr: '15:25', days: [1,0,0,0,0,0,0], period: '2026/09/03-2026/10/24' },
+                { fn: 'IT295', dep: '13:05', arr: '16:00', days: [1,0,0,0,0,0,0], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 33. TPE ⇄ HNA 花卷 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '花卷', toCode: 'HNA', country: '日本', flights: [
+                { fn: 'IT258', dep: '12:15', arr: '16:35', days: [0,0,0,1,0,0,1], period: '2026/10/25-2027/03/16、2027/03/17-2027/03/27' },
+                { fn: 'IT258', dep: '12:25', arr: '17:00', days: [0,0,0,1,0,0,1], period: '2026/06/02-2026/10/24' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '花卷', fromCode: 'HNA', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT259', dep: '17:50', arr: '21:10', days: [0,0,0,1,0,0,0], period: '2026/10/25-2027/03/16、2027/03/17-2027/03/27' },
+                { fn: 'IT259', dep: '17:50', arr: '20:55', days: [0,0,0,0,0,0,1], period: '2026/10/25-2027/03/16、2027/03/17-2027/03/27' },
+                { fn: 'IT259', dep: '18:00', arr: '21:00', days: [0,0,0,1,0,0,1], period: '2026/06/02-2026/10/24' }
+            ]},
+
+            // ==================== 34. KHH ⇄ SDJ 仙台 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '仙台', toCode: 'SDJ', country: '日本', flights: [
+                { fn: 'IT772', dep: '13:25', arr: '18:10', days: [0,1,0,1,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT772', dep: '13:25', arr: '17:55', days: [0,1,0,1,0,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '仙台', fromCode: 'SDJ', to: '高雄', toCode: 'KHH', country: '日本', flights: [
+                { fn: 'IT773', dep: '18:50', arr: '22:30', days: [0,1,0,1,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT773', dep: '19:00', arr: '22:10', days: [0,1,0,1,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
+            ]},
+
+            // ==================== 35. TPE ⇄ SDJ 仙台 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '仙台', toCode: 'SDJ', country: '日本', flights: [
+                { fn: 'IT254', dep: '13:45', arr: '18:10', days: [1,0,1,0,1,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT254', dep: '14:35', arr: '18:45', days: [1,0,1,0,1,0,0], period: '2026/10/25-2027/03/17、2027/03/18-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '仙台', fromCode: 'SDJ', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT255', dep: '19:00', arr: '21:55', days: [1,0,1,0,1,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT255', dep: '19:40', arr: '23:00', days: [1,0,1,0,1,0,0], period: '2026/10/25-2027/03/17、2027/03/18-2027/03/27' }
+            ]},
+
+            // ==================== 36. TPE ⇄ KIJ 新潟 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '新潟', toCode: 'KIJ', country: '日本', flights: [
+                { fn: 'IT228', dep: '13:45', arr: '18:00', days: [0,1,0,0,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT228', dep: '13:55', arr: '18:00', days: [0,1,0,0,0,1,0], period: '2026/10/25-2027/03/07、2027/03/08-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '新潟', fromCode: 'KIJ', to: '台北(桃園)', toCode: 'TPE', country: '日本', flights: [
+                { fn: 'IT229', dep: '18:50', arr: '21:25', days: [0,1,0,0,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT229', dep: '19:00', arr: '22:30', days: [0,1,0,0,0,1,0], period: '2026/10/25-2027/03/07、2027/03/08-2027/03/27' }
+            ]},
+
+            // ==================== 37. TPE ⇄ ICN 首爾(仁川) ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '首爾(仁川)', toCode: 'ICN', country: '南韓', flights: [
+                { fn: 'IT602', dep: '20:00', arr: '23:30', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/06/30, 07/02, 07/03, 07/05, 07/06, 07/07、2026/07/09-2026/07/17, 07/19, 07/20, 07/21, 07/26, 07/27, 07/28、2026/07/30-2026/10/24、2026/10/25-2027/03/01、2027/03/28-2027/10/30' },
+                { fn: 'IT602', dep: '20:00', arr: '23:30', days: [0,0,0,0,1,1,0], period: '2026/07/23, 07/24' },
+                { fn: 'IT602', dep: '20:00', arr: '23:30', days: [1,0,0,1,1,1,1], period: '2027/03/02-2027/03/19' },
+                { fn: 'IT602', dep: '20:00', arr: '23:30', days: [0,0,1,1,0,0,0], period: '2027/03/02, 03/03, 03/09' },
+                { fn: 'IT602', dep: '20:00', arr: '23:30', days: [1,1,0,0,1,1,0], period: '2027/03/21, 03/22, 03/25, 03/26' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '首爾(仁川)', fromCode: 'ICN', to: '台北(桃園)', toCode: 'TPE', country: '南韓', flights: [
+                { fn: 'IT603', dep: '00:30', arr: '02:15', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/07/01, 07/03, 07/04、2026/07/10-2026/07/18, 07/24, 07/25, 07/27, 07/28, 07/29、2026/07/31-2026/10/24、2026/10/25-2027/03/01、2027/03/29-2027/10/30' },
+                { fn: 'IT603', dep: '00:30', arr: '02:15', days: [0,1,1,1,0,0,0], period: '2026/07/06, 07/07, 07/08, 07/20, 07/21, 07/22' },
+                { fn: 'IT603', dep: '00:30', arr: '02:15', days: [1,1,1,0,0,1,1], period: '2027/03/02-2027/03/20, 03/22, 03/23, 03/26, 03/27' },
+                { fn: 'IT603', dep: '00:30', arr: '02:15', days: [0,0,1,1,1,0,0], period: '2027/03/02-2027/03/10' }
+            ]},
+
+            // ==================== 38. TPE ⇄ CJU 濟州 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '濟州', toCode: 'CJU', country: '南韓', flights: [
+                { fn: 'IT654', dep: '06:30', arr: '09:20', days: [0,1,0,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT654', dep: '06:40', arr: '09:25', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT654', dep: '06:40', arr: '09:35', days: [0,1,0,1,1,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT654', dep: '06:40', arr: '09:45', days: [0,0,1,0,0,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT654', dep: '06:40', arr: '09:50', days: [1,0,0,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT654', dep: '07:05', arr: '10:00', days: [0,0,0,1,0,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT654', dep: '07:50', arr: '10:45', days: [0,0,1,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT654', dep: '07:55', arr: '10:50', days: [0,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '濟州', fromCode: 'CJU', to: '台北(桃園)', toCode: 'TPE', country: '南韓', flights: [
+                { fn: 'IT655', dep: '10:10', arr: '11:25', days: [0,1,0,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT655', dep: '10:20', arr: '11:35', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT655', dep: '10:30', arr: '11:35', days: [0,1,1,1,1,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT655', dep: '10:40', arr: '11:45', days: [0,0,0,0,0,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT655', dep: '10:50', arr: '12:05', days: [1,0,0,1,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT655', dep: '10:50', arr: '12:10', days: [0,0,0,0,0,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT655', dep: '11:00', arr: '12:15', days: [0,0,0,0,0,1,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT655', dep: '11:40', arr: '12:55', days: [0,0,1,0,0,0,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT655', dep: '11:45', arr: '12:55', days: [0,0,0,0,1,0,0], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 39. RMQ ⇄ CJU 濟州 ====================
+            { hub: 'RMQ', dir: 'OUT', from: '台中', fromCode: 'RMQ', to: '濟州', toCode: 'CJU', country: '南韓', flights: [
+                { fn: 'IT632', dep: '07:00', arr: '10:00', days: [0,0,1,0,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT632', dep: '07:00', arr: '10:15', days: [0,0,1,0,0,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'RMQ', dir: 'IN', from: '濟州', fromCode: 'CJU', to: '台中', toCode: 'RMQ', country: '南韓', flights: [
+                { fn: 'IT633', dep: '19:55', arr: '21:00', days: [0,0,1,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT633', dep: '20:15', arr: '21:30', days: [0,0,0,0,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT633', dep: '20:20', arr: '21:35', days: [0,0,1,0,0,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 40. KHH ⇄ CJU 濟州 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '濟州', toCode: 'CJU', country: '南韓', flights: [
+                { fn: 'IT670', dep: '15:45', arr: '19:00', days: [0,0,0,0,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT670', dep: '15:50', arr: '18:50', days: [0,1,0,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT670', dep: '15:55', arr: '19:15', days: [0,0,0,1,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT670', dep: '16:00', arr: '19:30', days: [1,1,0,1,0,1,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT670', dep: '16:15', arr: '19:25', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '濟州', fromCode: 'CJU', to: '高雄', toCode: 'KHH', country: '南韓', flights: [
+                { fn: 'IT671', dep: '19:50', arr: '21:15', days: [0,1,0,0,0,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT671', dep: '20:05', arr: '21:30', days: [1,0,0,1,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT671', dep: '20:20', arr: '22:00', days: [1,1,0,1,0,1,0], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT675', dep: '10:50', arr: '12:15', days: [0,0,1,0,0,0,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT675', dep: '11:15', arr: '12:35', days: [0,0,1,0,0,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+
+            // ==================== 41. KHH ⇄ GMP 首爾(金浦) ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '首爾(金浦)', toCode: 'GMP', country: '南韓', flights: [
+                { fn: 'IT662', dep: '15:55', arr: '19:45', days: [1,0,1,0,0,0,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/05、2027/03/06-2027/03/27' },
+                { fn: 'IT662', dep: '15:55', arr: '19:45', days: [0,1,0,0,1,1,0], period: '2026/10/25-2027/03/24, 03/26' },
+                { fn: 'IT662', dep: '15:55', arr: '19:45', days: [0,0,0,0,1,0,0], period: '2027/03/25' },
+                { fn: 'IT662', dep: '16:00', arr: '19:45', days: [0,1,0,0,1,1,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '首爾(金浦)', fromCode: 'GMP', to: '高雄', toCode: 'KHH', country: '南韓', flights: [
+                { fn: 'IT663', dep: '20:35', arr: '22:40', days: [0,1,0,0,1,1,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/24, 03/26、2027/03/28-2027/10/30' },
+                { fn: 'IT663', dep: '20:35', arr: '22:40', days: [1,0,1,0,0,0,0], period: '2026/06/02-2026/10/24、2026/10/25-2027/03/05、2027/03/06-2027/03/27' },
+                { fn: 'IT663', dep: '20:35', arr: '22:40', days: [0,0,0,0,1,0,0], period: '2027/03/25' }
+            ]},
+
+            // ==================== 42. TPE ⇄ PUS 釜山 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '釜山', toCode: 'PUS', country: '南韓', flights: [
+                { fn: 'IT606', dep: '16:40', arr: '19:55', days: [1,1,1,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT606', dep: '16:50', arr: '20:05', days: [0,0,1,0,1,0,0], period: '2026/10/25-2027/03/17' },
+                { fn: 'IT606', dep: '16:50', arr: '20:00', days: [1,0,0,1,0,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT606', dep: '16:50', arr: '20:00', days: [0,1,0,0,0,0,0], period: '2026/10/25-2027/03/01' },
+                { fn: 'IT606', dep: '16:50', arr: '20:00', days: [0,1,0,0,0,0,0], period: '2027/03/02-2027/03/27' },
+                { fn: 'IT606', dep: '16:50', arr: '20:05', days: [0,0,1,0,1,0,0], period: '2027/03/18-2027/03/27' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '釜山', fromCode: 'PUS', to: '台北(桃園)', toCode: 'TPE', country: '南韓', flights: [
+                { fn: 'IT607', dep: '20:45', arr: '22:10', days: [0,0,1,0,0,0,0], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' },
+                { fn: 'IT607', dep: '20:50', arr: '22:30', days: [1,1,0,1,0,1,1], period: '2026/10/25-2027/03/01' },
+                { fn: 'IT607', dep: '20:50', arr: '22:30', days: [1,1,0,1,0,1,1], period: '2027/03/02-2027/03/27' },
+                { fn: 'IT607', dep: '21:00', arr: '22:30', days: [0,0,1,0,1,0,0], period: '2026/10/25-2027/03/17' },
+                { fn: 'IT607', dep: '21:00', arr: '22:30', days: [0,0,1,0,1,0,0], period: '2027/03/18-2027/03/27' },
+                { fn: 'IT607', dep: '21:05', arr: '22:25', days: [1,1,0,1,1,1,1], period: '2026/06/02-2026/10/24、2027/03/28-2027/10/30' }
+            ]},
+
+            // ==================== 43. KHH ⇄ DAD 峴港 ====================
+            { hub: 'KHH', dir: 'OUT', from: '高雄', fromCode: 'KHH', to: '峴港', toCode: 'DAD', country: '越南', flights: [
+                { fn: 'IT585', dep: '16:00', arr: '17:35', days: [0,0,0,1,0,0,0], period: '2026/06/02-2026/10/24, 12/23' },
+                { fn: 'IT585', dep: '16:00', arr: '17:35', days: [0,0,0,1,0,0,0], period: '2026/12/30、2027/02/03-2027/03/27' },
+                { fn: 'IT585', dep: '16:30', arr: '18:10', days: [1,0,1,0,0,1,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT585', dep: '16:30', arr: '18:10', days: [0,0,0,0,1,0,0], period: '2026/06/02-2026/10/22' },
+                { fn: 'IT585', dep: '17:00', arr: '18:25', days: [1,0,0,0,0,1,0], period: '2026/12/27, 2027/01/03、2027/02/03-2027/03/27' },
+                { fn: 'IT585', dep: '17:20', arr: '19:00', days: [0,0,1,0,1,0,1], period: '2026/10/25-2027/03/27' }
+            ]},
+            { hub: 'KHH', dir: 'IN', from: '峴港', fromCode: 'DAD', to: '高雄', toCode: 'KHH', country: '越南', flights: [
+                { fn: 'IT586', dep: '18:25', arr: '21:45', days: [0,0,0,1,0,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT586', dep: '18:25', arr: '21:40', days: [0,0,0,1,0,0,0], period: '2026/12/23-2027/01/03、2027/02/03-2027/03/27' },
+                { fn: 'IT586', dep: '19:00', arr: '22:20', days: [1,0,1,0,1,1,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT586', dep: '19:15', arr: '22:30', days: [0,0,1,0,1,0,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT586', dep: '19:15', arr: '22:30', days: [1,0,0,0,0,1,0], period: '2026/12/23-2027/01/03、2027/02/03-2027/03/27' }
+            ]},
+
+            // ==================== 44. TPE ⇄ DAD 峴港 ====================
+            { hub: 'TPE', dir: 'OUT', from: '台北(桃園)', fromCode: 'TPE', to: '峴港', toCode: 'DAD', country: '越南', flights: [
+                { fn: 'IT551', dep: '16:25', arr: '18:10', days: [0,0,1,0,0,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT551', dep: '16:30', arr: '18:10', days: [0,0,0,0,0,1,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT551', dep: '16:35', arr: '18:10', days: [0,1,0,0,0,0,0], period: '2026/06/02-2026/10/19' },
+                { fn: 'IT551', dep: '16:35', arr: '18:10', days: [0,0,0,1,0,0,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT551', dep: '16:50', arr: '18:25', days: [1,0,1,1,0,1,1], period: '2026/10/25-2027/03/27' },
+                { fn: 'IT551', dep: '17:15', arr: '18:55', days: [1,0,0,0,1,0,0], period: '2026/06/02-2026/10/24' }
+            ]},
+            { hub: 'TPE', dir: 'IN', from: '峴港', fromCode: 'DAD', to: '台北(桃園)', toCode: 'TPE', country: '越南', flights: [
+                { fn: 'IT552', dep: '19:00', arr: '22:40', days: [0,0,1,1,0,1,1], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT552', dep: '19:00', arr: '22:40', days: [0,1,0,0,0,0,0], period: '2026/06/02-2026/10/19' },
+                { fn: 'IT552', dep: '19:00', arr: '22:40', days: [0,0,0,0,1,0,0], period: '2026/06/02-2026/10/22' },
+                { fn: 'IT552', dep: '19:45', arr: '23:25', days: [1,0,0,0,0,0,0], period: '2026/06/02-2026/10/24' },
+                { fn: 'IT552', dep: '19:50', arr: '23:15', days: [1,0,1,1,0,1,1], period: '2026/10/25-2027/03/27' }
             ]}
         ];
 
         let activeHub = 'ALL';
+        let activeDir = 'ALL';
 
         function renderTimetable(data) {
             const container = document.getElementById('timetable-list');
+            const countInfo = document.getElementById('route-count-info');
             container.innerHTML = '';
+
+            let totalRows = 0;
+            data.forEach(item => totalRows += item.flights.length);
+            if (countInfo) {
+                countInfo.textContent = `顯示 ${data.length} 條航段 / 共 ${totalRows} 筆班表區間`;
+            }
 
             if (data.length === 0) {
                 container.innerHTML = '<div style="text-align:center; padding:50px; color:#888;">找不到符合條件的航班資訊。</div>';
@@ -521,7 +1113,7 @@
 
             data.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'route-schedule-card';
+                card.className = 'route-schedule-card' + (item.dir === 'IN' ? ' inbound-card' : '');
 
                 let rowsHtml = '';
                 item.flights.forEach(f => {
@@ -542,13 +1134,18 @@
                     `;
                 });
 
+                const dirLabel = item.dir === 'OUT'
+                    ? '<span class="dir-badge out">台灣出發 (去程)</span>'
+                    : '<span class="dir-badge in">外站回程 (返台)</span>';
+
                 card.innerHTML = `
                     <div class="route-header">
                         <div class="route-title">
-                            <span>${item.from} → ${item.to}</span>
+                            <span>${item.fromCode} ${item.from} → ${item.toCode} ${item.to}</span>
                             <span class="route-tag">${item.fromCode} - ${item.toCode}</span>
+                            ${dirLabel}
                         </div>
-                        <span style="font-size:0.85rem; color:#666; font-weight:bold;">${item.country}</span>
+                        <span style="font-size:0.85rem; color:#666; font-weight:bold;">台灣 / ${item.country}</span>
                     </div>
                     <div class="schedule-table-wrap">
                         <table class="schedule-table">
@@ -557,8 +1154,8 @@
                                     <th>航班號</th>
                                     <th>起飛</th>
                                     <th>抵達</th>
-                                    <th>飛航日</th>
-                                    <th>適合執飛/出發期間</th>
+                                    <th>飛航日 (週日~週六)</th>
+                                    <th>適合出發日期</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -578,6 +1175,13 @@
             applyFilters();
         }
 
+        function filterDir(dir, btn) {
+            activeDir = dir;
+            document.querySelectorAll('.dir-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            applyFilters();
+        }
+
         function filterSearch() {
             applyFilters();
         }
@@ -590,10 +1194,18 @@
                 filtered = filtered.filter(item => item.hub === activeHub);
             }
 
+            if (activeDir !== 'ALL') {
+                filtered = filtered.filter(item => item.dir === activeDir);
+            }
+
             if (query) {
                 filtered = filtered.filter(item => {
-                    const matchCity = item.from.toLowerCase().includes(query) || item.to.toLowerCase().includes(query) || item.toCode.toLowerCase().includes(query);
-                    const matchFlight = item.flights.some(f => f.fn.toLowerCase().includes(query));
+                    const matchCity = item.from.toLowerCase().includes(query) ||
+                                      item.to.toLowerCase().includes(query) ||
+                                      item.fromCode.toLowerCase().includes(query) ||
+                                      item.toCode.toLowerCase().includes(query) ||
+                                      item.country.toLowerCase().includes(query);
+                    const matchFlight = item.flights.some(f => f.fn.toLowerCase().includes(query) || f.period.toLowerCase().includes(query));
                     return matchCity || matchFlight;
                 });
             }
