@@ -3,381 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>機隊資料 (Fleet) | Virtual Tigerair Taiwan 虛擬台灣虎航</title>
-    
-    <!-- 網站 Favicon 圖示 -->
+    <title>機隊資料 (Fleet) | Virtual Tigerair Taiwan</title>
     <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="apple-touch-icon" href="assets/favicon.png">
-
     <link rel="stylesheet" href="assets/styles.css">
     <style>
-        .zulu-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-size: 0.85rem;
-            color: #1e293b;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
-        }
-
-        .zulu-dot {
-            width: 7px;
-            height: 7px;
-            background-color: #10b981;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-            animation: zuluPulse 2s infinite;
-        }
-
-        .zulu-label {
-            font-size: 0.72rem;
-            font-weight: 800;
-            color: #64748b;
-            letter-spacing: 1px;
-        }
-
-        #zulu-clock {
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: #0f172a;
-            font-weight: 800;
-        }
-
-        @keyframes zuluPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.9); }
-        }
-
-        .fleet-container {
-            max-width: 1200px;
-            margin: 40px auto 70px;
-            padding: 0 20px;
-        }
-
-        .fleet-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-            margin-bottom: 45px;
-        }
-
-        .stat-card {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--tiger-yellow);
-            text-align: center;
-        }
-
-        .stat-card h3 {
-            font-size: 2.2rem;
-            color: var(--tiger-black);
-            margin-bottom: 6px;
-            font-weight: 800;
-        }
-
-        .stat-card p {
-            color: #666;
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-
-        .section-header {
-            margin: 40px 0 20px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .section-header h2 {
-            font-size: 1.5rem;
-            color: var(--tiger-black);
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-header .tag {
-            background: var(--tiger-yellow);
-            color: #111;
-            font-size: 0.8rem;
-            font-weight: bold;
-            padding: 4px 10px;
-            border-radius: 20px;
-        }
+        .zulu-badge { display: inline-flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 12px; font-size: 0.85rem; color: #1e293b; font-weight: 700; }
+        .zulu-dot { width: 7px; height: 7px; background-color: #10b981; border-radius: 50%; display: inline-block; }
+        .nav-actions { display: inline-flex; align-items: center; gap: 10px; margin-left: 5px; }
+        .nav-btn-custom { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 9px 18px; border-radius: 8px; font-size: 0.92rem; font-weight: 700; text-decoration: none; }
+        .nav-btn-login { background-color: #ffffff; color: #1e293b !important; border: 1.5px solid #cbd5e1; }
+        .nav-btn-login svg { width: 17px; height: 17px; stroke: currentColor; stroke-width: 2; fill: none; }
+        .nav-btn-join { background-color: var(--tiger-orange); color: #ffffff !important; border: 1.5px solid var(--tiger-orange); }
+        .fleet-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
     </style>
 </head>
 <body>
-
     <header>
-        <a href="index.html" class="tiger-logo-link">
-            <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan 虛擬台灣虎航" class="tiger-logo-img">
-        </a>
+        <a href="index.html" class="tiger-logo-link"><img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan" class="tiger-logo-img"></a>
         <nav>
-            <div class="zulu-badge">
-                <span class="zulu-dot"></span>
-                <span class="zulu-label">ZULU</span>
-                <span id="zulu-clock">00:00:00Z</span>
-            </div>
+            <div class="zulu-badge"><span class="zulu-dot"></span><span style="font-size:0.72rem;font-weight:800;color:#64748b;">ZULU</span><span id="zulu-clock">00:00:00Z</span></div>
             <a href="routes.html">航線網絡</a>
             <a href="timetable.html">時刻表</a>
             <a href="fleet.html" style="color: var(--tiger-orange);">機隊資料</a>
             <a href="team.html">組織成員</a>
             <a href="about.html">關於我們</a>
-            <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
+            <div class="nav-actions">
+                <a href="https://auth.vamsys.io/login/ttwscva" target="_blank" class="nav-btn-custom nav-btn-login"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>組員登入</a>
+                <a href="join.html" class="nav-btn-custom nav-btn-join">加入我們</a>
+            </div>
         </nav>
     </header>
-
     <section style="background: linear-gradient(rgba(17,17,17,0.7), rgba(17,17,17,0.8)), url('assets/banner3.png') center/cover; color: white; text-align: center; padding: 45px 20px;">
-        <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">機隊資料 <span style="color: var(--tiger-yellow);">Fleet Information</span></h1>
-        <p style="font-size: 0.95rem; color: #eee; max-width: 800px; margin: 0 auto;">全主力營運空中巴士 A320 家族機隊，配備現代化航電與專屬虎斑塗裝，航向亞太各航點。</p>
+        <h1>機隊資料 <span style="color: var(--tiger-yellow);">Fleet Information</span></h1>
     </section>
-
-    <div class="fleet-container">
-
-        <div class="fleet-stats-grid">
-            <div class="stat-card">
-                <h3>19 架</h3>
-                <p>現役機隊總數 (Active Aircraft)</p>
-            </div>
-            <div class="stat-card">
-                <h3>9 架</h3>
-                <p>Airbus A320-200 (ceo)</p>
-            </div>
-            <div class="stat-card">
-                <h3>10 架</h3>
-                <p>Airbus A320-200neo (neo)</p>
-            </div>
-        </div>
-
-        <div class="section-header">
-            <h2>✈️ 機隊名冊 (Fleet List)</h2>
-            <span class="tag">Airbus A320 Family</span>
-        </div>
-
-        <div class="table-wrapper">
-            <table class="fleet-table">
-                <thead>
-                    <tr>
-                        <th>機型</th>
-                        <th>機號</th>
-                        <th>出廠日期</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="badge ceo">A320</span></td>
-                        <td><strong>B-50001</strong></td>
-                        <td>28 Aug 2014</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge ceo">A320</span></td>
-                        <td><strong>B-50005</strong></td>
-                        <td>26 Mar 2015</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge ceo">A320</span></td>
-                        <td><strong>B-50006</strong></td>
-                        <td>27 May 2015</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge ceo">A320</span></td>
-                        <td><strong>B-50008</strong></td>
-                        <td>24 Aug 2015</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge ceo">A320</span></td>
-                        <td><strong>B-50011</strong></td>
-                        <td>23 Dec 2015</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge ceo">A320</span></td>
-                        <td><strong>B-50015</strong></td>
-                        <td>22 Jan 2016</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge ceo">A320</span></td>
-                        <td><strong>B-50016</strong></td>
-                        <td>27 Jun 2016</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge ceo">A320</span></td>
-                        <td><strong>B-50017</strong></td>
-                        <td>16 Feb 2017</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge ceo">A320</span></td>
-                        <td><strong>B-50018</strong></td>
-                        <td>08 Dec 2017</td>
-                    </tr>
-
-                    <tr>
-                        <td><span class="badge neo">A20N</span></td>
-                        <td><strong>B-50021</strong></td>
-                        <td>26 Mar 2021</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge neo">A20N</span></td>
-                        <td><strong>B-50022</strong></td>
-                        <td>30 Jul 2021</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge neo">A20N</span></td>
-                        <td><strong>B-50023</strong></td>
-                        <td>31 Mar 2022</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge neo">A20N</span></td>
-                        <td><strong>B-50025</strong></td>
-                        <td>08 Jul 2022</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge neo">A20N</span></td>
-                        <td><strong>B-50026</strong></td>
-                        <td>28 Sep 2023</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge neo">A20N</span></td>
-                        <td><strong>B-50027</strong></td>
-                        <td>01 Dec 2023</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge neo">A20N</span></td>
-                        <td><strong>B-50028</strong></td>
-                        <td>18 Jun 2025</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge neo">A20N</span></td>
-                        <td><strong>B-50029</strong></td>
-                        <td>23 Jul 2025</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge neo">A20N</span></td>
-                        <td><strong>B-50031</strong></td>
-                        <td>29 Sep 2026</td>
-                    </tr>
-                    <tr>
-                        <td><span class="badge neo">A20N</span></td>
-                        <td><strong>B-50032</strong></td>
-                        <td>07 Jul 2026</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="section-header" style="margin-top: 60px;">
-            <h2>🎨 彩繪機資訊 (Special Liveries)</h2>
-            <span class="tag">專屬塗裝</span>
-        </div>
-        
-        <div class="cards-grid">
-            <div class="card">
-                <div class="card-content">
-                    <h4>B-50021 | AIRBUS A320neo 官方聯名彩繪</h4>
-                    <p>國內第一架 A320neo 客機，機身上與空中巴士攜手合作，將「AIRBUS A320neo」官方象徵識別直接塗裝於機身。</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h4>B-50015 | 董陽孜「虎虎生風」書法彩繪機</h4>
-                    <p>邀請國寶級書法家董陽孜創作「虎虎生風」四字，為亞洲首架文字巨幅書法彩繪機。</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h4>B-50006 | Rakuten Monkeys 樂天桃猿聯名彩繪機</h4>
-                    <p>跨界結合旅遊與運動文化，完美融合虎斑塗裝與球隊熱血應援視覺，翱翔亞太天空。</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <footer class="tiger-footer">
-        <div class="tiger-footer-top">
-            <div class="footer-col">
-                <h4>關於虛擬台虎</h4>
-                <ul>
-                    <li><a href="index.html#news">最新消息</a></li>
-                    <li><a href="about.html">關於我們</a></li>
-                    <li><a href="fleet.html">機隊資料</a></li>
-                    <li><a href="team.html">組織成員</a></li>
-                    <li><a href="join.html">加入我們</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>航務專區</h4>
-                <ul>
-                    <li><a href="routes.html">航線網絡</a></li>
-                    <li><a href="timetable.html">航班時刻表</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>飛行員指南</h4>
-                <ul>
-                    <li>新手報到須知</li>
-                    <li>常見問題</li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>關注我們</h4>
-                <ul>
-                    <li><a href="https://www.facebook.com/share/g/1Hp3dYjPf8/" target="_blank" class="social-link">📘 Facebook 社團</a></li>
-                    <li><a href="https://youtube.com" target="_blank" class="social-link">▶️ Youtube 頻道</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
-                <h4>飛行模擬支援工具</h4>
-                <div class="app-btn-box">
-                    <a href="https://vamsys.io" target="_blank" class="app-btn">
-                        <span class="app-btn-icon">✈️</span>
-                        <div class="app-btn-text">
-                            <small>Download ACARS</small>
-                            <span>vAMSYS Pegasus</span>
-                        </div>
-                    </a>
-                    <a href="https://simbrief.com" target="_blank" class="app-btn">
-                        <span class="app-btn-icon">📋</span>
-                        <div class="app-btn-text">
-                            <small>Flight Dispatch</small>
-                            <span>SimBrief by Navigraph</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="tiger-footer-bottom">
-            <div class="footer-bottom-inner">
-                <div class="footer-brand-logo">
-                    <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan" class="footer-logo-img">
-                </div>
-                <div class="footer-legal">
-                    <div>Copyright &copy; 2026 Virtual Tigerair Taiwan. All rights reserved.</div>
-                    <div style="margin-top: 4px; color: #777; font-size: 0.75rem;">
-                        <strong>⚠️ 虛擬航空社群免責聲明 (Disclaimer)：</strong>本網站與社群為非營利之飛行模擬愛好者團體（Virtual Airline），專供飛行模擬愛好者交流使用。支援微軟模擬飛行 (MSFS)、X-Plane 及 Prepar3D 等主流平台，且不限制連線網絡。本團體與真實世界的「台灣虎航股份有限公司 (Tigerair Taiwan)」無任何商業、法律或實質隸屬關係。所有商標與識別權利歸原版權所有者所有。
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="assets/site.js"></script>
+    <div class="fleet-container"><p style="text-align:center;">現役總數 19 架 A320 家族機隊。</p></div>
     <script>
         function updateZuluClock() {
             const now = new Date();
@@ -385,9 +44,7 @@
             const m = String(now.getUTCMinutes()).padStart(2, '0');
             const s = String(now.getUTCSeconds()).padStart(2, '0');
             const clockEl = document.getElementById('zulu-clock');
-            if (clockEl) {
-                clockEl.textContent = `${h}:${m}:${s}Z`;
-            }
+            if (clockEl) clockEl.textContent = `${h}:${m}:${s}Z`;
         }
         setInterval(updateZuluClock, 1000);
         updateZuluClock();
