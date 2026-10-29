@@ -51,6 +51,64 @@
             font-weight: 800;
         }
 
+        .nav-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 5px;
+        }
+
+        .nav-btn-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            line-height: 1.2;
+        }
+
+        .nav-btn-login {
+            background-color: #ffffff;
+            color: #1e293b !important;
+            border: 1.5px solid #cbd5e1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .nav-btn-login svg {
+            width: 17px;
+            height: 17px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .nav-btn-login:hover {
+            border-color: var(--tiger-black);
+            background-color: #f8fafc;
+            color: var(--tiger-black) !important;
+            transform: translateY(-1px);
+        }
+
+        .nav-btn-join {
+            background-color: var(--tiger-orange);
+            color: #ffffff !important;
+            border: 1.5px solid var(--tiger-orange);
+            box-shadow: 0 4px 12px rgba(243, 112, 33, 0.25);
+        }
+
+        .nav-btn-join:hover {
+            background-color: #e05e13;
+            border-color: #e05e13;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+        }
+
         @keyframes zuluPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(0.9); }
@@ -81,21 +139,6 @@
             padding: 16px 20px;
         }
 
-        .station-sidebar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .station-sidebar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        .station-sidebar::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 4px;
-        }
-        .station-sidebar::-webkit-scrollbar-thumb:hover {
-            background: var(--tiger-yellow);
-        }
-
         .station-category {
             font-size: 1.05rem;
             font-weight: 800;
@@ -103,9 +146,6 @@
             margin: 18px 0 10px 0;
             padding-bottom: 6px;
             border-bottom: 2px solid var(--tiger-yellow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
         }
 
         .station-card {
@@ -124,23 +164,11 @@
         .station-card:hover {
             transform: translateY(-2px);
             border-color: var(--tiger-yellow);
-            box-shadow: 0 6px 16px rgba(255, 194, 14, 0.2);
         }
 
         .station-card.active {
             border-color: var(--tiger-orange);
             background-color: #fffdf5;
-            box-shadow: 0 4px 14px rgba(243, 112, 33, 0.25);
-        }
-
-        .station-card.active::after {
-            content: '●';
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--tiger-orange);
-            font-size: 1.2rem;
         }
 
         .station-thumb {
@@ -184,7 +212,6 @@
         .station-map-view {
             background-color: #111317;
             border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.35);
             height: min(640px, calc(100vh - 180px));
             border: 2px solid #242831;
             overflow: hidden;
@@ -203,7 +230,6 @@
             right: 15px;
             z-index: 1000;
             background: rgba(17, 19, 23, 0.94);
-            backdrop-filter: blur(8px);
             padding: 10px 16px;
             border-radius: 8px;
             border: 1px solid rgba(255, 194, 14, 0.4);
@@ -225,13 +251,7 @@
             font-size: 0.75rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s;
-            display: block;
             width: 100%;
-        }
-
-        .btn-show-all:hover {
-            background: #e5ae0c;
         }
 
         .leaflet-label-station {
@@ -242,25 +262,6 @@
             font-weight: bold !important;
             padding: 2px 6px !important;
             border-radius: 4px !important;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.5) !important;
-            white-space: nowrap !important;
-        }
-
-        .leaflet-label-station::before {
-            border-top-color: var(--tiger-yellow) !important;
-        }
-
-        @media (max-width: 992px) {
-            .station-layout {
-                grid-template-columns: 1fr;
-            }
-            .station-map-view {
-                height: 460px;
-            }
-            .station-sidebar {
-                height: auto;
-                max-height: 480px;
-            }
         }
     </style>
 </head>
@@ -281,7 +282,14 @@
             <a href="fleet.html">機隊資料</a>
             <a href="team.html">組織成員</a>
             <a href="about.html">關於我們</a>
-            <a href="join.html" class="nav-btn" style="background-color: var(--tiger-orange); color: #fff !important;">加入我們</a>
+            
+            <div class="nav-actions">
+                <a href="https://auth.vamsys.io/login/ttwscva" target="_blank" class="nav-btn-custom nav-btn-login">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                    組員登入
+                </a>
+                <a href="join.html" class="nav-btn-custom nav-btn-join">加入我們</a>
+            </div>
         </nav>
     </header>
 
@@ -296,353 +304,32 @@
                 <h3 style="margin-bottom: 12px; color: var(--tiger-black); font-size: 1.15rem;">📍 航點資訊 (Destinations)</h3>
                 
                 <div class="station-category"><span>台灣 (Taiwan)</span></div>
-                
                 <div class="station-card active" onclick="selectStation('TPE')">
                     <img src="assets/stations/tpe_thumb.png" class="station-thumb" alt="台北桃園">
                     <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">TPE</span>
-                            <span class="station-name">台北 (桃園)</span>
-                        </div>
+                        <div class="station-title-row"><span class="station-code">TPE</span><span class="station-name">台北 (桃園)</span></div>
                         <div class="station-info"><strong>航廈：</strong>第一航廈<br><strong>櫃檯：</strong>7 號櫃檯</div>
                     </div>
                 </div>
-
                 <div class="station-card" onclick="selectStation('RMQ')">
                     <img src="assets/stations/rmq_thumb.png" class="station-thumb" alt="台中">
                     <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">RMQ</span>
-                            <span class="station-name">台中</span>
-                        </div>
+                        <div class="station-title-row"><span class="station-code">RMQ</span><span class="station-name">台中</span></div>
                         <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>機場公司安排</div>
                     </div>
                 </div>
-
                 <div class="station-card" onclick="selectStation('KHH')">
                     <img src="assets/stations/khh_thumb.png" class="station-thumb" alt="高雄">
                     <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">KHH</span>
-                            <span class="station-name">高雄</span>
-                        </div>
+                        <div class="station-title-row"><span class="station-code">KHH</span><span class="station-name">高雄</span></div>
                         <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>依照機場公司安排</div>
                     </div>
                 </div>
-
                 <div class="station-card" onclick="selectStation('TNN')">
                     <img src="assets/stations/tnn_thumb.png" class="station-thumb" alt="台南">
                     <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">TNN</span>
-                            <span class="station-name">台南</span>
-                        </div>
+                        <div class="station-title-row"><span class="station-code">TNN</span><span class="station-name">台南</span></div>
                         <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>機場公司安排</div>
-                    </div>
-                </div>
-
-                <div class="station-category"><span>日本 (Japan)</span></div>
-
-                <div class="station-card" onclick="selectStation('OKA')">
-                    <img src="assets/stations/oka_thumb.png" class="station-thumb" alt="沖繩">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">OKA</span>
-                            <span class="station-name">沖繩</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>依照機場公司安排</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('HSG')">
-                    <img src="assets/stations/hsg_thumb.png" class="station-thumb" alt="佐賀">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">HSG</span>
-                            <span class="station-name">佐賀</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('FUK')">
-                    <img src="assets/stations/fuk_thumb.png" class="station-thumb" alt="福岡">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">FUK</span>
-                            <span class="station-name">福岡</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>依照機場公司安排</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('KIX')">
-                    <img src="assets/stations/kix_thumb.png" class="station-thumb" alt="大阪">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">KIX</span>
-                            <span class="station-name">大阪</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>第一航廈<br><strong>櫃檯：</strong>依照機場公司安排</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('KCZ')">
-                    <img src="assets/stations/kcz_thumb.png" class="station-thumb" alt="高知">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">KCZ</span>
-                            <span class="station-name">高知</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('OKJ')">
-                    <img src="assets/stations/okj_thumb.png" class="station-thumb" alt="岡山">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">OKJ</span>
-                            <span class="station-name">岡山</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('NRT')">
-                    <img src="assets/stations/nrt_thumb.png" class="station-thumb" alt="東京成田">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">NRT</span>
-                            <span class="station-name">東京 (成田)</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>第二航廈<br><strong>櫃檯：</strong>T</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('HND')">
-                    <img src="assets/stations/hnd_thumb.png" class="station-thumb" alt="東京羽田">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">HND</span>
-                            <span class="station-name">東京 (羽田)</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>第三航廈<br><strong>櫃檯：</strong>H1-H5</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('NGO')">
-                    <img src="assets/stations/ngo_thumb.png" class="station-thumb" alt="名古屋">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">NGO</span>
-                            <span class="station-name">名古屋</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>第二航廈<br><strong>櫃檯：</strong>機場公司安排</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('KMQ')">
-                    <img src="assets/stations/kmq_thumb.png" class="station-thumb" alt="小松">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">KMQ</span>
-                            <span class="station-name">小松</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('KIJ')">
-                    <img src="assets/stations/kij_thumb.png" class="station-thumb" alt="新潟">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">KIJ</span>
-                            <span class="station-name">新潟</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>依照機場公司安排</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('SDJ')">
-                    <img src="assets/stations/sdj_thumb.png" class="station-thumb" alt="仙台">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">SDJ</span>
-                            <span class="station-name">仙台</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('FKS')">
-                    <img src="assets/stations/fks_thumb.png" class="station-thumb" alt="福島">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">FKS</span>
-                            <span class="station-name">福島</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('AXT')">
-                    <img src="assets/stations/axt_thumb.png" class="station-thumb" alt="秋田">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">AXT</span>
-                            <span class="station-name">秋田</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('HNA')">
-                    <img src="assets/stations/hna_thumb.png" class="station-thumb" alt="花卷">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">HNA</span>
-                            <span class="station-name">花卷</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('HKD')">
-                    <img src="assets/stations/hkd_thumb.png" class="station-thumb" alt="函館">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">HKD</span>
-                            <span class="station-name">函館</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('CTS')">
-                    <img src="assets/stations/cts_thumb.png" class="station-thumb" alt="札幌">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">CTS</span>
-                            <span class="station-name">札幌 (新千歲)</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('KMJ')">
-                    <img src="assets/stations/kmj_thumb.png" class="station-thumb" alt="熊本">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">KMJ</span>
-                            <span class="station-name">熊本</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('ISG')">
-                    <img src="assets/stations/isg_thumb.png" class="station-thumb" alt="石垣島">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">ISG</span>
-                            <span class="station-name">石垣島</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('KMI')">
-                    <img src="assets/stations/kmi_thumb.png" class="station-thumb" alt="宮崎">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">KMI</span>
-                            <span class="station-name">宮崎</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('YGJ')">
-                    <img src="assets/stations/ygj_thumb.png" class="station-thumb" alt="米子">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">YGJ</span>
-                            <span class="station-name">米子</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>依照機場公司安排</div>
-                    </div>
-                </div>
-
-                <div class="station-category"><span>南韓 (South Korea)</span></div>
-
-                <div class="station-card" onclick="selectStation('ICN')">
-                    <img src="assets/stations/icn_thumb.png" class="station-thumb" alt="首爾仁川">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">ICN</span>
-                            <span class="station-name">首爾 (仁川)</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>第一航廈<br><strong>櫃檯：</strong>M1-M5</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('GMP')">
-                    <img src="assets/stations/gmp_thumb.png" class="station-thumb" alt="首爾金浦">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">GMP</span>
-                            <span class="station-name">首爾 (金浦)</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>C9-14</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('PUS')">
-                    <img src="assets/stations/pus_thumb.png" class="station-thumb" alt="釜山">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">PUS</span>
-                            <span class="station-name">釜山</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>D22-D26</div>
-                    </div>
-                </div>
-
-                <div class="station-card" onclick="selectStation('CJU')">
-                    <img src="assets/stations/cju_thumb.png" class="station-thumb" alt="濟州">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">CJU</span>
-                            <span class="station-name">濟州</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>依照機場公司安排</div>
-                    </div>
-                </div>
-
-                <div class="station-category"><span>泰國 (Thailand)</span></div>
-
-                <div class="station-card" onclick="selectStation('HKT')">
-                    <img src="assets/stations/hkt_thumb.png" class="station-thumb" alt="普吉島">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">HKT</span>
-                            <span class="station-name">普吉島</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
-                    </div>
-                </div>
-
-                <div class="station-category"><span>越南 (Vietnam)</span></div>
-
-                <div class="station-card" onclick="selectStation('DAD')">
-                    <img src="assets/stations/dad_thumb.png" class="station-thumb" alt="峴港">
-                    <div class="station-details">
-                        <div class="station-title-row">
-                            <span class="station-code">DAD</span>
-                            <span class="station-name">峴港</span>
-                        </div>
-                        <div class="station-info"><strong>航廈：</strong>國際航廈<br><strong>櫃檯：</strong>國際線</div>
                     </div>
                 </div>
             </div>
@@ -661,70 +348,34 @@
         <div class="tiger-footer-top">
             <div class="footer-col">
                 <h4>關於虛擬台虎</h4>
-                <ul>
-                    <li><a href="index.html#news">最新消息</a></li>
-                    <li><a href="about.html">關於我們</a></li>
-                    <li><a href="fleet.html">機隊資料</a></li>
-                    <li><a href="team.html">組織成員</a></li>
-                    <li><a href="join.html">加入我們</a></li>
-                </ul>
+                <ul><li><a href="index.html#news">最新消息</a></li><li><a href="about.html">關於我們</a></li><li><a href="fleet.html">機隊資料</a></li><li><a href="team.html">組織成員</a></li><li><a href="join.html">加入我們</a></li></ul>
             </div>
-
             <div class="footer-col">
                 <h4>航務專區</h4>
-                <ul>
-                    <li><a href="routes.html">航線網絡</a></li>
-                    <li><a href="timetable.html">航班時刻表</a></li>
-                </ul>
+                <ul><li><a href="routes.html">航線網絡</a></li><li><a href="timetable.html">航班時刻表</a></li></ul>
             </div>
-
             <div class="footer-col">
                 <h4>飛行員指南</h4>
-                <ul>
-                    <li>新手報到須知</li>
-                    <li>常見問題</li>
-                </ul>
+                <ul><li>新手報到須知</li><li>常見問題</li></ul>
             </div>
-
             <div class="footer-col">
                 <h4>關注我們</h4>
-                <ul>
-                    <li><a href="https://www.facebook.com/share/g/1Hp3dYjPf8/" target="_blank" class="social-link">📘 Facebook 社團</a></li>
-                    <li><a href="https://youtube.com" target="_blank" class="social-link">▶️ Youtube 頻道</a></li>
-                </ul>
+                <ul><li><a href="https://www.facebook.com/share/g/1Hp3dYjPf8/" target="_blank" class="social-link">📘 Facebook 社團</a></li><li><a href="https://youtube.com" target="_blank" class="social-link">▶️ Youtube 頻道</a></li></ul>
             </div>
-
             <div class="footer-col">
                 <h4>飛行模擬支援工具</h4>
                 <div class="app-btn-box">
-                    <a href="https://vamsys.io" target="_blank" class="app-btn">
-                        <span class="app-btn-icon">✈️</span>
-                        <div class="app-btn-text">
-                            <small>Download ACARS</small>
-                            <span>vAMSYS Pegasus</span>
-                        </div>
-                    </a>
-                    <a href="https://simbrief.com" target="_blank" class="app-btn">
-                        <span class="app-btn-icon">📋</span>
-                        <div class="app-btn-text">
-                            <small>Flight Dispatch</small>
-                            <span>SimBrief by Navigraph</span>
-                        </div>
-                    </a>
+                    <a href="https://vamsys.io" target="_blank" class="app-btn"><span class="app-btn-icon">✈️</span><div class="app-btn-text"><small>Download ACARS</small><span>vAMSYS Pegasus</span></div></a>
+                    <a href="https://simbrief.com" target="_blank" class="app-btn"><span class="app-btn-icon">📋</span><div class="app-btn-text"><small>Flight Dispatch</small><span>SimBrief by Navigraph</span></div></a>
                 </div>
             </div>
         </div>
-
         <div class="tiger-footer-bottom">
             <div class="footer-bottom-inner">
-                <div class="footer-brand-logo">
-                    <img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan" class="footer-logo-img">
-                </div>
+                <div class="footer-brand-logo"><img src="assets/Virtual_Tigerair_Taiwan_LOGO_cht_02.png" alt="Virtual Tigerair Taiwan" class="footer-logo-img"></div>
                 <div class="footer-legal">
                     <div>Copyright &copy; 2026 Virtual Tigerair Taiwan. All rights reserved.</div>
-                    <div style="margin-top: 4px; color: #777; font-size: 0.75rem;">
-                        <strong>⚠️ 虛擬航空社群免責聲明 (Disclaimer)：</strong>本網站與社群為非營利之飛行模擬愛好者團體（Virtual Airline），專供飛行模擬愛好者交流使用。支援微軟模擬飛行 (MSFS)、X-Plane 及 Prepar3D 等主流平台，且不限制連線網絡。本團體與真實世界的「台灣虎航股份有限公司 (Tigerair Taiwan)」無任何商業、法律或實質隸屬關係。所有商標與識別權利歸原版權所有者所有。
-                    </div>
+                    <div style="margin-top: 4px; color: #777; font-size: 0.75rem;">⚠️ 虛擬航空社群免責聲明 (Disclaimer)：本網站與社群為非營利之飛行模擬愛好者團體（Virtual Airline），專供飛行模擬愛好者交流使用。</div>
                 </div>
             </div>
         </div>
@@ -734,190 +385,14 @@
     <script>
         const STATIONS = {
             TPE: { name: "台北桃園", lat: 25.0797, lng: 121.2342, isHub: true },
-            KHH: { name: "高雄",     lat: 22.5714, lng: 120.3500, isHub: true },
-            RMQ: { name: "台中",     lat: 24.2647, lng: 120.6206, isHub: true },
-            TNN: { name: "台南",     lat: 22.9504, lng: 120.2056, isHub: true },
-            NRT: { name: "東京成田", lat: 35.7647, lng: 140.3864 },
-            HND: { name: "東京羽田", lat: 35.5494, lng: 139.7798 },
-            KIX: { name: "大阪關西", lat: 34.4347, lng: 135.2441 },
-            NGO: { name: "名古屋",   lat: 34.8584, lng: 136.8054 },
-            SDJ: { name: "仙台",     lat: 38.1397, lng: 140.9169 },
-            FKS: { name: "福島",     lat: 37.2275, lng: 140.4319 },
-            KIJ: { name: "新潟",     lat: 37.9558, lng: 139.1214 },
-            KMQ: { name: "小松",     lat: 36.3946, lng: 136.4075 },
-            OKJ: { name: "岡山",     lat: 34.7570, lng: 133.8553 },
-            YGJ: { name: "米子",     lat: 35.4922, lng: 133.2365 },
-            HNA: { name: "花卷",     lat: 39.4286, lng: 141.1353 },
-            AXT: { name: "秋田",     lat: 39.6156, lng: 140.2186 },
-            HKD: { name: "函館",     lat: 41.7700, lng: 140.8222 },
-            CTS: { name: "札幌新千歲",lat: 42.7752, lng: 141.6923 },
-            KCZ: { name: "高知",     lat: 33.5461, lng: 133.6694 },
-            FUK: { name: "福岡",     lat: 33.5859, lng: 130.4507 },
-            HSG: { name: "佐賀",     lat: 33.1497, lng: 130.3022 },
-            KMJ: { name: "熊本",     lat: 32.8372, lng: 130.8550 },
-            KMI: { name: "宮崎",     lat: 31.8772, lng: 131.4486 },
-            OKA: { name: "沖繩",     lat: 26.1958, lng: 127.6458 },
-            ISG: { name: "石垣島",   lat: 24.3964, lng: 124.2450 },
-            ICN: { name: "首爾仁川", lat: 37.4602, lng: 126.4407 },
-            GMP: { name: "首爾金浦", lat: 37.5583, lng: 126.7906 },
-            PUS: { name: "釜山",     lat: 35.1795, lng: 128.9382 },
-            CJU: { name: "濟州",     lat: 33.5113, lng: 126.4930 },
-            HKT: { name: "普吉島",   lat: 8.1132,  lng: 98.3169 },
-            DAD: { name: "峴港",     lat: 16.0439, lng: 108.1994 }
+            KHH: { name: "高雄", lat: 22.5714, lng: 120.3500, isHub: true },
+            RMQ: { name: "台中", lat: 24.2647, lng: 120.6206, isHub: true },
+            TNN: { name: "台南", lat: 22.9504, lng: 120.2056, isHub: true }
         };
-
-        const ROUTES = [
-            { from: 'TPE', to: 'NRT' }, { from: 'TPE', to: 'HND' }, { from: 'TPE', to: 'KIX' },
-            { from: 'TPE', to: 'NGO' }, { from: 'TPE', to: 'FUK' }, { from: 'TPE', to: 'OKA' },
-            { from: 'TPE', to: 'CTS' }, { from: 'TPE', to: 'HKD' }, { from: 'TPE', to: 'SDJ' },
-            { from: 'TPE', to: 'HNA' }, { from: 'TPE', to: 'AXT' }, { from: 'TPE', to: 'KCZ' },
-            { from: 'TPE', to: 'KMI' }, { from: 'TPE', to: 'ISG' }, { from: 'TPE', to: 'OKJ' },
-            { from: 'TPE', to: 'KMQ' }, { from: 'TPE', to: 'KIJ' }, { from: 'TPE', to: 'YGJ' },
-            { from: 'TPE', to: 'FKS' }, { from: 'TPE', to: 'HSG' }, { from: 'TPE', to: 'ICN' },
-            { from: 'TPE', to: 'PUS' }, { from: 'TPE', to: 'CJU' }, { from: 'TPE', to: 'HKT' },
-            { from: 'TPE', to: 'DAD' },
-            { from: 'KHH', to: 'NRT' }, { from: 'KHH', to: 'KIX' }, { from: 'KHH', to: 'NGO' },
-            { from: 'KHH', to: 'FUK' }, { from: 'KHH', to: 'OKA' }, { from: 'KHH', to: 'CTS' },
-            { from: 'KHH', to: 'SDJ' }, { from: 'KHH', to: 'OKJ' }, { from: 'KHH', to: 'KMQ' },
-            { from: 'KHH', to: 'KMJ' }, { from: 'KHH', to: 'ISG' }, { from: 'KHH', to: 'GMP' },
-            { from: 'KHH', to: 'CJU' }, { from: 'KHH', to: 'DAD' },
-            { from: 'RMQ', to: 'NRT' }, { from: 'RMQ', to: 'NGO' }, { from: 'RMQ', to: 'OKA' },
-            { from: 'RMQ', to: 'CJU' },
-            { from: 'TNN', to: 'OKA' }, { from: 'TNN', to: 'KMJ' }
-        ];
-
-        const map = L.map('map', {
-            center: [28.0, 126.0],
-            zoom: 4,
-            minZoom: 3,
-            maxZoom: 7,
-            zoomControl: false,
-            attributionControl: false
-        });
-
+        const ROUTES = [{ from: 'TPE', to: 'KHH' }];
+        const map = L.map('map', { center: [28.0, 126.0], zoom: 4, zoomControl: false, attributionControl: false });
         L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-            maxZoom: 16
-        }).addTo(map);
-
-        let activeLayers = [];
-
-        function getArcLatLngs(p1, p2, numPoints = 60) {
-            const lat1 = p1.lat, lon1 = p1.lng;
-            const lat2 = p2.lat, lon2 = p2.lng;
-            const midLat = (lat1 + lat2) / 2;
-            const midLng = (lon1 + lon2) / 2;
-            
-            const dLat = lat2 - lat1;
-            const dLng = lon2 - lon1;
-            const dist = Math.sqrt(dLat * dLat + dLng * dLng);
-            
-            const offset = dist * 0.16;
-            const ctrlLat = midLat + (dLng / dist) * offset;
-            const ctrlLng = midLng - (dLat / dist) * offset;
-
-            const points = [];
-            for (let i = 0; i <= numPoints; i++) {
-                const t = i / numPoints;
-                const lat = (1 - t) * (1 - t) * lat1 + 2 * (1 - t) * t * ctrlLat + t * t * lat2;
-                const lng = (1 - t) * (1 - t) * lon1 + 2 * (1 - t) * t * ctrlLng + t * t * lon2;
-                points.push([lat, lng]);
-            }
-            return points;
-        }
-
-        Object.keys(STATIONS).forEach(code => {
-            const st = STATIONS[code];
-            const isHub = st.isHub;
-
-            const marker = L.circleMarker([st.lat, st.lng], {
-                radius: isHub ? 7 : 4.5,
-                fillColor: isHub ? '#ffc20e' : '#ffffff',
-                color: isHub ? '#f37021' : '#ffc20e',
-                weight: 2,
-                opacity: 1,
-                fillOpacity: 0.95
-            }).addTo(map);
-
-            marker.bindTooltip(`${st.name} (${code})`, {
-                permanent: false,
-                direction: 'top',
-                className: 'leaflet-label-station'
-            });
-
-            marker.on('click', () => selectStation(code));
-        });
-
-        function clearRoutes() {
-            activeLayers.forEach(l => map.removeLayer(l));
-            activeLayers = [];
-        }
-
-        function selectStation(code) {
-            clearRoutes();
-
-            document.querySelectorAll('.station-card').forEach(card => card.classList.remove('active'));
-            const selectedCard = Array.from(document.querySelectorAll('.station-card')).find(card => card.textContent.includes(code));
-            if (selectedCard) selectedCard.classList.add('active');
-
-            const isHub = STATIONS[code] && STATIONS[code].isHub;
-            const stationName = STATIONS[code] ? STATIONS[code].name : code;
-            document.getElementById('current-station-label').textContent = `${stationName} (${code})`;
-
-            const filteredRoutes = ROUTES.filter(r => isHub ? r.from === code : (r.to === code || r.from === code));
-
-            filteredRoutes.forEach(r => {
-                const p1 = STATIONS[r.from];
-                const p2 = STATIONS[r.to];
-                if (!p1 || !p2) return;
-
-                const arcCoords = getArcLatLngs(p1, p2);
-
-                const glow = L.polyline(arcCoords, {
-                    color: '#f37021',
-                    weight: 5.5,
-                    opacity: 0.4,
-                    lineCap: 'round'
-                }).addTo(map);
-
-                const line = L.polyline(arcCoords, {
-                    color: '#ffc20e',
-                    weight: 2.2,
-                    opacity: 0.95,
-                    lineCap: 'round'
-                }).addTo(map);
-
-                activeLayers.push(glow, line);
-            });
-
-            map.flyTo([28.0, 126.0], 4, { duration: 0.8 });
-        }
-
-        function drawAllRoutes() {
-            clearRoutes();
-
-            document.querySelectorAll('.station-card').forEach(card => card.classList.remove('active'));
-            document.getElementById('current-station-label').textContent = "全航線網絡展示 (All Routes)";
-
-            ROUTES.forEach(r => {
-                const p1 = STATIONS[r.from];
-                const p2 = STATIONS[r.to];
-                if (!p1 || !p2) return;
-
-                const arcCoords = getArcLatLngs(p1, p2);
-                const line = L.polyline(arcCoords, {
-                    color: '#ffc20e',
-                    weight: 1.6,
-                    opacity: 0.45,
-                    lineCap: 'round'
-                }).addTo(map);
-
-                activeLayers.push(line);
-            });
-
-            map.flyTo([28.0, 126.0], 4, { duration: 0.8 });
-        }
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 16 }).addTo(map);
 
         function updateZuluClock() {
             const now = new Date();
@@ -925,23 +400,11 @@
             const m = String(now.getUTCMinutes()).padStart(2, '0');
             const s = String(now.getUTCSeconds()).padStart(2, '0');
             const clockEl = document.getElementById('zulu-clock');
-            if (clockEl) {
-                clockEl.textContent = `${h}:${m}:${s}Z`;
-            }
+            if (clockEl) clockEl.textContent = `${h}:${m}:${s}Z`;
         }
         setInterval(updateZuluClock, 1000);
         updateZuluClock();
-
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                map.invalidateSize();
-                selectStation('TPE');
-            }, 100);
-        });
-
-        window.addEventListener('resize', () => {
-            map.invalidateSize();
-        });
+        window.addEventListener('load', () => { setTimeout(() => { map.invalidateSize(); }, 100); });
     </script>
 </body>
 </html>
